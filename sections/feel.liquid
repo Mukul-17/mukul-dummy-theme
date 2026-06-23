@@ -1,0 +1,61 @@
+{%- assign f1url = 'https://modrn.in/cdn/shop/files/Gemini_Generated_Image_avap0lavap0lavap.jpg?v=1776246119&width=1000' -%}
+{%- assign f2url = 'https://modrn.in/cdn/shop/files/Gemini_Generated_Image_2k98gq2k98gq2k98.jpg?v=1776246093&width=1000' -%}
+{%- assign f3url = 'https://modrn.in/cdn/shop/files/Gemini_Generated_Image_ak8ygak8ygak8yga.jpg?v=1776246134&width=1000' -%}
+{%- if section.settings.fabric1 != blank -%}{%- assign f1url = section.settings.fabric1 | image_url: width: 1000 -%}{%- endif -%}
+{%- if section.settings.fabric2 != blank -%}{%- assign f2url = section.settings.fabric2 | image_url: width: 1000 -%}{%- endif -%}
+{%- if section.settings.fabric3 != blank -%}{%- assign f3url = section.settings.fabric3 | image_url: width: 1000 -%}{%- endif -%}
+
+<section id="fabric" class="section feel">
+  <div class="section__head reveal">
+    <div class="eyebrow"><span class="eyebrow__num">{{ section.settings.eyebrow_num }}</span><span>{{ section.settings.eyebrow_label }}</span></div>
+    <h2 class="section__title">{{ section.settings.heading }} <span class="t-muted">{{ section.settings.heading_accent }}</span></h2>
+    {%- if section.settings.lead != blank -%}<p class="section__lead">{{ section.settings.lead }}</p>{%- endif -%}
+  </div>
+
+  <div class="feel__lensbox reveal" id="lensbox">
+    <img id="lensimg" src="{{ f1url }}" alt="Close-up of MODRN fabric and stitching" loading="lazy" decoding="async" width="1000" height="1000" />
+    <div class="feel__lens" id="lens"></div>
+    <div class="feel__hint" id="lens-hint">Drag to zoom ↗</div>
+  </div>
+
+  <div class="feel__thumbs" id="fab-thumbs">
+    <button class="is-active" data-src="{{ f1url }}" aria-label="Fabric close-up 1"><img src="{{ f1url }}" alt="" width="200" height="200" loading="lazy" /></button>
+    <button data-src="{{ f2url }}" aria-label="Fabric close-up 2"><img src="{{ f2url }}" alt="" width="200" height="200" loading="lazy" /></button>
+    <button data-src="{{ f3url }}" aria-label="Fabric close-up 3"><img src="{{ f3url }}" alt="" width="200" height="200" loading="lazy" /></button>
+  </div>
+
+  <div class="feel__weigh" id="weigh">
+    <div class="feel__weigh-intro reveal">
+      <span class="feel__kicker">The weigh-in</span>
+      <p>{{ section.settings.weigh_text }}</p>
+    </div>
+    <div class="gsm-row gsm-row--them">
+      <div class="gsm-lbl"><span>Normal t-shirt</span><b><span data-counter data-to="{{ section.settings.gsm_them }}">0</span> GSM</b></div>
+      <div class="gsm-bar"><i></i></div>
+    </div>
+    <div class="gsm-row gsm-row--us">
+      <div class="gsm-lbl"><span>MODRN t-shirt</span><b><span data-counter data-to="{{ section.settings.gsm_us }}">0</span> GSM</b></div>
+      <div class="gsm-bar"><i></i></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Feel the fabric",
+  "settings": [
+    { "type": "text", "id": "eyebrow_num", "label": "Eyebrow number", "default": "[ 04 ]" },
+    { "type": "text", "id": "eyebrow_label", "label": "Eyebrow label", "default": "Get closer" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "FEEL THE" },
+    { "type": "text", "id": "heading_accent", "label": "Heading accent (muted)", "default": "fabric." },
+    { "type": "textarea", "id": "lead", "label": "Sub text", "default": "Drag across the image to look at the cloth up close — thick, soft, breathable cotton. Tap the small photos to switch." },
+    { "type": "image_picker", "id": "fabric1", "label": "Fabric close-up 1" },
+    { "type": "image_picker", "id": "fabric2", "label": "Fabric close-up 2" },
+    { "type": "image_picker", "id": "fabric3", "label": "Fabric close-up 3" },
+    { "type": "textarea", "id": "weigh_text", "label": "Weigh-in text", "default": "GSM = how heavy the cloth is. Heavier cloth feels richer and lasts longer. Most cheap tees are 140 GSM. Ours start at 220." },
+    { "type": "number", "id": "gsm_them", "label": "Normal tee GSM", "default": 140 },
+    { "type": "number", "id": "gsm_us", "label": "MODRN tee GSM", "default": 240 }
+  ],
+  "presets": [{ "name": "Feel the fabric" }]
+}
+{% endschema %}

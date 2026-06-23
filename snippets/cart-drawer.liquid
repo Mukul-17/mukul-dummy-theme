@@ -1,0 +1,19 @@
+{%- comment -%} Cart drawer — static shell; JS fills it from /cart.js {%- endcomment -%}
+<div class="sheet-root" id="cart-root" hidden>
+  <div class="sheet__backdrop" data-cart-close></div>
+  <div class="sheet sheet--cart" role="dialog" aria-modal="true" aria-label="Your bag">
+    <div class="sheet__grip"></div>
+    <div class="cart__head">
+      <h3>Your bag <span id="cart-count-label"></span></h3>
+      <button class="appbar__icon" data-cart-close aria-label="Close bag">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="cart__items" id="cart-items"></div>
+    <div class="cart__foot" id="cart-foot" hidden>
+      <div class="cart__subtotal"><span>Subtotal</span><strong id="cart-subtotal"></strong></div>
+      <a class="btn btn--primary" href="{{ routes.cart_url }}/checkout" style="width:100%;display:flex;justify-content:center;">Checkout</a>
+      <p class="cart__note">Shipping &amp; taxes calculated at checkout · COD available</p>
+    </div>
+  </div>
+</div>

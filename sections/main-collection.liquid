@@ -1,0 +1,30 @@
+<section class="section">
+  <div class="section__head reveal">
+    <div class="eyebrow"><span>{{ collection.products_count }} {% if collection.products_count == 1 %}piece{% else %}pieces{% endif %}</span></div>
+    <h2 class="section__title">{{ collection.title }}</h2>
+    {%- if collection.description != blank -%}
+      <p class="section__lead">{{ collection.description }}</p>
+    {%- endif -%}
+  </div>
+
+  {%- paginate collection.products by 24 -%}
+    <div class="pgrid">
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product %}
+      {%- else -%}
+        <p class="section__lead">No products in this collection yet.</p>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <div class="section__cta" style="display:flex;justify-content:center;gap:0.5rem;margin-top:2rem;">
+        {%- if paginate.previous -%}<a class="btn" href="{{ paginate.previous.url }}">← Prev</a>{%- endif -%}
+        {%- if paginate.next -%}<a class="btn btn--primary" href="{{ paginate.next.url }}">More →</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+{% schema %}
+{ "name": "Collection", "settings": [] }
+{% endschema %}

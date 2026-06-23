@@ -1,0 +1,11 @@
+{
+  "general": {
+    "search": { "placeholder": "Search tees…" }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to bag",
+      "sold_out": "Sold out"
+    }
+  }
+}

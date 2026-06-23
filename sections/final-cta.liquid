@@ -1,0 +1,22 @@
+<section class="section final">
+  <h2 class="final__title">
+    <span class="mask"><span class="mask-inner">{{ section.settings.line1 }}</span></span>
+    <span class="mask"><span class="mask-inner final__hollow" style="transition-delay:.08s">{{ section.settings.line2 }}</span></span>
+  </h2>
+  <p class="final__lead reveal">{{ section.settings.lead }}</p>
+  <a href="{{ section.settings.btn_url | default: routes.all_products_collection_url }}" class="final__btn reveal">{{ section.settings.btn_label }}</a>
+</section>
+
+{% schema %}
+{
+  "name": "Final CTA",
+  "settings": [
+    { "type": "text", "id": "line1", "label": "Line 1", "default": "STOP SCROLLING." },
+    { "type": "text", "id": "line2", "label": "Line 2 (hollow)", "default": "START WEARING." },
+    { "type": "textarea", "id": "lead", "label": "Lead", "default": "Launch sale live — up to 45% off across every collection. Free shipping & COD across India." },
+    { "type": "text", "id": "btn_label", "label": "Button label", "default": "Shop all tees" },
+    { "type": "url", "id": "btn_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Final CTA" }]
+}
+{% endschema %}

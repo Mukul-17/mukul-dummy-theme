@@ -1,0 +1,6 @@
+# Brand images are intentionally served from the modrn.in CDN + Google Fonts,
+# and hero/marquee images are decorative & CSS-sized — silence those checks.
+RemoteAsset:
+  enabled: false
+ImgWidthAndHeight:
+  enabled: false

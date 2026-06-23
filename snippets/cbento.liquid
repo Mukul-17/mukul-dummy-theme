@@ -1,0 +1,9 @@
+{%- comment -%} params: title, url, image (url string), num, is_hero, tag {%- endcomment -%}
+<a class="cbento {% if is_hero %}cbento--hero{% endif %}" href="{{ url }}" {% if image != blank %}style="background-image:url('{{ image }}')"{% endif %}>
+  <span class="cbento__num">{{ num }}</span>
+  <div class="cbento__body">
+    {%- if is_hero -%}<div class="cbento__label">Hero mindset</div>{%- endif -%}
+    <h3 class="cbento__name">{{ title }}</h3>
+    {%- if is_hero -%}<p class="cbento__tag">"{{ tag | default: 'The one that sticks.' }}"</p><span class="cbento__cta">Explore the drop →</span>{%- endif -%}
+  </div>
+</a>

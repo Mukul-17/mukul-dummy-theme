@@ -1,0 +1,24 @@
+<section class="section">
+  <div class="section__head reveal">
+    <h1 class="section__title">SEARCH</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search__bar" style="margin:0 var(--pad);max-width:560px;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search tees, collections…" autocomplete="off">
+    </form>
+  </div>
+
+  {%- if search.performed -%}
+    <p class="section__lead">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for "{{ search.terms | escape }}"</p>
+    <div class="pgrid">
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}{%- endif -%}
+      {%- else -%}
+        <p class="section__lead">No matches. Try another search.</p>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}

@@ -1,0 +1,32 @@
+<nav class="tabbar" aria-label="Primary">
+  <a class="tab is-active" data-tab="top" href="{{ routes.root_url }}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+    <span>{{ section.settings.label_home | default: 'Home' }}</span>
+  </a>
+  <a class="tab" data-tab="drop" href="{{ section.settings.shop_link | default: routes.all_products_collection_url }}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+    <span>{{ section.settings.label_shop | default: 'Shop' }}</span>
+  </a>
+  <a class="tab" data-tab="search" href="{{ routes.search_url }}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <span>{{ section.settings.label_search | default: 'Search' }}</span>
+  </a>
+  <a class="tab tab--bag" data-tab="bag" href="{{ routes.cart_url }}">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    {%- if cart.item_count > 0 -%}<span class="bag-count">{{ cart.item_count }}</span>{%- endif -%}
+    <span>{{ section.settings.label_bag | default: 'Bag' }}</span>
+  </a>
+</nav>
+
+{% schema %}
+{
+  "name": "Bottom tab bar",
+  "settings": [
+    { "type": "text", "id": "label_home", "label": "Home label", "default": "Home" },
+    { "type": "text", "id": "label_shop", "label": "Shop label", "default": "Shop" },
+    { "type": "url", "id": "shop_link", "label": "Shop link" },
+    { "type": "text", "id": "label_search", "label": "Search label", "default": "Search" },
+    { "type": "text", "id": "label_bag", "label": "Bag label", "default": "Bag" }
+  ]
+}
+{% endschema %}

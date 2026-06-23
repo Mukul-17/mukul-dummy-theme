@@ -1,0 +1,9 @@
+# Files the Shopify CLI watcher should never try to upload
+*.tmp
+*.tmp.*
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+README.md

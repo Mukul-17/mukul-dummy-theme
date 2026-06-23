@@ -1,0 +1,26 @@
+{%- assign menu = linklists[settings.menu_handle] | default: linklists['main-menu'] -%}
+<div class="sheet-root" id="menu-sheet" hidden>
+  <div class="sheet__backdrop" data-close></div>
+  <aside class="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawer__head">
+      <a href="{{ routes.root_url }}" class="drawer__logo-link" data-close>
+        <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" class="drawer__logo" width="120" height="24" />
+      </a>
+      <button class="icon-close" data-close aria-label="Close menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <nav class="drawer__nav">
+      {%- for link in menu.links -%}
+        <a href="{{ link.url }}" data-close><span>{{ link.title }}</span><span class="drawer__idx">{{ forloop.index | prepend: '0' }}</span></a>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}" data-close><span>Shop all</span><span class="drawer__idx">01</span></a>
+        <a href="{{ routes.all_products_collection_url }}" data-close><span>Collections</span><span class="drawer__idx">02</span></a>
+      {%- endfor -%}
+    </nav>
+    <div class="drawer__foot">
+      <div class="drawer__foot-row"><span>Free shipping over</span><strong>₹1,499</strong></div>
+      <div class="drawer__foot-row"><span>Support</span><strong>modrnindia@gmail.com</strong></div>
+    </div>
+  </aside>
+</div>

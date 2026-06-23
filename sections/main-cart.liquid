@@ -1,0 +1,46 @@
+<section class="section cart-page" style="min-height:60vh;">
+  <div class="section__head">
+    <h1 class="section__title">Your bag</h1>
+  </div>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="cart__empty">
+      <p>Your bag is empty.</p>
+      <a class="btn btn--primary" href="{{ routes.all_products_collection_url }}">Shop tees</a>
+    </div>
+  {%- else -%}
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
+      <div class="cart__items" style="overflow:visible;">
+        {%- for item in cart.items -%}
+          <div class="cart__item" style="display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line);">
+            <a href="{{ item.url }}" style="flex:0 0 76px;">
+              <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.product.title | escape }}" width="76" height="95" style="border-radius:10px;object-fit:cover;">
+            </a>
+            <div style="flex:1;">
+              <div class="pcard__name">{{ item.product.title }}</div>
+              <div class="pcard__sub">{{ item.variant.title }}</div>
+              <div class="pcard__price" style="margin-top:0.35rem;"><b>{{ item.final_price | money }}</b></div>
+              <div style="display:flex;align-items:center;gap:1rem;margin-top:0.5rem;">
+                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric" style="width:60px;background:var(--surface);border:1px solid var(--line);color:#fff;border-radius:8px;padding:0.4rem;">
+                <a href="{{ item.url_to_remove }}" style="color:var(--muted);font-size:var(--fs-sm);">Remove</a>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="cart__foot">
+        <div class="cart__subtotal"><span>Subtotal</span><strong>{{ cart.total_price | money }}</strong></div>
+        <div style="display:flex;gap:0.75rem;">
+          <button type="submit" name="update" class="btn" style="flex:0 0 auto;">Update</button>
+          <button type="submit" name="checkout" class="btn btn--primary" style="flex:1;">Checkout</button>
+        </div>
+        <p class="cart__note">Shipping &amp; taxes calculated at checkout · COD available</p>
+      </div>
+    </form>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

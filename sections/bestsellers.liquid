@@ -1,0 +1,35 @@
+{%- assign coll = collections[section.settings.collection] -%}
+{%- if coll == blank or coll.products_count == 0 -%}{%- assign coll = collections.all -%}{%- endif -%}
+<section id="bestsellers" class="section">
+  <div class="section__head reveal">
+    <div class="eyebrow"><span class="eyebrow__num">{{ section.settings.eyebrow_num }}</span><span>{{ section.settings.eyebrow_label }}</span></div>
+    <h2 class="section__title">{{ section.settings.heading }} <span class="t-muted">{{ section.settings.heading_accent }}</span></h2>
+    {%- if section.settings.lead != blank -%}<p class="section__lead">{{ section.settings.lead }}</p>{%- endif -%}
+  </div>
+
+  <div class="pgrid" aria-label="Bestselling products">
+    {%- if coll != blank and coll.products_count > 0 -%}
+      {%- for product in coll.products limit: section.settings.limit -%}
+        {% render 'product-card', product: product, rank: forloop.index %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..4) -%}<article class="pcard"><div class="pcard__media"><span class="pcard__rank">{{ i }}</span></div><div class="pcard__info"><h3 class="pcard__name">Product</h3><div class="pcard__price"><b>₹599</b></div></div></article>{%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bestsellers",
+  "settings": [
+    { "type": "text", "id": "eyebrow_num", "label": "Eyebrow symbol", "default": "★" },
+    { "type": "text", "id": "eyebrow_label", "label": "Eyebrow label", "default": "Bestsellers" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "MOST" },
+    { "type": "text", "id": "heading_accent", "label": "Heading accent (muted)", "default": "loved." },
+    { "type": "textarea", "id": "lead", "label": "Sub text", "default": "The pieces India keeps reordering — ranked by what's flying out fastest." },
+    { "type": "collection", "id": "collection", "label": "Collection to show" },
+    { "type": "range", "id": "limit", "label": "Max products", "min": 2, "max": 8, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Bestsellers" }]
+}
+{% endschema %}

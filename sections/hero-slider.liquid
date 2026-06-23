@@ -1,0 +1,59 @@
+<section class="bn" id="bnSlider" aria-label="Featured offers">
+
+  {%- for block in section.blocks -%}
+    {%- if block.settings.image != blank -%}{%- assign bg = block.settings.image | image_url: width: 1600 -%}{%- else -%}{%- assign bg = block.settings.image_url -%}{%- endif -%}
+    <section class="slide eslide {% if block.settings.align == 'center' %}is-center{% endif %} {% if forloop.first %}on{% endif %}" data-dur="{{ block.settings.duration | default: 7 | times: 1000 }}" {{ block.shopify_attributes }}>
+      {%- if bg -%}<div class="ebg" style="background-image:url('{{ bg }}')"></div>{%- endif -%}
+      <div class="etint"></div>
+      <div class="ein">
+        {%- if block.settings.eyebrow != blank -%}<span class="kick" data-an="1">{{ block.settings.eyebrow }}</span>{%- endif -%}
+        <h1 data-an="2">{{ block.settings.heading }}{% if block.settings.heading_em != blank %} <em>{{ block.settings.heading_em }}</em>{% endif %}</h1>
+        {%- if block.settings.subtext != blank -%}<p class="sub" data-an="3">{{ block.settings.subtext }}</p>{%- endif -%}
+        {%- if block.settings.btn_label != blank -%}
+          <div class="cta-wrap late"><a class="sbtn {{ block.settings.btn_style | default: 'w' }}" href="{{ block.settings.btn_link | default: routes.all_products_collection_url }}">{{ block.settings.btn_label }} →</a></div>
+        {%- endif -%}
+      </div>
+    </section>
+  {%- endfor -%}
+
+  <div class="ctrl" id="bnSegs">
+    {%- for block in section.blocks -%}<span class="seg"><i></i></span>{%- endfor -%}
+  </div>
+  <div class="tap l" id="bnTapL" aria-label="Previous"></div>
+  <div class="tap r" id="bnTapR" aria-label="Next"></div>
+  <div class="arrows">
+    <button id="bnPrev" aria-label="Previous">←</button>
+    <button id="bnNext" aria-label="Next">→</button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero slider",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Background image (upload)" },
+        { "type": "text", "id": "image_url", "label": "…or image URL", "info": "Used only if no image is uploaded above." },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow (small label)" },
+        { "type": "text", "id": "heading", "label": "Headline" },
+        { "type": "text", "id": "heading_em", "label": "Headline accent word", "info": "Shown in italic coral after the headline." },
+        { "type": "textarea", "id": "subtext", "label": "Sub text" },
+        { "type": "text", "id": "btn_label", "label": "Button text" },
+        { "type": "url", "id": "btn_link", "label": "Button link" },
+        { "type": "select", "id": "btn_style", "label": "Button style", "options": [
+          { "value": "w", "label": "White" }, { "value": "r", "label": "Coral" }, { "value": "o", "label": "Outline" }
+        ], "default": "w" },
+        { "type": "select", "id": "align", "label": "Text position", "options": [
+          { "value": "bottom", "label": "Bottom-left" }, { "value": "center", "label": "Center" }
+        ], "default": "bottom" },
+        { "type": "range", "id": "duration", "label": "Seconds on screen", "min": 4, "max": 10, "step": 1, "unit": "s", "default": 7 }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Hero slider" }]
+}
+{% endschema %}

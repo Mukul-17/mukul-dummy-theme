@@ -1,0 +1,59 @@
+<footer class="footer">
+  <div class="footer__brand">
+    {%- if section.settings.logo != blank -%}
+      <img src="{{ section.settings.logo | image_url: width: 360 }}" alt="{{ shop.name }}" width="120" height="30" />
+    {%- else -%}
+      <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" width="120" height="30" />
+    {%- endif -%}
+    <p>{{ section.settings.blurb }}</p>
+    <div class="footer__social">
+      {%- assign ig_link = section.settings.instagram | default: 'https://www.instagram.com/modrnindia' -%}
+      <a href="{{ ig_link }}" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.5-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.45 2.9h-2.34V22c4.78-.78 8.44-4.93 8.44-9.94Z"/></svg></a>{%- endif -%}
+      {%- if section.settings.email != blank -%}<a href="mailto:{{ section.settings.email }}" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>{%- endif -%}
+    </div>
+  </div>
+
+  <div class="footer__links">
+    {%- if section.settings.menu_1 != blank -%}
+      <div class="footer__col">
+        <div class="footer__col-title">{{ section.settings.menu_1_title }}</div>
+        {%- for link in linklists[section.settings.menu_1].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- if section.settings.menu_2 != blank -%}
+      <div class="footer__col">
+        <div class="footer__col-title">{{ section.settings.menu_2_title }}</div>
+        {%- for link in linklists[section.settings.menu_2].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="footer__giant" aria-hidden="true">{{ section.settings.giant_text | default: shop.name }}</div>
+
+  <div class="footer__bottom">
+    <span>© {{ 'now' | date: '%Y' }} {{ shop.name }} · <span class="t-accent">Made in India</span></span>
+    <span class="footer__bottom-links">
+      {%- for link in linklists[section.settings.menu_legal].links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+    </span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "textarea", "id": "blurb", "label": "Blurb", "default": "Minimal. Bold. Intentional. Premium oversized essentials made in India for those who move with purpose." },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "text", "id": "email", "label": "Email", "default": "modrnindia@gmail.com" },
+    { "type": "text", "id": "menu_1_title", "label": "Column 1 title", "default": "Shop" },
+    { "type": "link_list", "id": "menu_1", "label": "Column 1 menu" },
+    { "type": "text", "id": "menu_2_title", "label": "Column 2 title", "default": "Help" },
+    { "type": "link_list", "id": "menu_2", "label": "Column 2 menu" },
+    { "type": "text", "id": "giant_text", "label": "Giant wordmark", "default": "MODRN" },
+    { "type": "link_list", "id": "menu_legal", "label": "Bottom (legal) menu" }
+  ]
+}
+{% endschema %}

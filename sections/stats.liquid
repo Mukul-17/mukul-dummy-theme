@@ -1,0 +1,33 @@
+<section class="section section--lines stats">
+  <div class="stats__primary reveal">
+    <div class="stats__big"><span data-counter data-to="{{ section.settings.big_num }}">0</span><span class="t-accent">{{ section.settings.big_suffix }}</span></div>
+    <div class="stats__cap">{{ section.settings.big_cap }}</div>
+  </div>
+  <div class="stats__row">
+    <div class="reveal stat"><div class="stat__num">{{ section.settings.s1_num }}<span class="t-accent">{{ section.settings.s1_accent }}</span>{{ section.settings.s1_after }}</div><div class="stat__lbl">{{ section.settings.s1_lbl }}</div></div>
+    <div class="reveal stat"><div class="stat__num"><span data-counter data-to="{{ section.settings.s2_num }}">0</span><span class="t-accent">{{ section.settings.s2_accent }}</span></div><div class="stat__lbl">{{ section.settings.s2_lbl }}</div></div>
+    <div class="reveal stat"><div class="stat__num"><span data-counter data-to="{{ section.settings.s3_num }}">0</span><span class="t-accent">{{ section.settings.s3_accent }}</span></div><div class="stat__lbl">{{ section.settings.s3_lbl }}</div></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Stats",
+  "settings": [
+    { "type": "number", "id": "big_num", "label": "Big number", "default": 28 },
+    { "type": "text", "id": "big_suffix", "label": "Big suffix", "default": "K+" },
+    { "type": "text", "id": "big_cap", "label": "Big caption", "default": "Tees shipped across India" },
+    { "type": "text", "id": "s1_num", "label": "Stat 1 number", "default": "4" },
+    { "type": "text", "id": "s1_accent", "label": "Stat 1 accent", "default": "." },
+    { "type": "text", "id": "s1_after", "label": "Stat 1 after-accent", "default": "9" },
+    { "type": "text", "id": "s1_lbl", "label": "Stat 1 label", "default": "Rating" },
+    { "type": "number", "id": "s2_num", "label": "Stat 2 number", "default": 72 },
+    { "type": "text", "id": "s2_accent", "label": "Stat 2 accent", "default": "h" },
+    { "type": "text", "id": "s2_lbl", "label": "Stat 2 label", "default": "Avg. delivery" },
+    { "type": "number", "id": "s3_num", "label": "Stat 3 number", "default": 14 },
+    { "type": "text", "id": "s3_accent", "label": "Stat 3 accent", "default": "+" },
+    { "type": "text", "id": "s3_lbl", "label": "Stat 3 label", "default": "Cities" }
+  ],
+  "presets": [{ "name": "Stats" }]
+}
+{% endschema %}

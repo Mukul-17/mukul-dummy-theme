@@ -1,0 +1,71 @@
+{%- capture star_svg -%}<svg width="15" height="15" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>{%- endcapture -%}
+
+<section class="section reviews">
+  <div class="section__head reveal">
+    <div class="eyebrow"><span class="eyebrow__num">{{ section.settings.eyebrow_num }}</span><span>{{ section.settings.eyebrow_label }}</span></div>
+    <div class="reviews__rating">
+      <div class="reviews__stars" id="review-stars">{{ star_svg }}{{ star_svg }}{{ star_svg }}{{ star_svg }}{{ star_svg }}</div>
+      <span class="reviews__score">{{ section.settings.score }}</span>
+      <span class="reviews__count">{{ section.settings.count_text }}</span>
+    </div>
+  </div>
+  <div class="reviews__viewport">
+    <div class="reviews__track" id="reviews-track">
+      {%- for block in section.blocks -%}
+        {%- assign empt = 5 | minus: block.settings.rating -%}
+        <div class="review" {{ block.shopify_attributes }}>
+          <div class="review__top">
+            <div class="review__avatar">{{ block.settings.name | slice: 0, 2 | upcase }}</div>
+            <div class="review__who">
+              <b>{{ block.settings.name }}</b>
+              <span>{{ block.settings.city }} · {{ block.settings.time }}</span>
+            </div>
+            <span class="review__vfy">✓ Verified buyer</span>
+          </div>
+          <div class="review__stars" aria-label="{{ block.settings.rating }} out of 5 stars">{% for i in (1..block.settings.rating) %}★{% endfor %}{% if empt > 0 %}<span class="empty">{% for i in (1..empt) %}☆{% endfor %}</span>{% endif %}</div>
+          <p class="review__quote">"{{ block.settings.quote }}"</p>
+          <span class="review__bought"><i></i>Bought: {{ block.settings.piece }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="reviews__dots" id="review-dots" aria-hidden="true">
+    {%- for block in section.blocks -%}<span class="rail__dot {% if forloop.first %}is-active{% endif %}"></span>{%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [
+    { "type": "text", "id": "eyebrow_num", "label": "Eyebrow number", "default": "[ 06 ]" },
+    { "type": "text", "id": "eyebrow_label", "label": "Eyebrow label", "default": "Customer voices" },
+    { "type": "text", "id": "score", "label": "Score", "default": "4.9" },
+    { "type": "text", "id": "count_text", "label": "Count text", "default": "2,400+ reviews" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "The 240 GSM is no joke. Heaviest tee in my wardrobe." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Aarav S." },
+        { "type": "text", "id": "city", "label": "City", "default": "Bangalore" },
+        { "type": "text", "id": "piece", "label": "Product bought", "default": "Built To Burn Fuel" },
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "text", "id": "time", "label": "Time ago", "default": "2 weeks ago" }
+      ]
+    }
+  ],
+  "max_blocks": 12,
+  "presets": [{
+    "name": "Reviews",
+    "blocks": [
+      { "type": "review", "settings": { "quote": "The 240 GSM is no joke. Heaviest tee in my wardrobe. Cut is perfect — oversized but still clean.", "name": "Aarav S.", "city": "Bangalore", "piece": "Built To Burn Fuel", "rating": 5, "time": "2 weeks ago" } },
+      { "type": "review", "settings": { "quote": "Finally a brand that gets minimal right. Not boring — confident. Wearing 'Focus' on repeat.", "name": "Ishita K.", "city": "Mumbai", "piece": "Focus", "rating": 5, "time": "1 month ago" } },
+      { "type": "review", "settings": { "quote": "I've spent ₹3k on tees that feel cheaper than this ₹599 one. MODRN is doing something right.", "name": "Tanvi R.", "city": "Pune", "piece": "Unstoppable", "rating": 5, "time": "3 weeks ago" } },
+      { "type": "review", "settings": { "quote": "Packaging felt like unboxing a phone. Fit is exactly what was shown. Already ordered two more.", "name": "Rohan M.", "city": "Delhi", "piece": "Who Needs Roads", "rating": 4, "time": "1 week ago" } }
+    ]
+  }]
+}
+{% endschema %}

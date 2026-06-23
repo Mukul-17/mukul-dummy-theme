@@ -1,0 +1,33 @@
+<header id="appbar" class="appbar">
+  <button class="appbar__icon" id="menu-open" aria-label="Open menu">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="3" x2="21" y1="7" y2="7"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="15" y1="17" y2="17"/></svg>
+  </button>
+
+  <a href="{{ routes.root_url }}" class="appbar__logo" aria-label="{{ shop.name }}">
+    {%- if section.settings.logo != blank -%}
+      <img src="{{ section.settings.logo | image_url: width: 360 }}" alt="{{ shop.name }}" width="120" height="30">
+    {%- else -%}
+      <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" width="120" height="30">
+    {%- endif -%}
+  </a>
+
+  <div class="appbar__actions">
+    <a class="appbar__icon" href="{{ routes.search_url }}" id="search-open" aria-label="Search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    </a>
+    <a class="appbar__icon appbar__bag" href="{{ routes.cart_url }}" id="bag-open" aria-label="Open bag">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      <span class="bag-count" id="bag-count"{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+    </a>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Upload your MODRN logo. Leave empty to show the store name as text." },
+    { "type": "link_list", "id": "menu", "label": "Menu (drawer)", "info": "Pick the navigation menu used by the hamburger drawer." }
+  ]
+}
+{% endschema %}

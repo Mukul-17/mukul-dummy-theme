@@ -1,0 +1,60 @@
+{%- comment -%}
+  100% dynamic. Shows collections from Admin only:
+  - If specific collections are picked in the editor -> show those.
+  - Otherwise -> show every collection in the store (excluding the default Home page).
+  Nothing is hardcoded. Add a collection in Admin -> Products -> Collections and it appears here.
+{%- endcomment -%}
+{%- assign list = section.settings.collections -%}
+
+<section id="collections" class="section">
+  <div class="section__head reveal">
+    <div class="eyebrow"><span class="eyebrow__num">{{ section.settings.eyebrow_num }}</span><span>{{ section.settings.eyebrow_label }}</span></div>
+    <h2 class="section__title">{{ section.settings.heading }} <span class="t-muted">{{ section.settings.heading_accent }}</span></h2>
+    {%- if section.settings.lead != blank -%}<p class="section__lead">{{ section.settings.lead }}</p>{%- endif -%}
+  </div>
+
+  <div class="coll-bento" aria-label="Collections">
+    {%- if list != blank and list.count > 0 -%}
+      {%- for c in list limit: 4 -%}
+        {%- assign img = c.featured_image | default: c.image -%}
+        {%- if img == blank and c.products.first -%}{%- assign img = c.products.first.featured_image -%}{%- endif -%}
+        {% render 'cbento', title: c.title, url: c.url, image: img | image_url: width: 2000, num: forloop.index | prepend: '0', is_hero: forloop.first, tag: c.description | strip_html | truncatewords: 8 %}
+      {%- endfor -%}
+    {%- else -%}
+      {%- assign shown = 0 -%}
+      {%- for c in collections -%}
+        {%- unless c.handle == 'frontpage' -%}
+          {%- if shown < 4 -%}
+            {%- assign shown = shown | plus: 1 -%}
+            {%- assign img = c.featured_image | default: c.image -%}
+            {%- if img == blank and c.products.first -%}{%- assign img = c.products.first.featured_image -%}{%- endif -%}
+            {% render 'cbento', title: c.title, url: c.url, image: img | image_url: width: 2000, num: shown | prepend: '0', is_hero: shown == 1, tag: c.description | strip_html | truncatewords: 8 %}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    <a class="cbento cbento--explore" href="{{ routes.all_products_collection_url }}">
+      <div class="cbento__ex-top">+ all mindsets</div>
+      <div>
+        <div class="cbento__ex-big">EXPLORE THE<br><span class="t-muted">full archive</span></div>
+        <div class="cbento__ex-shop">Shop all →</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections bento",
+  "settings": [
+    { "type": "text", "id": "eyebrow_num", "label": "Eyebrow number", "default": "[ 02 ]" },
+    { "type": "text", "id": "eyebrow_label", "label": "Eyebrow label", "default": "Collections" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "EVERY TEE IS" },
+    { "type": "text", "id": "heading_accent", "label": "Heading accent (muted)", "default": "a mindset." },
+    { "type": "textarea", "id": "lead", "label": "Sub text", "default": "Every drop is built around a feeling. Pick the one that matches your week." },
+    { "type": "collection_list", "id": "collections", "label": "Collections to feature (leave empty = show all)", "limit": 4 }
+  ],
+  "presets": [{ "name": "Collections bento" }]
+}
+{% endschema %}

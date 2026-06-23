@@ -1,0 +1,24 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "MODRN Mobile",
+    "theme_version": "0.1.0",
+    "theme_author": "MODRN",
+    "theme_documentation_url": "https://shopify.dev",
+    "theme_support_url": "https://shopify.dev"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Defaults to the MODRN logo." },
+      { "type": "text", "id": "seo_title", "label": "Homepage browser title", "default": "MODRN" }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "accent", "label": "Accent (coral)", "default": "#e03e1f" },
+      { "type": "color", "id": "bg", "label": "Background", "default": "#060606" }
+    ]
+  }
+]

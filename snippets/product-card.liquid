@@ -1,0 +1,46 @@
+{%- comment -%}
+  Reusable product card (Liquid version of the old cardHTML()).
+  Usage: {% render 'product-card', product: product, rank: forloop.index %}
+{%- endcomment -%}
+{%- assign on_sale = false -%}
+{%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
+
+<article class="pcard" data-card="{{ product.handle }}" data-product-handle="{{ product.handle }}">
+  <div class="pcard__media">
+    {%- if product.featured_image -%}
+      <img class="pcard__img pcard__img--main" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000">
+    {%- endif -%}
+    {%- if product.images[1] -%}
+      <img class="pcard__img pcard__img--alt" src="{{ product.images[1] | image_url: width: 1200 }}" alt="" loading="lazy" decoding="async" width="800" height="1000">
+    {%- endif -%}
+
+    <a class="pcard__hit" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
+
+    {%- if rank -%}
+      <span class="pcard__rank">{{ rank }}</span>
+    {%- elsif product.metafields.custom.badge != blank -%}
+      <span class="pcard__badge">{{ product.metafields.custom.badge }}</span>
+    {%- endif -%}
+
+    {%- if on_sale -%}
+      {%- assign pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
+      <span class="pcard__disc">−{{ pct }}%</span>
+    {%- endif -%}
+
+    {%- unless product.available -%}<span class="pcard__badge" style="background:#444;color:#fff;">Sold out</span>{%- endunless -%}
+
+    <button class="pcard__wish" data-wish="{{ product.handle }}" aria-label="Add to wishlist"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+    <a class="pcard__add" href="{{ product.url }}" aria-label="View {{ product.title | escape }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg></a>
+  </div>
+
+  <div class="pcard__info">
+    <h3 class="pcard__name">{{ product.title }}</h3>
+    {%- if product.metafields.custom.gsm != blank -%}
+      <div class="pcard__sub">{{ product.metafields.custom.gsm }} GSM · Oversized</div>
+    {%- endif -%}
+    <div class="pcard__price">
+      <b>{{ product.price | money }}</b>
+      {%- if on_sale -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+    </div>
+  </div>
+</article>
