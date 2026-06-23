@@ -1282,16 +1282,17 @@ body.scrolled-past .appbar { top: 0; }
 .a-pinwrap { position: relative; height: 300vh; }
 .a-pin {
   position: sticky; top: 0; min-height: 100svh;
-  display: grid; grid-template-rows: auto auto; align-content: center; gap: 0.4rem;
-  padding: calc(var(--appbar-h) + 0.75rem) var(--pad) calc(var(--tabbar-h) + 0.75rem);
+  display: grid; grid-template-rows: auto auto; align-content: center; gap: 0.25rem;
+  padding: calc(var(--appbar-h) + 0.4rem) var(--pad) calc(var(--tabbar-h) + 0.4rem);
   overflow: hidden;
 }
 .anatomy__diagram { display: grid; place-items: center; padding: 0; }
-.a-pin .tee-svg { width: auto; height: clamp(110px, 19vh, 190px); overflow: visible; }
+.a-pin .tee-svg { width: auto; height: clamp(200px, 40vh, 380px); overflow: visible; }
 .a-pin .anatomy__steps { padding: 0; width: 100%; max-width: 600px; margin: 0 auto; display: block; }
-.a-pin .astep { padding: 0.5rem 0; }
-.a-pin .astep__title { font-size: clamp(1rem, 4.4vw, 1.3rem); margin: 0.2rem 0 0.3rem; }
-.a-pin .astep__copy { font-size: 0.8rem; line-height: 1.45; }
+.a-pin .astep { padding: 0.35rem 0; }
+.a-pin .astep__num { font-size: 10px; }
+.a-pin .astep__title { font-size: clamp(0.95rem, 4vw, 1.15rem); margin: 0.1rem 0 0.18rem; line-height: 1; }
+.a-pin .astep__copy { font-size: 0.72rem; line-height: 1.35; }
 .a-progress { height: 2px; background: var(--line); border-radius: 2px; margin-top: 0.6rem; overflow: hidden; }
 .a-progress i { display: block; height: 100%; width: 0; background: var(--accent); }
 @media (min-width: 720px) {
