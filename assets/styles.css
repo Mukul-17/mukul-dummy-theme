@@ -1276,9 +1276,15 @@ body.scrolled-past .appbar { top: 0; }
    ========================================================= */
 .anatomy { position: relative; }
 
-/* tee diagram (normal flow) — draws + hotspots light up when it scrolls in */
-.anatomy__diagram { display: grid; place-items: center; padding: 1.25rem var(--pad) 2.25rem; }
-.tee-svg { width: min(66vw, 300px); height: auto; overflow: visible; }
+/* tee diagram — sticks to the top while the steps scroll, so the marked point
+   on the tee stays visible as you read 01->04. Opaque bg occludes scrolling text. */
+.anatomy__diagram {
+  display: grid; place-items: center;
+  padding: 0.75rem var(--pad) 1rem;
+  position: sticky; top: calc(var(--appbar-h) + 6px); z-index: 5;
+  background: var(--bg);
+}
+.tee-svg { width: min(46vw, 210px); height: auto; overflow: visible; }
 .tee-body {
   fill: rgba(255, 255, 255, 0.03);
   stroke: rgba(255, 255, 255, 0.9); stroke-width: 2.5;

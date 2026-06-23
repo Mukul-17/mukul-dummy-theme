@@ -178,14 +178,15 @@
     }, { threshold: 0.2 });
     io.observe(diagram || sec);
 
+    // Light point N when step N has scrolled up into the reading zone (just below
+    // the sticky tee). Cumulative + current pulses; clears in reverse on scroll up.
     let activeCount = -1;
     const update = () => {
-      const r = sec.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      const span = r.height + vh * 0.5;
-      const travelled = vh * 0.85 - r.top;
-      const p = Math.max(0, Math.min(travelled / span, 1));
-      const count = Math.round(p * spots.length);
+      const line = vh * 0.62;
+      let count = 0;
+      steps.forEach((st) => { if (st.getBoundingClientRect().top < line) count++; });
+      count = Math.min(count, spots.length);
       if (count === activeCount) return;
       activeCount = count;
       spots.forEach((s, i) => { const on = i < count; s.classList.toggle("on", on); s.classList.toggle("current", on && i === count - 1); });
