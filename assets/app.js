@@ -139,14 +139,7 @@
     if (tapR) tapR.addEventListener("click", () => go(i + 1));
     if (tapL) tapL.addEventListener("click", () => go(i - 1));
 
-    let hold;
-    [tapL, tapR].forEach((el) => {
-      if (!el) return;
-      el.addEventListener("touchstart", () => { hold = setTimeout(() => (paused = true), 220); }, { passive: true });
-      el.addEventListener("touchend", () => { clearTimeout(hold); if (paused) { paused = false; t0 = performance.now() - elapsed; } }, { passive: true });
-    });
-    slider.addEventListener("mouseenter", () => (paused = true));
-    slider.addEventListener("mouseleave", () => { paused = false; t0 = performance.now() - elapsed; });
+    // (auto-advance never pauses on hover or tap-hold — keeps running continuously)
 
     let visible = true;
     new IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible) t0 = performance.now() - elapsed; }, { threshold: 0.05 }).observe(slider);
