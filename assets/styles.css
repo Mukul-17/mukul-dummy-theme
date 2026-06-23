@@ -1276,15 +1276,31 @@ body.scrolled-past .appbar { top: 0; }
    ========================================================= */
 .anatomy { position: relative; }
 
-/* tee diagram — sticks to the top while the steps scroll, so the marked point
-   on the tee stays visible as you read 01->04. Opaque bg occludes scrolling text. */
-.anatomy__diagram {
-  display: grid; place-items: center;
-  padding: 0.75rem var(--pad) 1rem;
-  position: sticky; top: calc(var(--appbar-h) + 6px); z-index: 5;
-  background: var(--bg);
+/* Anatomy = pinned scrollytelling. A tall track (.a-pinwrap) holds a sticky
+   full-screen stage (.a-pin) with the tee + steps TOGETHER, so nothing scrolls
+   behind the tee. JS scrubs the active point 01->04 by scroll progress. */
+.a-pinwrap { position: relative; height: 300vh; }
+.a-pin {
+  position: sticky; top: 0; min-height: 100svh;
+  display: grid; grid-template-rows: auto auto; align-content: center; gap: 0.4rem;
+  padding: calc(var(--appbar-h) + 0.75rem) var(--pad) calc(var(--tabbar-h) + 0.75rem);
+  overflow: hidden;
 }
-.tee-svg { width: min(46vw, 210px); height: auto; overflow: visible; }
+.anatomy__diagram { display: grid; place-items: center; padding: 0; }
+.a-pin .tee-svg { width: auto; height: clamp(110px, 19vh, 190px); overflow: visible; }
+.a-pin .anatomy__steps { padding: 0; width: 100%; max-width: 600px; margin: 0 auto; display: block; }
+.a-pin .astep { padding: 0.5rem 0; }
+.a-pin .astep__title { font-size: clamp(1rem, 4.4vw, 1.3rem); margin: 0.2rem 0 0.3rem; }
+.a-pin .astep__copy { font-size: 0.8rem; line-height: 1.45; }
+.a-progress { height: 2px; background: var(--line); border-radius: 2px; margin-top: 0.6rem; overflow: hidden; }
+.a-progress i { display: block; height: 100%; width: 0; background: var(--accent); }
+@media (min-width: 720px) {
+  .a-pinwrap { height: 280vh; }
+  .a-pin { grid-template-rows: none; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 3rem; max-width: 1080px; margin: 0 auto; }
+  .a-pin .tee-svg { width: auto; height: min(46vh, 440px); }
+  .a-pin .astep__title { font-size: 1.5rem; }
+  .a-pin .astep__copy { font-size: var(--fs-sm); }
+}
 .tee-body {
   fill: rgba(255, 255, 255, 0.03);
   stroke: rgba(255, 255, 255, 0.9); stroke-width: 2.5;

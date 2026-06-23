@@ -170,27 +170,30 @@
   function initAnatomy() {
     const sec = $("#anatomy");
     if (!sec) return;
-    const diagram = $(".anatomy__diagram", sec);
+    const pinwrap = $(".a-pinwrap", sec);
     const spots = $$(".hotspot", sec);
     const steps = $$(".astep", sec);
+    const prog = $(".a-progress i", sec);
     const io = new IntersectionObserver((es, o) => {
       es.forEach((e) => { if (e.isIntersecting) { o.disconnect(); sec.classList.add("is-drawn"); } });
-    }, { threshold: 0.2 });
-    io.observe(diagram || sec);
+    }, { threshold: 0.15 });
+    io.observe(pinwrap || sec);
 
-    // Light point N when step N has scrolled up into the reading zone (just below
-    // the sticky tee). Cumulative + current pulses; clears in reverse on scroll up.
-    let activeCount = -1;
+    // Pinned scrollytelling: progress through the tall .a-pinwrap track maps to the
+    // active point. Points/steps with index <= idx light up; reverse clears going up.
+    let lastIdx = -2;
     const update = () => {
+      if (!pinwrap) return;
+      const r = pinwrap.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      const line = vh * 0.62;
-      let count = 0;
-      steps.forEach((st) => { if (st.getBoundingClientRect().top < line) count++; });
-      count = Math.min(count, spots.length);
-      if (count === activeCount) return;
-      activeCount = count;
-      spots.forEach((s, i) => { const on = i < count; s.classList.toggle("on", on); s.classList.toggle("current", on && i === count - 1); });
-      steps.forEach((st, i) => st.classList.toggle("is-active", i < count));
+      const total = r.height - vh;
+      const p = total > 0 ? Math.min(Math.max(-r.top / total, 0), 1) : 0;
+      if (prog) prog.style.width = (p * 100) + "%";
+      const idx = Math.min(Math.floor(p * spots.length), spots.length - 1);
+      if (idx === lastIdx) return;
+      lastIdx = idx;
+      spots.forEach((s) => { const i = +s.dataset.i; const on = i <= idx; s.classList.toggle("on", on); s.classList.toggle("current", i === idx); });
+      steps.forEach((s) => s.classList.toggle("is-active", +s.dataset.i <= idx));
     };
     let ticking = false;
     const onScroll = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { update(); ticking = false; }); };

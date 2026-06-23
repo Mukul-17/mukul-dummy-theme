@@ -5,6 +5,8 @@
     {%- if section.settings.lead != blank -%}<p class="section__lead">{{ section.settings.lead }}</p>{%- endif -%}
   </div>
 
+  <div class="a-pinwrap">
+   <div class="a-pin">
   <div class="anatomy__diagram reveal">
     <svg class="tee-svg" viewBox="0 0 520 560" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram of an oversized tee with construction details">
       <path class="tee-body" d="M170 90 C195 60 325 60 350 90 L470 150 L440 235 L385 210 L385 500 C385 515 135 515 135 500 L135 210 L80 235 L50 150 Z"/>
@@ -44,6 +46,9 @@
         <p class="astep__copy">{{ block.settings.copy }}</p>
       </div>
     {%- endfor -%}
+    <div class="a-progress" aria-hidden="true"><i></i></div>
+  </div>
+   </div>
   </div>
 </section>
 
