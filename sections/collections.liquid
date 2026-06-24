@@ -23,7 +23,8 @@
       {%- for c in collections -%}
         {%- unless c.handle == 'frontpage' -%}
           {%- assign cimg = c.featured_image | default: c.image -%}
-          <button type="button" class="chip" data-cat="{{ c.handle }}" data-label="{{ c.title | escape }}" style="--rot:{{ rots[forloop.index0 | modulo: 6] }}">
+          {%- assign ri = forloop.index0 | modulo: 6 -%}
+          <button type="button" class="chip" data-cat="{{ c.handle }}" data-label="{{ c.title | escape }}" style="--rot:{{ rots[ri] }}">
             <span class="tee">
               <span class="collar"></span>
               {%- if cimg -%}<img class="tee-img" src="{{ cimg | image_url: width: 120 }}" alt="" width="40" height="40">{%- else -%}<span class="tee-ico">{{ c.title | slice: 0 | upcase }}</span>{%- endif -%}
