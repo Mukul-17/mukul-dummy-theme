@@ -1,9 +1,9 @@
 <footer class="footer">
   <div class="footer__brand">
     {%- if section.settings.logo != blank -%}
-      <img src="{{ section.settings.logo | image_url: width: 360 }}" alt="{{ shop.name }}" width="120" height="30" />
+      <img class="footer__logo-img{% if section.settings.invert_logo %} is-inverted{% endif %}" src="{{ section.settings.logo | image_url: width: 480 }}" alt="{{ shop.name }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" style="--flogo-h:{{ section.settings.logo_height | default: 26 }}px" />
     {%- else -%}
-      <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" width="120" height="30" />
+      <img class="footer__logo-img is-default" src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" width="120" height="26" />
     {%- endif -%}
     <p>{{ section.settings.blurb }}</p>
     <div class="footer__social">
@@ -43,7 +43,9 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "A white/transparent PNG works best on the dark footer. Empty = default MODRN logo." },
+    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 20, "max": 56, "step": 2, "unit": "px", "default": 26 },
+    { "type": "checkbox", "id": "invert_logo", "label": "Invert logo colour", "info": "Turn on if your logo is dark and hard to see on the dark footer.", "default": false },
     { "type": "textarea", "id": "blurb", "label": "Blurb", "default": "Minimal. Bold. Intentional. Premium oversized essentials made in India for those who move with purpose." },
     { "type": "url", "id": "instagram", "label": "Instagram URL" },
     { "type": "url", "id": "facebook", "label": "Facebook URL" },
