@@ -11,6 +11,16 @@
     {%- endif -%}
   </a>
 
+  {%- comment -%} Inline nav: hidden on mobile (CSS), shown as a top nav on desktop. Same menu picker stays Admin-editable. {%- endcomment -%}
+  {%- assign topnav = section.settings.menu | default: linklists['main-menu'] -%}
+  {%- if topnav.links.size > 0 -%}
+    <nav class="appbar__nav" aria-label="Primary">
+      {%- for link in topnav.links -%}
+        <a href="{{ link.url }}" class="appbar__navlink{% if link.active or link.child_active %} is-active{% endif %}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+
   <div class="appbar__actions">
     <a class="appbar__icon" href="{{ routes.search_url }}" id="search-open" aria-label="Search">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>

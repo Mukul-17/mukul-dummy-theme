@@ -41,6 +41,7 @@
   /* Spacing scale */
   --gap: 1rem;
   --pad: 1.25rem;             /* page gutter */
+  --shell: min(1200px, 92vw);  /* desktop content width cap (used only in min-width queries) */
   --section-y: 3.25rem;       /* vertical rhythm between sections */
   --radius: 18px;
   --radius-sm: 12px;
@@ -1688,3 +1689,52 @@ body.scrolled-past .appbar { top: 0; }
   display: grid; place-items: center; pointer-events: none;
 }
 .tile__hit { position: absolute; inset: 0; z-index: 3; }
+
+/* =========================================================
+   DESKTOP REFINEMENTS  (Phase 1 — header / chrome)
+   Everything below is gated behind a min-width query, so the
+   mobile layout (< 900px) is never affected. The only base rule
+   here is `.appbar__nav { display:none }` which keeps the inline
+   nav hidden — and a display:none element doesn't take part in
+   the appbar's flex layout, so mobile spacing is identical.
+   ========================================================= */
+.appbar__nav { display: none; }
+
+@media (min-width: 900px) {
+  :root {
+    --tabbar-h: 1rem;       /* collapse the space the bottom bar reserved */
+  }
+
+  /* --- Header → real inline top nav --- */
+  #menu-open { display: none; }                       /* hamburger retires on desktop */
+  .appbar { padding-inline: var(--pad); }
+
+  .appbar__nav {
+    display: flex; align-items: center;
+    flex: 1; justify-content: center;
+    gap: clamp(1.1rem, 2.4vw, 2.6rem);
+    margin: 0 1.5rem;
+  }
+  .appbar__navlink {
+    position: relative;
+    font-family: var(--mono);
+    font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.74); padding: 0.45rem 0; white-space: nowrap;
+    transition: color 0.2s var(--ease);
+  }
+  .appbar__navlink::after {
+    content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 2px;
+    background: var(--accent); transition: right 0.28s var(--ease);
+  }
+  .appbar__navlink:hover, .appbar__navlink:focus-visible { color: #fff; }
+  .appbar__navlink:hover::after,
+  .appbar__navlink.is-active::after { right: 0; }
+  .appbar__navlink.is-active { color: #fff; }
+
+  /* icons gain a proper hover state (touch had :active only) */
+  .appbar__icon { transition: background 0.2s, transform 0.12s, color 0.2s; }
+  .appbar__icon:hover { background: rgba(255, 255, 255, 0.08); }
+
+  /* --- Bottom tab bar is redundant once the top nav exists --- */
+  .tabbar, .tabbar-spacer { display: none; }
+}
