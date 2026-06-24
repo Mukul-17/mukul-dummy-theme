@@ -1959,20 +1959,20 @@ body.scrolled-past .appbar { top: 0; }
 .gsm-row--them .gsm-bar i { background: rgba(20, 20, 20, 0.25); }
 
 /* =========================================================
-   DESKTOP: transparent header floating over the hero (home only)
-   so the hero stays full-bleed (no cropped heads). The bar turns
-   into the solid light header once you scroll (is-scrolled) or on
-   any non-home page. Mobile is untouched.
+   Transparent header floating over the hero (home only, all widths)
+   so the hero stays full-bleed (no cropped heads). The bar turns into
+   the solid light header once you scroll (is-scrolled) or on any
+   non-home page. Applies to mobile + desktop.
    ========================================================= */
-@media (min-width: 900px) {
-  .appbar.is-home:not(.is-scrolled) {
-    background: transparent;
-    -webkit-backdrop-filter: none; backdrop-filter: none;
-    border-bottom-color: transparent;
-  }
-  .appbar.is-home:not(.is-scrolled) .appbar__icon { color: #fff; }
-  .appbar.is-home:not(.is-scrolled) .appbar__logo img.is-default { filter: brightness(0) invert(1); }
+.appbar.is-home:not(.is-scrolled) {
+  background: transparent;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  border-bottom-color: transparent;
+}
+.appbar.is-home:not(.is-scrolled) .appbar__icon { color: #fff; }
+.appbar.is-home:not(.is-scrolled) .appbar__logo img.is-default { filter: brightness(0) invert(1); }
 
+@media (min-width: 900px) {
   /* Category hanger: spread the tees across the full width on desktop.
      When there are too many to fit, space-between collapses to flex-start
      so the row simply scrolls (packs toward the left) — no left cut-off. */
