@@ -193,9 +193,11 @@ body.scrolled-past .appbar { top: 0; }
 }
 .appbar__icon:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.06); }
 .appbar__logo img {
-  height: 30px; width: auto; object-fit: contain;
-  filter: brightness(0) invert(1);
+  height: var(--logo-h, 30px); width: auto; max-width: 190px; object-fit: contain;
 }
+/* only the built-in default (black wordmark) gets whitened for the dark bar */
+.appbar__logo img.is-default,
+.appbar__logo img.is-inverted { filter: brightness(0) invert(1); }
 .appbar__actions { display: flex; align-items: center; gap: 0.1rem; }
 
 .bag-count {

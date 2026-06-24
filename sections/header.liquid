@@ -3,11 +3,11 @@
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="3" x2="21" y1="7" y2="7"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="15" y1="17" y2="17"/></svg>
   </button>
 
-  <a href="{{ routes.root_url }}" class="appbar__logo" aria-label="{{ shop.name }}">
+  <a href="{{ routes.root_url }}" class="appbar__logo" aria-label="{{ shop.name }}" style="--logo-h:{{ section.settings.logo_height | default: 30 }}px">
     {%- if section.settings.logo != blank -%}
-      <img src="{{ section.settings.logo | image_url: width: 360 }}" alt="{{ shop.name }}" width="120" height="30">
+      <img class="appbar__logo-img{% if section.settings.invert_logo %} is-inverted{% endif %}" src="{{ section.settings.logo | image_url: width: 480 }}" alt="{{ shop.name }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}">
     {%- else -%}
-      <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" width="120" height="30">
+      <img class="appbar__logo-img is-default" src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" width="120" height="30">
     {%- endif -%}
   </a>
 
@@ -26,7 +26,9 @@
 {
   "name": "Header",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Upload your MODRN logo. Leave empty to show the store name as text." },
+    { "type": "image_picker", "id": "logo", "label": "Logo image", "info": "Upload a logo (a white/transparent PNG works best on the dark bar). Leave empty to use the default MODRN logo." },
+    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 20, "max": 48, "step": 2, "unit": "px", "default": 30 },
+    { "type": "checkbox", "id": "invert_logo", "label": "Invert logo colour", "info": "Turn on if your uploaded logo is dark and hard to see on the dark bar.", "default": false },
     { "type": "link_list", "id": "menu", "label": "Menu (drawer)", "info": "Pick the navigation menu used by the hamburger drawer." }
   ]
 }
