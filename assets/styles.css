@@ -1224,15 +1224,10 @@ body.scrolled-past .appbar { top: 0; }
 .drawer__item:active, .drawer__item-link:active { color: var(--accent); padding-left: 0.6rem; }
 .drawer__item:active .drawer__ic, .drawer__item-link:active .drawer__ic { color: var(--accent); }
 .drawer__lbl { line-height: 1.1; }
-/* parent row: label-link on the left, expand arrow on the right */
-.drawer__item--parent { display: flex; align-items: stretch; gap: 0; padding: 0; border-bottom: 1px solid var(--line-soft); }
-.drawer__item--parent .drawer__item-link { flex: 1; border-bottom: 0; }
-.drawer__expand {
-  flex-shrink: 0; width: 48px; display: grid; place-items: center;
-  color: var(--muted); transition: color 0.2s, transform 0.15s;
-}
-.drawer__expand svg { width: 20px; height: 20px; }
-.drawer__expand:active { color: var(--accent); transform: scale(0.88); }
+/* parent row: whole row is a button that opens the sub-panel; arrow sits at the end */
+.drawer__item--parent { width: 100%; text-align: left; }
+.drawer__arrow { width: 20px; height: 20px; margin-left: auto; flex-shrink: 0; color: var(--muted); transition: color 0.2s, transform 0.15s; }
+.drawer__item--parent:active .drawer__arrow { color: var(--accent); transform: translateX(2px); }
 .drawer__foot { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
 .drawer__social {
   height: 42px; width: 42px; border-radius: 50%;
