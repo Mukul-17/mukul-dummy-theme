@@ -371,7 +371,7 @@ body.scrolled-past .appbar { top: 0; }
 .bn1 .ribbon span { display: inline-block; animation: bnRib 16s linear infinite; }
 .bn1 .ribbon.r1 { top: calc(var(--appbar-h) + 6px); rotate: 0deg; } .bn1 .ribbon.r2 { bottom: 8%; rotate: 5deg; }
 .bn1 .top { position: relative; z-index: 2; text-align: center; padding: 11svh 22px 0; }
-.bn1 .script { font-family: 'Caveat', cursive; font-size: clamp(34px,9vw,58px); color: #ffe3da; rotate: -3deg; display: inline-block; margin-bottom: -0.22em; }
+.bn1 .script { font-family: 'Caveat', cursive; font-size: clamp(34px,9vw,58px); color: #ffe3da; display: inline-block; line-height: 1.05; margin-bottom: 0.1em; }
 .bn1 h1 { font-family: var(--display); font-size: clamp(52px,16vw,84px); line-height: .9; text-transform: uppercase; color: #fff; text-shadow: 0 6px 0 rgba(0,0,0,.18); letter-spacing: -.01em; margin: 0; }
 .bn1 .sub { font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: #ffd9cf; margin-top: 12px; }
 .bn1 .spark { position: absolute; font-size: 30px; color: #fff; animation: bnWig 1.8s ease-in-out infinite; z-index: 2; }
