@@ -1954,9 +1954,17 @@ body.scrolled-past .appbar { top: 0; }
 .gsm-row--them .gsm-bar i { background: rgba(20, 20, 20, 0.25); }
 
 /* =========================================================
-   DESKTOP: drop the hero slider below the fixed header
-   (mobile keeps its full-bleed hero — untouched).
+   DESKTOP: transparent header floating over the hero (home only)
+   so the hero stays full-bleed (no cropped heads). The bar turns
+   into the solid light header once you scroll (is-scrolled) or on
+   any non-home page. Mobile is untouched.
    ========================================================= */
 @media (min-width: 900px) {
-  .bn { margin-top: var(--appbar-h); height: calc(100vh - var(--appbar-h)); min-height: 600px; }
+  .appbar.is-home:not(.is-scrolled) {
+    background: transparent;
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    border-bottom-color: transparent;
+  }
+  .appbar.is-home:not(.is-scrolled) .appbar__icon { color: #fff; }
+  .appbar.is-home:not(.is-scrolled) .appbar__logo img.is-default { filter: brightness(0) invert(1); }
 }
