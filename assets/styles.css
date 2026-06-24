@@ -8,22 +8,22 @@
 *::after { box-sizing: border-box; }
 
 :root {
-  /* Palette */
-  --bg: #060606;
-  --bg-soft: #0c0c0d;
-  --surface: #111113;
-  --surface-2: #17171a;
-  --fg: #f5f5f5;
-  --muted: #9a9a9a;
-  --faint: rgba(255, 255, 255, 0.5);
+  /* Palette — LIGHT theme (warm off-white). Buttons/accents stay red. */
+  --bg: #faf9f5;            /* warm off-white page background */
+  --bg-soft: #f2efe6;       /* slightly deeper warm surface (sheets, drawer) */
+  --surface: #ffffff;       /* cards */
+  --surface-2: #f0ece0;     /* deeper card / inset */
+  --fg: #141414;            /* primary ink text */
+  --muted: #6b675e;         /* warm grey secondary text */
+  --faint: rgba(20, 20, 20, 0.45);
   --accent: #e03e1f;
-  --accent-dim: rgba(224, 62, 31, 0.14);
+  --accent-dim: rgba(224, 62, 31, 0.1);
   /* v8 fonts */
   --display: "Archivo Black", "Archivo", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
   --sale: #e03e1f;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-soft: rgba(255, 255, 255, 0.05);
+  --line: rgba(20, 20, 20, 0.12);
+  --line-soft: rgba(20, 20, 20, 0.07);
 
   /* Paper theme (trust / receipt section) */
   --paper: #f4f1ea;
@@ -1807,3 +1807,108 @@ body.scrolled-past .appbar { top: 0; }
   .bcard:hover .bcard__img { transform: scale(1.04); }
   .rail-arrow:hover  { transform: scale(1.08); }
 }
+
+/* =========================================================
+   LIGHT THEME COLOR LAYER
+   The :root palette is already light; this layer re-colors the
+   elements whose colors were hardcoded white/black for the dark
+   theme and now sit on LIGHT surfaces. Image-overlay sections
+   (hero .bn*, spotlight, bestseller cards, social tiles, fabric
+   lens) are intentionally NOT listed — their white text sits over
+   photos and reads fine on any background. Appended last so these
+   win on equal specificity; delete this block to revert to dark.
+   ========================================================= */
+
+/* ---- App bar: always a light translucent header (dark icons/logo) ---- */
+.appbar { background: rgba(250, 249, 245, 0.82); backdrop-filter: blur(10px) saturate(150%); -webkit-backdrop-filter: blur(10px) saturate(150%); border-bottom: 1px solid var(--line); }
+.appbar.is-scrolled { background: rgba(250, 249, 245, 0.92); }
+.appbar__icon { color: var(--fg); }
+.appbar__icon:active { background: rgba(20, 20, 20, 0.06); }
+.appbar__logo img.is-default { filter: brightness(0); }   /* default wordmark = black on light bar */
+
+/* ---- Bottom tab bar (mobile): light glass ---- */
+.tabbar { background: rgba(250, 249, 245, 0.92); }
+
+/* ---- Generic section headings / eyebrows / leads ---- */
+.t-muted { color: rgba(20, 20, 20, 0.3); }
+.section__title { color: var(--fg); }
+.eyebrow { color: rgba(20, 20, 20, 0.5); }
+.section__lead { color: var(--muted); }
+
+/* ---- Buttons / links (kept red where they were the primary CTA) ---- */
+.btn--primary { background: var(--accent); color: #fff; }
+.btn--ghost { background: var(--surface); border: 1px solid var(--line); color: var(--fg); }
+.link-underline { color: var(--fg); }
+.final__btn { background: var(--accent); color: #fff; }
+.final__btn:hover { background: #c5341a; color: #fff; }
+
+/* ---- Marquee strips ---- */
+.marquee__word { color: var(--fg); }
+.marquee__word--stroke { color: transparent; -webkit-text-stroke: 1px rgba(20, 20, 20, 0.5); }
+
+/* ---- Product card text (below the image, on page bg) ---- */
+.pcard__name { color: var(--fg); }
+.pcard__price b { color: var(--fg); }
+
+/* ---- Engineered / stats / reviews ---- */
+.feature__title { color: var(--fg); }
+.stats__big, .stat__num { color: var(--fg); }
+.reviews__score, .review__who b, .review__quote { color: var(--fg); }
+.review__stars .empty { color: rgba(20, 20, 20, 0.18); }
+.review__bought { background: rgba(20, 20, 20, 0.04); }
+
+/* ---- Social handle pill ---- */
+.social__handle { color: var(--fg); }
+
+/* ---- Newsletter / final ---- */
+.newsletter__title { color: var(--fg); }
+.newsletter__form input { color: var(--fg); }
+.final__title { color: var(--fg); }
+.final__hollow { -webkit-text-stroke: 1.5px rgba(20, 20, 20, 0.85); }
+
+/* ---- Footer ---- */
+.footer__brand img.is-default { filter: brightness(0); }
+.footer__social a { color: var(--fg); }
+.footer__col a { color: var(--muted); }
+.footer__col a:active, .footer__col a:hover { color: var(--fg); }
+.footer__giant { -webkit-text-stroke: 1.5px rgba(20, 20, 20, 0.12); }
+
+/* ---- Category switcher (swing-tag rod + labels) ---- */
+.chip-rod { background: linear-gradient(90deg, rgba(20, 20, 20, 0.45), rgba(20, 20, 20, 0.12)); }
+.chip::before { background: rgba(20, 20, 20, 0.45); }
+.chip-lbl { color: rgba(20, 20, 20, 0.7); }
+.catsec .feed-head h3 { color: var(--fg); }
+
+/* ---- Product sheet ---- */
+.sheet__grip::before { background: rgba(20, 20, 20, 0.2); }
+.ps__name, .ps__price b { color: var(--fg); }
+.ps__label .ps__chosen { color: var(--fg); }
+.ps__size { color: var(--fg); }
+.ps__qty button { color: var(--fg); }
+
+/* ---- Cart sheet ---- */
+.icon-close { color: var(--fg); }
+.icon-close:active { background: rgba(20, 20, 20, 0.06); }
+.citem__name, .citem__price { color: var(--fg); }
+.citem__qty button { color: var(--fg); }
+
+/* ---- Drawer / search ---- */
+.drawer__logo.is-default { filter: brightness(0); }
+.drawer__nav a { color: var(--fg); }
+.drawer__foot-row strong { color: var(--fg); }
+.search__bar input { color: var(--fg); }
+.sresult__name { color: var(--fg); }
+.chip { color: var(--fg); }
+
+/* ---- Toast (stays a dark pill on the light page) ---- */
+.toast { color: var(--bg); }
+
+/* ---- Anatomy tee diagram (draw the tee in ink, not white) ---- */
+.tee-body { fill: rgba(20, 20, 20, 0.03); stroke: rgba(20, 20, 20, 0.9); }
+.tee-stitch { stroke: rgba(20, 20, 20, 0.35); }
+.astep__title { color: var(--fg); }
+
+/* ---- Feel the fabric (GSM bars) ---- */
+.gsm-lbl b { color: var(--fg); }
+.gsm-bar { background: rgba(20, 20, 20, 0.08); }
+.gsm-row--them .gsm-bar i { background: rgba(20, 20, 20, 0.25); }
