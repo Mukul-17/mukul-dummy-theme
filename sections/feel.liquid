@@ -26,15 +26,15 @@
 
   <div class="feel__weigh" id="weigh">
     <div class="feel__weigh-intro reveal">
-      <span class="feel__kicker">The weigh-in</span>
+      <span class="feel__kicker">{{ section.settings.weigh_kicker }}</span>
       <p>{{ section.settings.weigh_text }}</p>
     </div>
     <div class="gsm-row gsm-row--them">
-      <div class="gsm-lbl"><span>Normal t-shirt</span><b><span data-counter data-to="{{ section.settings.gsm_them }}">0</span> GSM</b></div>
+      <div class="gsm-lbl"><span>{{ section.settings.them_label }}</span><b><span data-counter data-to="{{ section.settings.gsm_them }}">0</span> GSM</b></div>
       <div class="gsm-bar"><i></i></div>
     </div>
     <div class="gsm-row gsm-row--us">
-      <div class="gsm-lbl"><span>MODRN t-shirt</span><b><span data-counter data-to="{{ section.settings.gsm_us }}">0</span> GSM</b></div>
+      <div class="gsm-lbl"><span>{{ section.settings.us_label }}</span><b><span data-counter data-to="{{ section.settings.gsm_us }}">0</span> GSM</b></div>
       <div class="gsm-bar"><i></i></div>
     </div>
   </div>
@@ -52,8 +52,11 @@
     { "type": "image_picker", "id": "fabric1", "label": "Fabric close-up 1" },
     { "type": "image_picker", "id": "fabric2", "label": "Fabric close-up 2" },
     { "type": "image_picker", "id": "fabric3", "label": "Fabric close-up 3" },
+    { "type": "text", "id": "weigh_kicker", "label": "Weigh-in kicker", "default": "The weigh-in" },
     { "type": "textarea", "id": "weigh_text", "label": "Weigh-in text", "default": "GSM = how heavy the cloth is. Heavier cloth feels richer and lasts longer. Most cheap tees are 140 GSM. Ours start at 220." },
+    { "type": "text", "id": "them_label", "label": "Comparison row label", "default": "Normal t-shirt" },
     { "type": "number", "id": "gsm_them", "label": "Normal tee GSM", "default": 140 },
+    { "type": "text", "id": "us_label", "label": "MODRN row label", "default": "MODRN t-shirt" },
     { "type": "number", "id": "gsm_us", "label": "MODRN tee GSM", "default": 240 }
   ],
   "presets": [{ "name": "Feel the fabric" }]

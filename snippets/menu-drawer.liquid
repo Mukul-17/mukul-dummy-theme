@@ -4,7 +4,11 @@
   <aside class="drawer" role="dialog" aria-modal="true" aria-label="Menu">
     <div class="drawer__head">
       <a href="{{ routes.root_url }}" class="drawer__logo-link" data-close>
-        <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" class="drawer__logo" width="120" height="24" />
+        {%- if settings.logo != blank -%}
+          <img class="drawer__logo" src="{{ settings.logo | image_url: width: 360 }}" alt="{{ shop.name }}" width="{{ settings.logo.width }}" height="{{ settings.logo.height }}" />
+        {%- else -%}
+          <img class="drawer__logo is-default" src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="{{ shop.name }}" width="120" height="24" />
+        {%- endif -%}
       </a>
       <button class="icon-close" data-close aria-label="Close menu">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>

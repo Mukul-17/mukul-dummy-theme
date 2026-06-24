@@ -11,10 +11,8 @@
     <div class="search__suggest">
       <span class="search__label">Popular</span>
       <div class="search__chips">
-        <button class="chip" data-search="oversized">Oversized</button>
-        <button class="chip" data-search="240">240 GSM</button>
-        <button class="chip" data-search="coffee">Coffee</button>
-        <button class="chip" data-search="roads">Who Needs Roads</button>
+        {%- assign pops = settings.popular_searches | default: 'Oversized, 240 GSM, Coffee, Who Needs Roads' | split: ',' -%}
+        {%- for p in pops -%}{%- assign term = p | strip -%}<button class="chip" data-search="{{ term | escape }}">{{ term }}</button>{%- endfor -%}
       </div>
     </div>
     <div class="search__results" id="search-results"></div>

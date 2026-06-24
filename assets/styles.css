@@ -1207,7 +1207,8 @@ body.scrolled-past .appbar { top: 0; }
 }
 .sheet-root.is-open .drawer { transform: translateX(0); }
 .drawer__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; }
-.drawer__logo { height: 22px; filter: brightness(0) invert(1); }
+.drawer__logo { height: 24px; width: auto; max-width: 160px; object-fit: contain; }
+.drawer__logo.is-default { filter: brightness(0) invert(1); }
 .drawer__nav { display: flex; flex-direction: column; flex: 1; }
 .drawer__nav a {
   display: flex; align-items: baseline; justify-content: space-between;

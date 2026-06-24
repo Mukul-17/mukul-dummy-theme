@@ -10,6 +10,7 @@
   {
     "name": "Brand",
     "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo (menu drawer)", "info": "Used in the slide-out menu. White/transparent PNG works best. Empty = default MODRN logo." },
       { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Defaults to the MODRN logo." },
       { "type": "text", "id": "seo_title", "label": "Homepage browser title", "default": "MODRN" }
     ]
@@ -18,7 +19,8 @@
     "name": "Store info",
     "settings": [
       { "type": "text", "id": "free_ship_text", "label": "Free shipping threshold", "default": "₹1,499" },
-      { "type": "text", "id": "support_email", "label": "Support email", "default": "modrnindia@gmail.com" }
+      { "type": "text", "id": "support_email", "label": "Support email", "default": "modrnindia@gmail.com" },
+      { "type": "text", "id": "popular_searches", "label": "Popular search chips (comma-separated)", "default": "Oversized, 240 GSM, Coffee, Who Needs Roads" }
     ]
   },
   {
