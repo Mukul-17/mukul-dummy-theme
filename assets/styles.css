@@ -1738,3 +1738,78 @@ body.scrolled-past .appbar { top: 0; }
   /* --- Bottom tab bar is redundant once the top nav exists --- */
   .tabbar, .tabbar-spacer { display: none; }
 }
+
+/* =========================================================
+   DESKTOP REFINEMENTS  (Phase 2 — fill the width + hover)
+   Still fully gated behind min-width:900px. These rules sit
+   AFTER the earlier 720/1024 blocks in source order, so they
+   win on equal specificity without !important. Mobile (<900px)
+   is untouched.
+   ========================================================= */
+@media (min-width: 900px) {
+
+  /* ---- Feel the fabric → image + thumbs left, weigh-in right ---- */
+  .feel {
+    display: grid;
+    grid-template-columns: minmax(0, 460px) 1fr;
+    column-gap: clamp(2rem, 4.5vw, 4.5rem);
+    align-items: start;
+    max-width: var(--shell); margin-inline: auto;
+    grid-template-areas:
+      "head   head"
+      "img    weigh"
+      "thumbs weigh";
+  }
+  .feel .section__head { grid-area: head; padding-inline: 0; margin-bottom: 2.25rem; }
+  .feel__lensbox { grid-area: img; margin: 0; max-width: none; }
+  .feel__thumbs  { grid-area: thumbs; max-width: none; padding: 1rem 0 0; justify-content: flex-start; }
+  .feel__weigh   { grid-area: weigh; max-width: none; padding: 0; align-self: center; }
+  .feel__thumbs button { transition: border-color 0.2s, transform 0.12s, opacity 0.2s; }
+  .feel__thumbs button:hover { opacity: 1; border-color: rgba(255, 255, 255, 0.4); }
+
+  /* ---- Trust / receipt → copy + proof left, receipt right, pay strip full ---- */
+  .trust {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 430px);
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: start;
+    max-width: var(--shell); margin-inline: auto;
+    grid-template-areas:
+      "head    receipt"
+      "proof   receipt"
+      "risk    receipt"
+      "pay     pay";
+  }
+  .trust__head        { grid-area: head; }
+  .trust__proof       { grid-area: proof; }
+  .trust .risk        { grid-area: risk; }
+  .trust .receipt-wrap { grid-area: receipt; margin-top: 0; align-self: start; }
+  .trust .pay-strip   { grid-area: pay; margin-top: 2.5rem; }
+
+  /* ---- Newsletter → heading left, form + trust right ---- */
+  .newsletter { text-align: left; }
+  .newsletter__inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    column-gap: clamp(2.5rem, 5vw, 5rem); row-gap: 0.4rem;
+    max-width: var(--shell); margin-inline: auto;
+    grid-template-areas:
+      "eye   form"
+      "title form"
+      "lead  trust";
+  }
+  .newsletter .eyebrow   { grid-area: eye; justify-content: flex-start; margin-bottom: 0; }
+  .newsletter__title     { grid-area: title; }
+  .newsletter__lead      { grid-area: lead; margin: 0.6rem 0 0; max-width: 40ch; }
+  .newsletter__form      { grid-area: form; margin: 0; max-width: 440px; width: 100%; justify-self: end; }
+  .newsletter__trust     { grid-area: trust; justify-content: flex-start; margin-top: 1rem; }
+
+  /* ---- General hover affordances (touch keeps its :active states) ---- */
+  .pcard__add:hover  { background: var(--accent); color: #000; transform: scale(1.06); }
+  .pcard__wish:hover { color: var(--accent); }
+  .chip:hover .tee   { filter: drop-shadow(0 11px 15px rgba(0, 0, 0, 0.6)); }
+  .bcard__img        { transition: transform 0.6s var(--ease); }
+  .bcard:hover .bcard__img { transform: scale(1.04); }
+  .rail-arrow:hover  { transform: scale(1.08); }
+}
