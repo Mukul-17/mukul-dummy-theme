@@ -15,6 +15,13 @@
     ]
   },
   {
+    "name": "Store info",
+    "settings": [
+      { "type": "text", "id": "free_ship_text", "label": "Free shipping threshold", "default": "₹1,499" },
+      { "type": "text", "id": "support_email", "label": "Support email", "default": "modrnindia@gmail.com" }
+    ]
+  },
+  {
     "name": "Colors",
     "settings": [
       { "type": "color", "id": "accent", "label": "Accent (coral)", "default": "#e03e1f" },

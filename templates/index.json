@@ -25,7 +25,22 @@
       "block_order": ["s1", "s2", "s3", "s4"]
     },
     "feel": { "type": "feel", "settings": {} },
-    "trust": { "type": "trust", "settings": {} },
+    "trust": {
+      "type": "trust",
+      "blocks": {
+        "tr1": { "type": "trust_row", "settings": { "icon": "₹", "title": "Cash on delivery", "text": "Pay only when the tee is in your hands." } },
+        "tr2": { "type": "trust_row", "settings": { "icon": "⇄", "title": "Easy size exchange", "text": "Wrong size? We replace it — no long forms." } },
+        "tr3": { "type": "trust_row", "settings": { "icon": "🔒", "title": "Safe payments", "text": "Your card & UPI details are always protected." } },
+        "tr4": { "type": "trust_row", "settings": { "icon": "✉", "title": "Real people in support", "text": "Email us — a real person replies fast." } },
+        "rl1": { "type": "receipt_line", "settings": { "label": "220–240 GSM cotton", "value": "VERIFIED" } },
+        "rl2": { "type": "receipt_line", "settings": { "label": "Made in India", "value": "VERIFIED" } },
+        "rl3": { "type": "receipt_line", "settings": { "label": "Cash on delivery", "value": "AVAILABLE" } },
+        "rl4": { "type": "receipt_line", "settings": { "label": "Free shipping (India)", "value": "INCLUDED" } },
+        "rl5": { "type": "receipt_line", "settings": { "label": "Returns & exchange", "value": "COVERED" } },
+        "rl6": { "type": "receipt_line", "settings": { "label": "Hidden charges", "value": "₹0.00" } }
+      },
+      "block_order": ["tr1", "tr2", "tr3", "tr4", "rl1", "rl2", "rl3", "rl4", "rl5", "rl6"]
+    },
     "social": {
       "type": "social",
       "blocks": {

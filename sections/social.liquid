@@ -37,7 +37,7 @@
 
   <div class="social__foot reveal-fade">
     <a href="{{ ig }}" target="_blank" rel="noreferrer" class="btn btn--ghost">{{ ig_icon }}<span>Follow {{ section.settings.handle }}</span></a>
-    <p class="social__tag">Tag <strong>#ModrnInTheWild</strong> to get featured.</p>
+    <p class="social__tag">{{ section.settings.tagline }}</p>
   </div>
 </section>
 
@@ -51,6 +51,7 @@
     { "type": "text", "id": "heading_accent", "label": "Heading accent (muted)", "default": "the streets." },
     { "type": "text", "id": "handle", "label": "Instagram handle", "default": "@modrnindia" },
     { "type": "url", "id": "handle_url", "label": "Instagram URL" },
+    { "type": "text", "id": "tagline", "label": "Footer tagline", "default": "Tag #ModrnInTheWild to get featured." },
     { "type": "header", "content": "Reel video (tall tile)" },
     { "type": "video", "id": "reel_video", "label": "Reel video — upload" },
     { "type": "text", "id": "reel_url", "label": "…or video URL (.mp4)" },

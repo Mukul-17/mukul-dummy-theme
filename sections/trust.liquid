@@ -6,47 +6,53 @@
   </div>
 
   <div class="trust__proof">
-    <div class="trow"><div class="trow__ic">₹</div><div><b>Cash on delivery</b><span>Pay only when the tee is in your hands.</span></div></div>
-    <div class="trow"><div class="trow__ic">⇄</div><div><b>Easy size exchange</b><span>Wrong size? We replace it — no long forms.</span></div></div>
-    <div class="trow"><div class="trow__ic">🔒</div><div><b>Safe payments</b><span>Your card &amp; UPI details are always protected.</span></div></div>
-    <div class="trow"><div class="trow__ic">✉</div><div><b>Real people in support</b><span>Email us — a real person replies fast.</span></div></div>
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'trust_row' -%}
+        <div class="trow" {{ block.shopify_attributes }}><div class="trow__ic">{{ block.settings.icon }}</div><div><b>{{ block.settings.title }}</b><span>{{ block.settings.text }}</span></div></div>
+      {%- endif -%}
+    {%- endfor -%}
   </div>
 
   <div class="risk" aria-label="Your risk reduces to zero">
-    <span class="risk__lbl">Your risk</span>
+    <span class="risk__lbl">{{ section.settings.risk_label }}</span>
     <div class="risk__track"><i></i></div>
     <span class="risk__val" id="riskval">100%</span>
   </div>
 
   <div class="receipt-wrap">
-    <div class="receipt" aria-label="MODRN trust receipt">
+    <div class="receipt" aria-label="{{ shop.name }} trust receipt">
       <div class="receipt__head">
-        <div class="receipt__logo">MODRN<span>.</span></div>
-        <p>Trust receipt · No. 000-IN</p>
+        <div class="receipt__logo">{{ section.settings.receipt_brand }}<span>.</span></div>
+        <p>{{ section.settings.receipt_title }}</p>
       </div>
       <div class="receipt__body">
-        <div class="receipt__line" style="transition-delay:.3s"><span>220–240 GSM cotton</span><span class="receipt__dots"></span><span class="receipt__ok">VERIFIED</span></div>
-        <div class="receipt__line" style="transition-delay:.45s"><span>Made in India</span><span class="receipt__dots"></span><span class="receipt__ok">VERIFIED</span></div>
-        <div class="receipt__line" style="transition-delay:.6s"><span>Cash on delivery</span><span class="receipt__dots"></span><span class="receipt__ok">AVAILABLE</span></div>
-        <div class="receipt__line" style="transition-delay:.75s"><span>Free shipping (India)</span><span class="receipt__dots"></span><span class="receipt__ok">INCLUDED</span></div>
-        <div class="receipt__line" style="transition-delay:.9s"><span>Returns &amp; exchange</span><span class="receipt__dots"></span><span class="receipt__ok">COVERED</span></div>
-        <div class="receipt__line" style="transition-delay:1.05s"><span>Hidden charges</span><span class="receipt__dots"></span><span class="receipt__ok">₹0.00</span></div>
-        <div class="receipt__total"><span>Your risk</span><span>₹0.00</span></div>
+        {%- assign d = 30 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'receipt_line' -%}
+            <div class="receipt__line" style="transition-delay:{{ d | divided_by: 100.0 }}s" {{ block.shopify_attributes }}><span>{{ block.settings.label }}</span><span class="receipt__dots"></span><span class="receipt__ok">{{ block.settings.value }}</span></div>
+            {%- assign d = d | plus: 15 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        <div class="receipt__total"><span>{{ section.settings.risk_label }}</span><span>{{ section.settings.risk_value }}</span></div>
       </div>
       <div class="receipt__foot">
-        Thank you for supporting an Indian brand
+        {{ section.settings.receipt_foot }}
         <div class="receipt__barcode" aria-hidden="true"></div>
       </div>
-      <div class="receipt__stamp">MODRN<br>★ Verified ★<br>Promise</div>
+      <div class="receipt__stamp">{{ section.settings.stamp | newline_to_br }}</div>
     </div>
   </div>
 
-  <div class="pay-strip" aria-hidden="true">
-    <div class="pay-track">
-      <span>Pay your way —</span><span><b>UPI</b></span><span><b>Visa</b></span><span><b>Mastercard</b></span><span><b>RuPay</b></span><span><b>Net Banking</b></span><span><b>Cash on Delivery</b></span><span><b>Wallets</b></span>
-      <span>Pay your way —</span><span><b>UPI</b></span><span><b>Visa</b></span><span><b>Mastercard</b></span><span><b>RuPay</b></span><span><b>Net Banking</b></span><span><b>Cash on Delivery</b></span><span><b>Wallets</b></span>
+  {%- if section.settings.pay_methods != blank -%}
+    {%- assign methods = section.settings.pay_methods | split: ',' -%}
+    <div class="pay-strip" aria-hidden="true">
+      <div class="pay-track">
+        {%- for n in (1..2) -%}
+          <span>{{ section.settings.pay_intro }}</span>{%- for m in methods -%}<span><b>{{ m | strip }}</b></span>{%- endfor -%}
+        {%- endfor -%}
+      </div>
     </div>
-  </div>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -56,8 +62,39 @@
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "Why trust us" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "SHOP WITHOUT" },
     { "type": "text", "id": "heading_accent", "label": "Heading accent (outline)", "default": "worry." },
-    { "type": "textarea", "id": "lead", "label": "Lead", "default": "We're a new Indian brand, so we don't ask you to trust us blindly. Order today and pay only when the tee reaches your hands. Wrong size? We exchange it. Simple." }
+    { "type": "textarea", "id": "lead", "label": "Lead", "default": "We're a new Indian brand, so we don't ask you to trust us blindly. Order today and pay only when the tee reaches your hands. Wrong size? We exchange it. Simple." },
+    { "type": "header", "content": "Risk meter" },
+    { "type": "text", "id": "risk_label", "label": "Risk label", "default": "Your risk" },
+    { "type": "text", "id": "risk_value", "label": "Risk total value", "default": "₹0.00" },
+    { "type": "header", "content": "Receipt" },
+    { "type": "text", "id": "receipt_brand", "label": "Receipt brand", "default": "MODRN" },
+    { "type": "text", "id": "receipt_title", "label": "Receipt subtitle", "default": "Trust receipt · No. 000-IN" },
+    { "type": "text", "id": "receipt_foot", "label": "Receipt footer", "default": "Thank you for supporting an Indian brand" },
+    { "type": "textarea", "id": "stamp", "label": "Stamp (one line each)", "default": "MODRN\n★ Verified ★\nPromise" },
+    { "type": "header", "content": "Payment strip" },
+    { "type": "text", "id": "pay_intro", "label": "Strip intro", "default": "Pay your way —" },
+    { "type": "text", "id": "pay_methods", "label": "Payment methods (comma-separated)", "default": "UPI, Visa, Mastercard, RuPay, Net Banking, Cash on Delivery, Wallets" }
   ],
+  "blocks": [
+    {
+      "type": "trust_row",
+      "name": "Trust point",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji/char)", "default": "★" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Trust point" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Short reassuring line." }
+      ]
+    },
+    {
+      "type": "receipt_line",
+      "name": "Receipt line",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Feature" },
+        { "type": "text", "id": "value", "label": "Value", "default": "VERIFIED" }
+      ]
+    }
+  ],
+  "max_blocks": 16,
   "presets": [{ "name": "Trust" }]
 }
 {% endschema %}
