@@ -382,17 +382,16 @@ body.scrolled-past .appbar { top: 0; }
 .bn1 .cta-wrap { position: absolute; left: 0; right: 0; bottom: calc(var(--tabbar-h) + 2.75rem); display: flex; justify-content: center; z-index: 4; }
 .bn1 .cta-wrap .sbtn { box-shadow: 0 14px 30px rgba(0,0,0,.35); }
 @media (min-width: 881px) {
-  /* Desktop poster: headline + button grouped on the left and vertically
-     centred; product image pinned to the bottom-right. (The cta-wrap is a
-     sibling of .top, so a column layout keeps them stacked together instead
-     of the button landing between the text and the product image.) */
-  .bn1 { flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 7vw; }
-  .bn1 .top { flex: 0 0 auto; text-align: left; padding: 0; max-width: 60%; }
-  .bn1 .script { font-size: 56px; }
-  .bn1 h1 { font-size: clamp(72px, 7.5vw, 128px); }
-  .bn1 .sub { font-size: 13px; margin-top: 14px; max-width: 34ch; }
-  .bn1 .cta-wrap { position: static; justify-content: flex-start; margin-top: 30px; z-index: 4; }
-  .bn1 .prod { position: absolute; right: 7vw; bottom: 0; left: auto; translate: none; width: clamp(300px, 26vw, 400px); margin: 0; align-self: auto; z-index: 2; }
+  /* Desktop flow: smaller headline (left) → product image with its wobble
+     (centre, rising from the bottom) → Shop button (right). flex order is
+     used because .cta-wrap sits before .prod in the markup. */
+  .bn1 { flex-direction: row; align-items: center; justify-content: space-between; padding: 0 5vw; gap: 2rem; }
+  .bn1 .top { order: 1; flex: 0 1 auto; max-width: 30%; text-align: left; padding: 0; }
+  .bn1 .script { font-size: 38px; }
+  .bn1 h1 { font-size: clamp(50px, 5.2vw, 84px); }
+  .bn1 .sub { font-size: 12px; margin-top: 12px; max-width: 30ch; }
+  .bn1 .prod { order: 2; position: relative; left: auto; bottom: auto; translate: none; align-self: flex-end; width: clamp(300px, 27vw, 400px); margin: 0; z-index: 2; }
+  .bn1 .cta-wrap { order: 3; position: static; align-self: center; flex: 0 0 auto; justify-content: flex-end; margin: 0; z-index: 4; }
   .bn1 .ribbon.r1 { top: calc(var(--appbar-h) + 8px); }
   .bn1 .ribbon.r2 { bottom: 9%; }
 }
