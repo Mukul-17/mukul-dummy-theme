@@ -1967,4 +1967,9 @@ body.scrolled-past .appbar { top: 0; }
   }
   .appbar.is-home:not(.is-scrolled) .appbar__icon { color: #fff; }
   .appbar.is-home:not(.is-scrolled) .appbar__logo img.is-default { filter: brightness(0) invert(1); }
+
+  /* Category hanger: spread the tees across the full width on desktop.
+     When there are too many to fit, space-between collapses to flex-start
+     so the row simply scrolls (packs toward the left) — no left cut-off. */
+  .chips-scroll { justify-content: space-between; }
 }
