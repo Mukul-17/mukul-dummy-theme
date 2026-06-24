@@ -1,23 +1,104 @@
 <section class="bn" id="bnSlider" aria-label="Featured offers">
 
-  {%- for block in section.blocks -%}
-    {%- if block.settings.image != blank -%}{%- assign bg = block.settings.image | image_url: width: 1600 -%}{%- else -%}{%- assign bg = block.settings.image_url -%}{%- endif -%}
-    <section class="slide eslide {% if block.settings.align == 'center' %}is-center{% endif %} {% if forloop.first %}on{% endif %}" data-dur="{{ block.settings.duration | default: 7 | times: 1000 }}" {{ block.shopify_attributes }}>
-      {%- if bg -%}<div class="ebg" style="background-image:url('{{ bg }}')"></div>{%- endif -%}
-      <div class="etint"></div>
-      <div class="ein">
-        {%- if block.settings.eyebrow != blank -%}<span class="kick" data-an="1">{{ block.settings.eyebrow }}</span>{%- endif -%}
-        <h1 data-an="2">{{ block.settings.heading }}{% if block.settings.heading_em != blank %} <em>{{ block.settings.heading_em }}</em>{% endif %}</h1>
-        {%- if block.settings.subtext != blank -%}<p class="sub" data-an="3">{{ block.settings.subtext }}</p>{%- endif -%}
-        {%- if block.settings.btn_label != blank -%}
-          <div class="cta-wrap late"><a class="sbtn {{ block.settings.btn_style | default: 'w' }}" href="{{ block.settings.btn_link | default: routes.all_products_collection_url }}">{{ block.settings.btn_label }} →</a></div>
-        {%- endif -%}
+  <section class="slide bn1 on" data-dur="6800">
+    <div class="wm" aria-hidden="true">MODRNMODRNMODRN</div>
+    <div class="ribbon r1"><span>LAUNCH SALE&nbsp;&nbsp;✦&nbsp;&nbsp;FLAT ₹450 OFF&nbsp;&nbsp;✦&nbsp;&nbsp;FREE SHIPPING&nbsp;&nbsp;✦&nbsp;&nbsp;LAUNCH SALE&nbsp;&nbsp;✦&nbsp;&nbsp;FLAT ₹450 OFF&nbsp;&nbsp;✦&nbsp;&nbsp;FREE SHIPPING&nbsp;&nbsp;✦&nbsp;&nbsp;LAUNCH SALE&nbsp;&nbsp;✦&nbsp;&nbsp;FLAT ₹450 OFF&nbsp;&nbsp;✦&nbsp;&nbsp;FREE SHIPPING&nbsp;&nbsp;✦&nbsp;&nbsp;</span></div>
+    <span class="spark sp1">✦</span><span class="spark sp2">✧</span>
+    <div class="top">
+      <span class="script" data-an="1">the sale</span>
+      <h1 data-an="2">is live</h1>
+      <p class="sub" data-an="3">Flat ₹450 off every oversized tee</p>
+    </div>
+    <div class="cta-wrap late"><a class="sbtn b" href="{{ routes.all_products_collection_url }}">Shop the sale →</a></div>
+    <div class="prod" data-an="3">
+      <span class="price-tag">FROM ₹599</span>
+      <img src="https://modrn.in/cdn/shop/files/focus.png?v=1777025982&width=900" alt="Focus oversized tee" decoding="async">
+    </div>
+  </section>
+
+  <section class="slide bn2" data-dur="7500">
+    <video muted loop playsinline preload="metadata" poster="https://modrn.in/cdn/shop/files/ChatGPT_Image_Apr_10_2026_02_11_09_PM.png?v=1776075534&width=1200">
+      <source src="https://cdn.shopify.com/videos/c/o/v/7caf3a8202b8481286c09cf06eb0bac8.mp4" type="video/mp4">
+    </video>
+    <div class="tint"></div>
+    <div class="live"><i></i>From the studio</div>
+    <div class="in">
+      <span class="kick" data-an="1">Premium oversized · Made in India</span>
+      <h1 data-an="2">Wear your<br><em>identity</em></h1>
+      <p class="sub" data-an="3">Heavy 220–240 GSM cotton. Designs built around mindsets, not trends.</p>
+      <div class="row late">
+        <a class="sbtn w" href="{{ routes.all_products_collection_url }}">Shop now</a>
+        <a class="sbtn o" href="#collections">Mindsets</a>
       </div>
-    </section>
-  {%- endfor -%}
+    </div>
+  </section>
+
+  <section class="slide bn3" data-dur="7000">
+    <div class="top" data-an="1">
+      <h1>Every tee<br>tells <span class="rd">a story</span></h1>
+    </div>
+    <div class="frame" data-an="2">
+      <div class="kb"></div>
+      <div class="mini m1"><img src="https://modrn.in/cdn/shop/files/VacationIcons_blue.png?v=1780475223&width=300" alt="" decoding="async"><span>Vacation ₹649</span></div>
+      <div class="mini m2"><img src="https://modrn.in/cdn/shop/files/secular_socialist_iffwht_1.png?v=1779367382&width=300" alt="" decoding="async"><span>Secular ₹599</span></div>
+    </div>
+    <div class="below">
+      <span class="tagline" data-an="3">Airplane Mode · Oversized · 220 GSM</span>
+      <div class="cta-bar late"><a class="sbtn b" href="{{ routes.all_products_collection_url }}">View this tee →</a></div>
+    </div>
+  </section>
+
+  <section class="slide bn4" data-dur="6800">
+    <div class="half-img">
+      <div class="kb"></div>
+      <span class="flag">Rider favourite</span>
+    </div>
+    <div class="half-txt">
+      <span class="kick" data-an="1">Machine Mode collection</span>
+      <h1 data-an="2">Who needs <em>roads</em></h1>
+      <div class="pr" data-an="3">₹699 <s>₹1,099</s><span class="off">36% OFF</span></div>
+      <div class="sz" data-an="3"><b>S</b><b>M</b><b>L</b><b>XL</b><b>XXL</b></div>
+      <div class="row late">
+        <a class="sbtn r" href="{{ routes.all_products_collection_url }}">Buy now</a>
+        <a class="sbtn o" href="#collections">Collection</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide bn5" data-dur="6500">
+    <div class="kb"></div><div class="tint"></div>
+    <div class="mid">
+      <h1 data-an="2">Machine<br>mode <span class="shake">on.</span></h1>
+      <p class="sub" data-an="3">Built for machines · Driven by instinct</p>
+    </div>
+    <div class="cta-wrap late"><a class="sbtn w" href="#collections">Enter machine mode →</a></div>
+  </section>
+
+  <section class="slide bn6" data-dur="8000">
+    <div class="top">
+      <span class="kick" data-an="1">Most ordered this month</span>
+      <h1 data-an="2">Bestsellers<br><em>from ₹599</em></h1>
+    </div>
+    <div class="strip" data-an="3">
+      <div class="lane">
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><span class="new">Hot</span><img src="https://modrn.in/cdn/shop/files/focus.png?v=1777025982&width=400" alt="" decoding="async"><b>Focus</b><span>₹599 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><span class="new">New</span><img src="https://modrn.in/cdn/shop/files/2_e2b912cb-7af2-42fc-9510-41022a9fd1f6.png?v=1777469735&width=400" alt="" decoding="async"><b>Unstoppable</b><span>₹599 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><img src="https://modrn.in/cdn/shop/files/WhoNeedRoads_1.png?v=1777282143&width=400" alt="" decoding="async"><b>Who Needs Roads</b><span>₹699 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><img src="https://modrn.in/cdn/shop/files/LessWheels_1_blk.png?v=1777291909&width=400" alt="" decoding="async"><b>Less Wheels</b><span>₹699 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><img src="https://modrn.in/cdn/shop/files/burn_fuel.png?v=1777025982&width=400" alt="" decoding="async"><b>Built To Burn Fuel</b><span>₹699 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><span class="new">Hot</span><img src="https://modrn.in/cdn/shop/files/focus.png?v=1777025982&width=400" alt="" decoding="async"><b>Focus</b><span>₹599 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><span class="new">New</span><img src="https://modrn.in/cdn/shop/files/2_e2b912cb-7af2-42fc-9510-41022a9fd1f6.png?v=1777469735&width=400" alt="" decoding="async"><b>Unstoppable</b><span>₹599 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><img src="https://modrn.in/cdn/shop/files/WhoNeedRoads_1.png?v=1777282143&width=400" alt="" decoding="async"><b>Who Needs Roads</b><span>₹699 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><img src="https://modrn.in/cdn/shop/files/LessWheels_1_blk.png?v=1777291909&width=400" alt="" decoding="async"><b>Less Wheels</b><span>₹699 <s>₹1,099</s></span></a>
+        <a class="pc" href="{{ routes.all_products_collection_url }}"><img src="https://modrn.in/cdn/shop/files/burn_fuel.png?v=1777025982&width=400" alt="" decoding="async"><b>Built To Burn Fuel</b><span>₹699 <s>₹1,099</s></span></a>
+      </div>
+    </div>
+    <div class="cta-wrap late"><a class="sbtn w" href="{{ routes.all_products_collection_url }}">Shop all bestsellers →</a></div>
+  </section>
 
   <div class="ctrl" id="bnSegs">
-    {%- for block in section.blocks -%}<span class="seg"><i></i></span>{%- endfor -%}
+    <span class="seg"><i></i></span><span class="seg"><i></i></span><span class="seg"><i></i></span>
+    <span class="seg"><i></i></span><span class="seg"><i></i></span><span class="seg"><i></i></span>
   </div>
   <div class="tap l" id="bnTapL" aria-label="Previous"></div>
   <div class="tap r" id="bnTapR" aria-label="Next"></div>
@@ -30,29 +111,8 @@
 {% schema %}
 {
   "name": "Hero slider",
-  "max_blocks": 8,
-  "blocks": [
-    {
-      "type": "slide",
-      "name": "Slide",
-      "settings": [
-        { "type": "image_picker", "id": "image", "label": "Background image (upload)" },
-        { "type": "text", "id": "image_url", "label": "…or image URL", "info": "Used only if no image is uploaded above." },
-        { "type": "text", "id": "eyebrow", "label": "Eyebrow (small label)" },
-        { "type": "text", "id": "heading", "label": "Headline" },
-        { "type": "text", "id": "heading_em", "label": "Headline accent word", "info": "Shown in italic coral after the headline." },
-        { "type": "textarea", "id": "subtext", "label": "Sub text" },
-        { "type": "text", "id": "btn_label", "label": "Button text" },
-        { "type": "url", "id": "btn_link", "label": "Button link" },
-        { "type": "select", "id": "btn_style", "label": "Button style", "options": [
-          { "value": "w", "label": "White" }, { "value": "r", "label": "Coral" }, { "value": "o", "label": "Outline" }
-        ], "default": "w" },
-        { "type": "select", "id": "align", "label": "Text position", "options": [
-          { "value": "bottom", "label": "Bottom-left" }, { "value": "center", "label": "Center" }
-        ], "default": "bottom" },
-        { "type": "range", "id": "duration", "label": "Seconds on screen", "min": 4, "max": 10, "step": 1, "unit": "s", "default": 7 }
-      ]
-    }
+  "settings": [
+    { "type": "paragraph", "content": "This is the 6-slide MODRN story slider (launch sale, studio video, every-tee, who-needs-roads, machine-mode, bestsellers). Slides are designed promo posters — ask to expose any text/image as an editable setting." }
   ],
   "presets": [{ "name": "Hero slider" }]
 }

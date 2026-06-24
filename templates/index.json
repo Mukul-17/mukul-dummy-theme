@@ -1,16 +1,6 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero-slider",
-      "blocks": {
-        "h1": { "type": "slide", "settings": { "image_url": "https://modrn.in/cdn/shop/files/ChatGPT_Image_Apr_10_2026_04_49_17_PM.png?v=1776067779&width=1600", "eyebrow": "The sale is live", "heading": "FLAT ₹450 OFF", "heading_em": "every tee", "subtext": "Premium oversized cotton, made in India. Free shipping & COD.", "btn_label": "Shop the sale", "btn_style": "r", "align": "bottom", "duration": 7 } },
-        "h2": { "type": "slide", "settings": { "image_url": "https://modrn.in/cdn/shop/files/ChatGPT_Image_Apr_10_2026_03_07_34_PM.png?v=1776066628&width=1600", "eyebrow": "Premium oversized · Made in India", "heading": "WEAR YOUR", "heading_em": "identity", "subtext": "Heavy 220–240 GSM cotton. Designs built around mindsets, not trends.", "btn_label": "Shop now", "btn_style": "w", "align": "bottom", "duration": 7 } },
-        "h3": { "type": "slide", "settings": { "image_url": "https://modrn.in/cdn/shop/files/ChatGPT_Image_Apr_10_2026_02_11_09_PM.png?v=1776075534&width=1600", "eyebrow": "Machine Mode", "heading": "WHO NEEDS", "heading_em": "roads", "subtext": "Built for machines. Driven by instinct.", "btn_label": "Shop the drop", "btn_style": "w", "align": "bottom", "duration": 6 } },
-        "h4": { "type": "slide", "settings": { "image_url": "https://modrn.in/cdn/shop/files/MinimalVibe_collection_img.png?v=1777443353&width=1600", "eyebrow": "Minimal vibe", "heading": "LESS NOISE.", "heading_em": "more intent.", "subtext": "Clean cuts. Heavyweight cotton. Zero shouting.", "btn_label": "Explore", "btn_style": "o", "align": "bottom", "duration": 6 } },
-        "h5": { "type": "slide", "settings": { "image_url": "https://modrn.in/cdn/shop/files/burn_fuel.png?v=1777025982&width=1600", "eyebrow": "Most ordered this month", "heading": "BESTSELLERS", "heading_em": "from ₹599", "subtext": "", "btn_label": "Shop bestsellers", "btn_style": "w", "align": "center", "duration": 7 } }
-      },
-      "block_order": ["h1", "h2", "h3", "h4", "h5"]
-    },
+    "hero": { "type": "hero-slider", "settings": {} },
     "featured": { "type": "featured-tees", "settings": {} },
     "bestsellers": { "type": "bestsellers", "settings": {} },
     "collections": { "type": "collections", "settings": {} },
