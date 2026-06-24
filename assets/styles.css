@@ -1952,3 +1952,11 @@ body.scrolled-past .appbar { top: 0; }
 .gsm-lbl b { color: var(--fg); }
 .gsm-bar { background: rgba(20, 20, 20, 0.08); }
 .gsm-row--them .gsm-bar i { background: rgba(20, 20, 20, 0.25); }
+
+/* =========================================================
+   DESKTOP: drop the hero slider below the fixed header
+   (mobile keeps its full-bleed hero — untouched).
+   ========================================================= */
+@media (min-width: 900px) {
+  .bn { margin-top: var(--appbar-h); height: calc(100vh - var(--appbar-h)); min-height: 600px; }
+}
