@@ -382,14 +382,19 @@ body.scrolled-past .appbar { top: 0; }
 .bn1 .cta-wrap { position: absolute; left: 0; right: 0; bottom: calc(var(--tabbar-h) + 2.75rem); display: flex; justify-content: center; z-index: 4; }
 .bn1 .cta-wrap .sbtn { box-shadow: 0 14px 30px rgba(0,0,0,.35); }
 @media (min-width: 881px) {
-  .bn1 { flex-direction: row; align-items: center; }
-  .bn1 .top { flex: 1; text-align: left; padding: 0 0 0 7vw; }
-  .bn1 .script { font-size: 54px; }
-  .bn1 h1 { font-size: clamp(80px,9vw,140px); }
-  .bn1 .sub { font-size: 12px; margin-top: 16px; }
-  .bn1 .prod { position: relative; left: auto; bottom: auto; translate: none; width: clamp(320px,28vw,420px); margin-right: 9vw; align-self: flex-end; }
-  .bn1 .cta-wrap { position: static; justify-content: flex-start; margin-top: 34px; }
-  .bn1 .ribbon.r1 { top: 12%; } .bn1 .ribbon.r2 { bottom: 10%; }
+  /* Desktop poster: headline + button grouped on the left and vertically
+     centred; product image pinned to the bottom-right. (The cta-wrap is a
+     sibling of .top, so a column layout keeps them stacked together instead
+     of the button landing between the text and the product image.) */
+  .bn1 { flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 7vw; }
+  .bn1 .top { flex: 0 0 auto; text-align: left; padding: 0; max-width: 60%; }
+  .bn1 .script { font-size: 56px; }
+  .bn1 h1 { font-size: clamp(72px, 7.5vw, 128px); }
+  .bn1 .sub { font-size: 13px; margin-top: 14px; max-width: 34ch; }
+  .bn1 .cta-wrap { position: static; justify-content: flex-start; margin-top: 30px; z-index: 4; }
+  .bn1 .prod { position: absolute; right: 7vw; bottom: 0; left: auto; translate: none; width: clamp(300px, 26vw, 400px); margin: 0; align-self: auto; z-index: 2; }
+  .bn1 .ribbon.r1 { top: calc(var(--appbar-h) + 8px); }
+  .bn1 .ribbon.r2 { bottom: 9%; }
 }
 @media (max-width: 880px) {
   .bn1 { justify-content: center; align-items: center; gap: 1.6vh; padding: calc(var(--appbar-h) + 7svh) 22px calc(var(--tabbar-h) + 1.5rem); }
