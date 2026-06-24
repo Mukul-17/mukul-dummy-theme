@@ -10,6 +10,19 @@
 
   {%- assign social_defaults = "https://modrn.in/cdn/shop/files/ChatGPT_Image_Apr_10_2026_02_11_09_PM.png?v=1776075534&width=800|https://modrn.in/cdn/shop/files/WhoNeedRoads_1.png?v=1777282143&width=800|https://modrn.in/cdn/shop/files/focus.png?v=1777025982&width=800|https://modrn.in/cdn/shop/files/burn_fuel.png?v=1777025982&width=800|https://modrn.in/cdn/shop/files/ChatGPT_Image_Apr_10_2026_04_49_17_PM.png?v=1776067779&width=800|https://modrn.in/cdn/shop/files/2_e2b912cb-7af2-42fc-9510-41022a9fd1f6.png?v=1777469735&width=800" | split: "|" -%}
   <div class="social-grid" id="social-grid">
+    {%- assign reel_default = 'https://cdn.shopify.com/videos/c/o/v/7caf3a8202b8481286c09cf06eb0bac8.mp4' -%}
+    <div class="tile tile--video reveal-fade">
+      {%- if section.settings.reel_video != blank -%}
+        {{ section.settings.reel_video | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
+      {%- else -%}
+        <video autoplay muted loop playsinline preload="metadata">
+          <source src="{{ section.settings.reel_url | default: reel_default }}" type="video/mp4">
+        </video>
+      {%- endif -%}
+      <span class="tile__badge">{{ ig_icon }}</span>
+      <span class="tile__play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+      <a class="tile__hit" href="{{ section.settings.reel_link | default: ig }}" target="_blank" rel="noreferrer" aria-label="Watch on Instagram"></a>
+    </div>
     {%- for block in section.blocks -%}
       {%- if block.settings.image != blank -%}{%- assign tsrc = block.settings.image | image_url: width: 800 -%}{%- else -%}{%- assign tsrc = social_defaults[forloop.index0] -%}{%- endif -%}
       {%- if tsrc -%}
@@ -37,7 +50,11 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "SEEN ON" },
     { "type": "text", "id": "heading_accent", "label": "Heading accent (muted)", "default": "the streets." },
     { "type": "text", "id": "handle", "label": "Instagram handle", "default": "@modrnindia" },
-    { "type": "url", "id": "handle_url", "label": "Instagram URL" }
+    { "type": "url", "id": "handle_url", "label": "Instagram URL" },
+    { "type": "header", "content": "Reel video (tall tile)" },
+    { "type": "video", "id": "reel_video", "label": "Reel video — upload" },
+    { "type": "text", "id": "reel_url", "label": "…or video URL (.mp4)" },
+    { "type": "url", "id": "reel_link", "label": "Reel opens (link)" }
   ],
   "blocks": [
     {
