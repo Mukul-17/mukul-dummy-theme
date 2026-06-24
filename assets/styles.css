@@ -1705,42 +1705,25 @@ body.scrolled-past .appbar { top: 0; }
     --tabbar-h: 1rem;       /* collapse the space the bottom bar reserved */
   }
 
-  /* --- Header → top nav: links left, logo dead-center, icons right ---
-     3-column grid (1fr | auto | 1fr) keeps the logo at the true viewport
-     centre no matter how wide the link labels get. --- */
-  #menu-open { display: none; }                       /* hamburger retires on desktop */
+  /* --- Header on desktop: hamburger left, logo centred, icons right ---
+     All nav (incl. the nested "Our Collections" submenu) lives under the
+     hamburger drawer. The 3-column grid (1fr | auto | 1fr) keeps the logo
+     at the true viewport centre regardless of the side widths. --- */
   .appbar {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
     padding-inline: var(--pad);
   }
-
-  .appbar__nav {
-    grid-column: 1; justify-self: start;
-    display: flex; align-items: center;
-    justify-content: flex-start;
-    gap: clamp(0.9rem, 1.8vw, 2rem);
-    min-width: 0; overflow-x: auto; scrollbar-width: none;
-  }
-  .appbar__nav::-webkit-scrollbar { display: none; }
+  #menu-open       { grid-column: 1; justify-self: start; }
   .appbar__logo    { grid-column: 2; justify-self: center; }
   .appbar__actions { grid-column: 3; justify-self: end; }
-  .appbar__navlink {
-    position: relative;
-    font-family: var(--mono);
-    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.74); padding: 0.45rem 0; white-space: nowrap;
-    transition: color 0.2s var(--ease);
-  }
-  .appbar__navlink::after {
-    content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 2px;
-    background: var(--accent); transition: right 0.28s var(--ease);
-  }
-  .appbar__navlink:hover, .appbar__navlink:focus-visible { color: #fff; }
-  .appbar__navlink:hover::after,
-  .appbar__navlink.is-active::after { right: 0; }
-  .appbar__navlink.is-active { color: #fff; }
+
+  /* the inline link row stays hidden on every screen — menu is under the hamburger */
+  .appbar__nav { display: none; }
+
+  /* slightly larger tap targets read better on desktop */
+  #menu-open svg, .appbar__icon svg { width: 24px; height: 24px; }
 
   /* icons gain a proper hover state (touch had :active only) */
   .appbar__icon { transition: background 0.2s, transform 0.12s, color 0.2s; }
