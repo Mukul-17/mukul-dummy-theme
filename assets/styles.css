@@ -1211,17 +1211,62 @@ body.scrolled-past .appbar { top: 0; }
 .drawer__logo { height: 24px; width: auto; max-width: 160px; object-fit: contain; }
 .drawer__logo.is-default { filter: brightness(0) invert(1); }
 .drawer__nav { display: flex; flex-direction: column; flex: 1; }
-.drawer__nav a {
-  display: flex; align-items: baseline; justify-content: space-between;
-  padding: 1rem 0; border-bottom: 1px solid var(--line-soft);
-  font-family: var(--display); font-size: 2rem; color: #fff;
-  transition: color 0.2s, padding-left 0.25s var(--ease);
+/* icon + label rows (reference look) */
+.drawer__item, .drawer__item-link {
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 0.95rem 0.25rem; border-bottom: 1px solid var(--line-soft);
+  font-size: 1.05rem; font-weight: 600; color: var(--fg);
+  transition: color 0.2s, padding-left 0.22s var(--ease);
 }
-.drawer__nav a:active { color: var(--accent); padding-left: 0.5rem; }
-.drawer__idx { font-family: var(--mono); font-size: 11px; color: var(--faint); }
-.drawer__foot { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.5rem; }
-.drawer__foot-row { display: flex; justify-content: space-between; font-size: var(--fs-sm); color: var(--muted); }
-.drawer__foot-row strong { color: #fff; font-weight: 500; }
+.drawer__item .drawer__ic, .drawer__item-link .drawer__ic {
+  width: 22px; height: 22px; flex-shrink: 0; color: var(--fg);
+}
+.drawer__item:active, .drawer__item-link:active { color: var(--accent); padding-left: 0.6rem; }
+.drawer__item:active .drawer__ic, .drawer__item-link:active .drawer__ic { color: var(--accent); }
+.drawer__lbl { line-height: 1.1; }
+/* parent row: label-link on the left, expand arrow on the right */
+.drawer__item--parent { display: flex; align-items: stretch; gap: 0; padding: 0; border-bottom: 1px solid var(--line-soft); }
+.drawer__item--parent .drawer__item-link { flex: 1; border-bottom: 0; }
+.drawer__expand {
+  flex-shrink: 0; width: 48px; display: grid; place-items: center;
+  color: var(--muted); transition: color 0.2s, transform 0.15s;
+}
+.drawer__expand svg { width: 20px; height: 20px; }
+.drawer__expand:active { color: var(--accent); transform: scale(0.88); }
+.drawer__foot { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
+.drawer__social {
+  height: 42px; width: 42px; border-radius: 50%;
+  border: 1px solid var(--line); display: grid; place-items: center; color: var(--fg);
+  transition: border-color 0.2s, color 0.2s, transform 0.12s;
+}
+.drawer__social:active { transform: scale(0.9); border-color: var(--accent); color: var(--accent); }
+
+/* drill-down sub-panel — slides over the whole drawer from the right */
+.drawer__subview {
+  position: absolute; inset: 0; z-index: 4;
+  background: var(--bg-soft);
+  padding: calc(env(safe-area-inset-top, 0px) + 1.25rem) 1.5rem 1.5rem;
+  display: flex; flex-direction: column;
+  transform: translateX(100%); visibility: hidden;
+  transition: transform 0.34s var(--ease-out), visibility 0.34s;
+}
+.drawer__subview.is-current { transform: translateX(0); visibility: visible; }
+.drawer__back {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0 0 1rem; margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line-soft);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--fg);
+}
+.drawer__back svg { width: 18px; height: 18px; }
+.drawer__back:active { color: var(--accent); }
+.drawer__sublist { display: flex; flex-direction: column; overflow-y: auto; }
+.drawer__subitem {
+  padding: 0.95rem 0.25rem; border-bottom: 1px solid var(--line-soft);
+  font-family: var(--display); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.01em;
+  color: var(--fg); transition: color 0.2s, padding-left 0.22s var(--ease);
+}
+.drawer__subitem:active { color: var(--accent); padding-left: 0.6rem; }
 
 /* =========================================================
    Search sheet

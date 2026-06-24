@@ -14,17 +14,65 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
       </button>
     </div>
-    <nav class="drawer__nav">
+
+    <nav class="drawer__nav" aria-label="Main">
       {%- for link in menu.links -%}
-        <a href="{{ link.url }}" data-close><span>{{ link.title }}</span><span class="drawer__idx">{{ forloop.index | prepend: '0' }}</span></a>
+        {%- assign t = link.title | downcase -%}
+        {%- assign use_coll = false -%}
+        {%- if link.links.size == 0 and t contains 'collection' -%}{%- assign use_coll = true -%}{%- endif -%}
+        {%- assign has_sub = false -%}
+        {%- if link.links.size > 0 or use_coll -%}{%- assign has_sub = true -%}{%- endif -%}
+        {%- assign ic = 'tag' -%}
+        {%- if t contains 'home' -%}{%- assign ic = 'home' -%}
+        {%- elsif t contains 'collection' -%}{%- assign ic = 'grid' -%}
+        {%- elsif t contains 'tshirt' or t contains 't-shirt' or t contains 'shirt' or t contains 'tee' or t contains 'unisex' -%}{%- assign ic = 'tee' -%}
+        {%- elsif t contains 'about' -%}{%- assign ic = 'info' -%}
+        {%- elsif t contains 'contact' -%}{%- assign ic = 'phone' -%}
+        {%- endif -%}
+        {%- if has_sub -%}
+          <div class="drawer__item drawer__item--parent">
+            <a class="drawer__item-link" href="{{ link.url }}" data-close>{% render 'icon-nav', name: ic %}<span class="drawer__lbl">{{ link.title }}</span></a>
+            <button type="button" class="drawer__expand" data-open-sub="dsub-{{ forloop.index }}" aria-label="Open {{ link.title }}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        {%- else -%}
+          <a class="drawer__item" href="{{ link.url }}" data-close>{% render 'icon-nav', name: ic %}<span class="drawer__lbl">{{ link.title }}</span></a>
+        {%- endif -%}
       {%- else -%}
-        <a href="{{ routes.all_products_collection_url }}" data-close><span>Shop all</span><span class="drawer__idx">01</span></a>
-        <a href="{{ routes.all_products_collection_url }}" data-close><span>Collections</span><span class="drawer__idx">02</span></a>
+        <a class="drawer__item" href="{{ routes.all_products_collection_url }}" data-close>{% render 'icon-nav', name: 'grid' %}<span class="drawer__lbl">Shop all</span></a>
       {%- endfor -%}
     </nav>
+
     <div class="drawer__foot">
-      <div class="drawer__foot-row"><span>Free shipping over</span><strong>{{ settings.free_ship_text }}</strong></div>
-      <div class="drawer__foot-row"><span>Support</span><strong>{{ settings.support_email }}</strong></div>
+      <a class="drawer__social" href="{{ settings.social_instagram | default: 'https://instagram.com' }}" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg>
+      </a>
+      <a class="drawer__social" href="{{ settings.social_facebook | default: 'https://facebook.com' }}" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
     </div>
+
+    {%- comment -%} Drill-down sub-panels — one per parent item, in the same order so dsub-N matches. {%- endcomment -%}
+    {%- for link in menu.links -%}
+      {%- assign t = link.title | downcase -%}
+      {%- assign use_coll = false -%}
+      {%- if link.links.size == 0 and t contains 'collection' -%}{%- assign use_coll = true -%}{%- endif -%}
+      {%- if link.links.size > 0 or use_coll -%}
+        <nav class="drawer__subview" data-view="dsub-{{ forloop.index }}" aria-label="{{ link.title }}">
+          <button type="button" class="drawer__back" data-back>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            <span>{{ link.title }}</span>
+          </button>
+          <div class="drawer__sublist">
+            {%- if use_coll -%}
+              {%- for c in collections -%}{%- unless c.handle == 'frontpage' -%}<a class="drawer__subitem" href="{{ c.url }}" data-close>{{ c.title }}</a>{%- endunless -%}{%- endfor -%}
+            {%- else -%}
+              {%- for child in link.links -%}<a class="drawer__subitem" href="{{ child.url }}" data-close>{{ child.title }}</a>{%- endfor -%}
+            {%- endif -%}
+          </div>
+        </nav>
+      {%- endif -%}
+    {%- endfor -%}
   </aside>
 </div>

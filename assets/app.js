@@ -326,7 +326,11 @@
     root.classList.remove("is-open");
     const k = openStack.indexOf(id); if (k >= 0) openStack.splice(k, 1);
     if (!openStack.length) document.body.classList.remove("no-scroll");
-    setTimeout(() => { root.hidden = true; }, 450);
+    setTimeout(() => {
+      root.hidden = true;
+      // reset any open drawer sub-panel so it reopens at the root next time
+      root.querySelectorAll(".drawer__subview.is-current").forEach((v) => v.classList.remove("is-current"));
+    }, 450);
   }
 
   /* ---------------- cart ---------------- */
@@ -431,6 +435,17 @@
     if (searchTrig) { e.preventDefault(); openSheet("search-sheet"); return; }
     const bag = e.target.closest('.appbar__bag, .tab--bag, a[href$="/cart"]');
     if (bag) { e.preventDefault(); getCart().then(renderCart).then(() => openSheet("cart-root")); return; }
+    // drawer drill-down: open a sub-panel / go back
+    const openSub = e.target.closest("[data-open-sub]");
+    if (openSub) {
+      e.preventDefault();
+      const rootEl = openSub.closest(".sheet-root");
+      const view = rootEl && rootEl.querySelector('.drawer__subview[data-view="' + openSub.getAttribute("data-open-sub") + '"]');
+      if (view) view.classList.add("is-current");
+      return;
+    }
+    const back = e.target.closest("[data-back]");
+    if (back) { e.preventDefault(); const v = back.closest(".drawer__subview"); if (v) v.classList.remove("is-current"); return; }
     // close
     if (e.target.closest("[data-close]") || e.target.classList.contains("sheet__backdrop")) {
       if (e.target.closest("[data-cart-close]")) { closeSheet("cart-root"); return; }

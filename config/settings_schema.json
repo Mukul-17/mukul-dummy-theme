@@ -20,7 +20,9 @@
     "settings": [
       { "type": "text", "id": "free_ship_text", "label": "Free shipping threshold", "default": "₹1,499" },
       { "type": "text", "id": "support_email", "label": "Support email", "default": "modrnindia@gmail.com" },
-      { "type": "text", "id": "popular_searches", "label": "Popular search chips (comma-separated)", "default": "Oversized, 240 GSM, Coffee, Who Needs Roads" }
+      { "type": "text", "id": "popular_searches", "label": "Popular search chips (comma-separated)", "default": "Oversized, 240 GSM, Coffee, Who Needs Roads" },
+      { "type": "url", "id": "social_instagram", "label": "Instagram URL", "info": "Shown in the slide-out menu footer." },
+      { "type": "url", "id": "social_facebook", "label": "Facebook URL", "info": "Shown in the slide-out menu footer." }
     ]
   },
   {
