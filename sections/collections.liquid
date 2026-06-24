@@ -1,60 +1,67 @@
 {%- comment -%}
-  100% dynamic. Shows collections from Admin only:
-  - If specific collections are picked in the editor -> show those.
-  - Otherwise -> show every collection in the store (excluding the default Home page).
-  Nothing is hardcoded. Add a collection in Admin -> Products -> Collections and it appears here.
+  Tee-tag category switcher. Tags = store collections (Admin-managed: add/edit/
+  delete/reorder collections and their cover images in Admin and they appear here).
+  Tapping a tee filters the product grid below and updates the heading + count.
+  Products come from the store catalog; each card is tagged with its collections.
 {%- endcomment -%}
-{%- assign list = section.settings.collections -%}
+{%- assign rots = "-4deg|3deg|-2deg|4deg|-3deg|2deg" | split: "|" -%}
 
-<section id="collections" class="section">
+<section id="collections" class="section catsec">
   <div class="section__head reveal">
     <div class="eyebrow"><span class="eyebrow__num">{{ section.settings.eyebrow_num }}</span><span>{{ section.settings.eyebrow_label }}</span></div>
     <h2 class="section__title">{{ section.settings.heading }} <span class="t-muted">{{ section.settings.heading_accent }}</span></h2>
     {%- if section.settings.lead != blank -%}<p class="section__lead">{{ section.settings.lead }}</p>{%- endif -%}
   </div>
 
-  <div class="coll-bento" aria-label="Collections">
-    {%- if list != blank and list.count > 0 -%}
-      {%- for c in list limit: 4 -%}
-        {%- assign img = c.featured_image | default: c.image -%}
-        {%- if img == blank and c.products.first -%}{%- assign img = c.products.first.featured_image -%}{%- endif -%}
-        {% render 'cbento', title: c.title, url: c.url, image: img | image_url: width: 2000, num: forloop.index | prepend: '0', is_hero: forloop.first, tag: c.description | strip_html | truncatewords: 8 %}
-      {%- endfor -%}
-    {%- else -%}
-      {%- assign shown = 0 -%}
+  <div class="chips" aria-label="Shop by category">
+    <div class="chip-rod" aria-hidden="true"></div>
+    <div class="chips-scroll" id="cat-chips">
+      <button type="button" class="chip is-active" data-cat="__all" data-label="{{ section.settings.all_label | escape }}" style="--rot:-3deg">
+        <span class="tee"><span class="collar"></span><span class="tee-ico">★</span></span>
+        <span class="chip-lbl">{{ section.settings.all_label }}</span>
+      </button>
       {%- for c in collections -%}
         {%- unless c.handle == 'frontpage' -%}
-          {%- if shown < 4 -%}
-            {%- assign shown = shown | plus: 1 -%}
-            {%- assign img = c.featured_image | default: c.image -%}
-            {%- if img == blank and c.products.first -%}{%- assign img = c.products.first.featured_image -%}{%- endif -%}
-            {% render 'cbento', title: c.title, url: c.url, image: img | image_url: width: 2000, num: shown | prepend: '0', is_hero: shown == 1, tag: c.description | strip_html | truncatewords: 8 %}
-          {%- endif -%}
+          {%- assign cimg = c.featured_image | default: c.image -%}
+          <button type="button" class="chip" data-cat="{{ c.handle }}" data-label="{{ c.title | escape }}" style="--rot:{{ rots[forloop.index0 | modulo: 6] }}">
+            <span class="tee">
+              <span class="collar"></span>
+              {%- if cimg -%}<img class="tee-img" src="{{ cimg | image_url: width: 120 }}" alt="" width="40" height="40">{%- else -%}<span class="tee-ico">{{ c.title | slice: 0 | upcase }}</span>{%- endif -%}
+            </span>
+            <span class="chip-lbl">{{ c.title }}</span>
+          </button>
         {%- endunless -%}
       {%- endfor -%}
-    {%- endif -%}
+    </div>
+  </div>
 
-    <a class="cbento cbento--explore" href="{{ routes.all_products_collection_url }}">
-      <div class="cbento__ex-top">+ all mindsets</div>
-      <div>
-        <div class="cbento__ex-big">EXPLORE THE<br><span class="t-muted">full archive</span></div>
-        <div class="cbento__ex-shop">Shop all →</div>
-      </div>
-    </a>
+  <div class="feed-head">
+    <h3 id="cat-heading">{{ section.settings.all_label }}</h3>
+    <span class="count" id="cat-count"></span>
+  </div>
+
+  <div class="pgrid catgrid" id="cat-grid" aria-label="Products">
+    {%- for product in collections.all.products limit: section.settings.limit -%}
+      {%- capture cats -%}{% for pc in product.collections %}{{ pc.handle }} {% endfor %}{%- endcapture -%}
+      {% render 'product-card', product: product, cats: cats %}
+    {%- else -%}
+      {%- for i in (1..4) -%}<article class="pcard"><div class="pcard__media"></div><div class="pcard__info"><h3 class="pcard__name">Product</h3><div class="pcard__price"><b>₹599</b></div></div></article>{%- endfor -%}
+    {%- endfor -%}
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Collections bento",
+  "name": "Category switcher",
   "settings": [
     { "type": "text", "id": "eyebrow_num", "label": "Eyebrow number", "default": "[ 02 ]" },
     { "type": "text", "id": "eyebrow_label", "label": "Eyebrow label", "default": "Collections" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "EVERY TEE IS" },
     { "type": "text", "id": "heading_accent", "label": "Heading accent (muted)", "default": "a mindset." },
-    { "type": "textarea", "id": "lead", "label": "Sub text", "default": "Every drop is built around a feeling. Pick the one that matches your week." },
-    { "type": "collection_list", "id": "collections", "label": "Collections to feature (leave empty = show all)", "limit": 4 }
+    { "type": "textarea", "id": "lead", "label": "Sub text", "default": "Pick a mindset — the drop below filters to match." },
+    { "type": "text", "id": "all_label", "label": "First tag label", "default": "All" },
+    { "type": "range", "id": "limit", "label": "Max products loaded", "min": 12, "max": 50, "step": 2, "default": 36 }
   ],
-  "presets": [{ "name": "Collections bento" }]
+  "presets": [{ "name": "Category switcher" }]
 }
 {% endschema %}

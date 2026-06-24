@@ -5,7 +5,7 @@
 {%- assign on_sale = false -%}
 {%- if product.compare_at_price > product.price -%}{%- assign on_sale = true -%}{%- endif -%}
 
-<article class="pcard" data-card="{{ product.handle }}" data-product-handle="{{ product.handle }}">
+<article class="pcard" data-card="{{ product.handle }}" data-product-handle="{{ product.handle }}"{% if cats %} data-cats="{{ cats }}"{% endif %}>
   <div class="pcard__media">
     {%- if product.featured_image -%}
       <img class="pcard__img pcard__img--main" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000">

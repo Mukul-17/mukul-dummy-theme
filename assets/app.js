@@ -469,6 +469,36 @@
     });
   }
 
+  /* ---------------- category switcher (tee tags) ---------------- */
+  function initCatSwitch() {
+    const chips = $("#cat-chips"), grid = $("#cat-grid");
+    if (!chips || !grid) return;
+    const cards = $$(".pcard", grid);
+    const headingEl = $("#cat-heading"), countEl = $("#cat-count");
+    const apply = (cat, label) => {
+      let n = 0;
+      cards.forEach((c) => {
+        const cats = " " + (c.dataset.cats || "") + " ";
+        const show = cat === "__all" || cats.indexOf(" " + cat + " ") !== -1;
+        c.hidden = !show;
+        if (show) n++;
+      });
+      if (headingEl) headingEl.textContent = label;
+      if (countEl) countEl.textContent = n + (n === 1 ? " piece" : " pieces");
+    };
+    chips.addEventListener("click", (e) => {
+      const b = e.target.closest(".chip");
+      if (!b) return;
+      $$(".chip", chips).forEach((x) => x.classList.remove("is-active"));
+      b.classList.add("is-active");
+      b.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      apply(b.dataset.cat, b.dataset.label || b.textContent.trim());
+      haptic();
+    });
+    const first = $(".chip.is-active", chips) || $(".chip", chips);
+    if (first) apply(first.dataset.cat, first.dataset.label || first.textContent.trim());
+  }
+
   /* ---------------- init ---------------- */
   document.addEventListener("DOMContentLoaded", () => {
     initReveals();
@@ -481,6 +511,7 @@
     initChrome();
     initProduct();
     initSearch();
+    initCatSwitch();
     initCardFlip();
     $$(".rail-wrap").forEach(initRail);
     bindRailDots($("#drop-rail"), $(".rail__dots"));
