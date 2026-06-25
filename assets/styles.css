@@ -1876,6 +1876,8 @@ body.scrolled-past .appbar { top: 0; }
 .section__title { color: var(--fg); }
 .eyebrow { color: rgba(20, 20, 20, 0.5); }
 .section__lead { color: var(--muted); }
+/* hide the [ 01 ] [ 02 ] … eyebrow numbers across all sections */
+.eyebrow__num { display: none; }
 
 /* ---- Buttons / links (kept red where they were the primary CTA) ---- */
 .btn--primary { background: var(--accent); color: #fff; }
