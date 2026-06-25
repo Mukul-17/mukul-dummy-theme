@@ -1,8 +1,8 @@
 {
   "sections": {
     "hero": { "type": "hero-slider", "settings": {} },
-    "featured": { "type": "featured-tees", "settings": {} },
-    "bestsellers": { "type": "bestsellers", "settings": {} },
+    "featured": { "type": "featured-tees", "disabled": true, "settings": {} },
+    "bestsellers": { "type": "bestsellers", "disabled": true, "settings": {} },
     "collections": { "type": "collections", "settings": {} },
     "anatomy": {
       "type": "anatomy",
