@@ -59,7 +59,7 @@
 
   /* Chrome heights */
   --appbar-h: 56px;
-  --announce-h: 0px;  /* announcement bar removed */
+  --announce-h: 32px;  /* fixed announcement marquee bar */
   --tabbar-h: calc(62px + env(safe-area-inset-bottom, 0px));
 }
 
@@ -145,19 +145,20 @@ input { font-family: inherit; }
 .announce {
   position: fixed; top: 0; left: 0; right: 0; z-index: 71;
   height: var(--announce-h);
-  background: var(--accent);
-  color: #000;
+  background: #0b0b0b;
+  color: #fff;
   overflow: hidden;
   display: flex; align-items: center;
   transition: transform 0.4s var(--ease);
 }
 .announce__track {
-  display: flex; align-items: center; gap: 1.5rem;
+  display: flex; align-items: center; gap: 1.1rem;
   white-space: nowrap;
   animation: marquee 26s linear infinite;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-  padding-left: 1.5rem;
+  padding-left: 1.1rem;
 }
+.announce__msg { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; }
+.announce__sep { color: var(--accent); font-size: 10px; flex-shrink: 0; }
 .announce__track i { width: 4px; height: 4px; border-radius: 50%; background: #000; opacity: 0.5; flex-shrink: 0; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 

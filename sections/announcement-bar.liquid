@@ -1,0 +1,22 @@
+{%- assign msgs = section.settings.messages | default: 'LAUNCH SALE, FLAT ₹450 OFF, FREE SHIPPING' | split: ',' -%}
+<div class="announce" role="status" aria-label="Announcements">
+  <div class="announce__track" style="animation-duration: {{ section.settings.speed | default: 26 }}s">
+    {%- for n in (1..2) -%}
+      {%- for m in msgs -%}
+        <span class="announce__msg">{{ m | strip }}</span>
+        <span class="announce__sep" aria-hidden="true">✦</span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    { "type": "text", "id": "messages", "label": "Messages (comma-separated)", "default": "LAUNCH SALE, FLAT ₹450 OFF, FREE SHIPPING" },
+    { "type": "range", "id": "speed", "label": "Scroll speed (seconds)", "min": 12, "max": 50, "step": 2, "unit": "s", "default": 26 }
+  ],
+  "presets": [{ "name": "Announcement bar" }]
+}
+{% endschema %}
