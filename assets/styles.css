@@ -143,13 +143,12 @@ input { font-family: inherit; }
    Announcement bar
    ========================================================= */
 .announce {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 71;
+  position: fixed; top: calc(var(--appbar-h) + 8px); left: 0; right: 0; z-index: 69;
   height: var(--announce-h);
   background: #0b0b0b;
   color: #fff;
   overflow: hidden;
   display: flex; align-items: center;
-  transition: transform 0.4s var(--ease);
 }
 .announce__track {
   display: flex; align-items: center; gap: 1.1rem;
@@ -166,7 +165,7 @@ input { font-family: inherit; }
    Top app bar
    ========================================================= */
 .appbar {
-  position: fixed; top: var(--announce-h); left: 0; right: 0; z-index: 70;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 70;
   height: var(--appbar-h);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 0.75rem 0 0.5rem;
@@ -181,8 +180,7 @@ input { font-family: inherit; }
   -webkit-backdrop-filter: blur(12px) saturate(150%);
   border-bottom-color: var(--line);
 }
-/* Chrome hides when announce scrolls away */
-body.scrolled-past .announce { transform: translateY(-100%); }
+/* Announcement marquee stays fixed below the header at all times. */
 body.scrolled-past .appbar { top: 0; }
 
 .appbar__icon {
