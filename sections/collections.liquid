@@ -17,18 +17,24 @@
     <div class="chip-rod" aria-hidden="true"></div>
     <div class="chips-scroll" id="cat-chips">
       <button type="button" class="chip is-active" data-cat="__all" data-label="{{ section.settings.all_label | escape }}" style="--rot:-3deg">
-        <span class="tee"><span class="collar"></span><span class="tee-ico">★</span></span>
+        <span class="tee"><span class="collar"></span>{% render 'tee-icon', key: 'grid' %}</span>
         <span class="chip-lbl">{{ section.settings.all_label }}</span>
       </button>
+      {%- assign icycle = "sparkle,flame,helmet,compass,coffee,bolt,layers" | split: "," -%}
       {%- for c in collections -%}
         {%- unless c.handle == 'frontpage' -%}
-          {%- assign cimg = c.featured_image | default: c.image -%}
           {%- assign ri = forloop.index0 | modulo: 6 -%}
+          {%- assign t = c.title | downcase -%}
+          {%- if t contains 'machine' or t contains 'moto' or t contains 'rider' or t contains 'road' or t contains 'wheel' -%}{%- assign ikey = 'helmet' -%}
+          {%- elsif t contains 'vacation' or t contains 'travel' or t contains 'trip' or t contains 'airplane' -%}{%- assign ikey = 'compass' -%}
+          {%- elsif t contains 'coffee' or t contains 'caffeine' -%}{%- assign ikey = 'coffee' -%}
+          {%- elsif t contains 'minimal' or t contains 'essential' or t contains 'clean' or t contains 'basic' -%}{%- assign ikey = 'sparkle' -%}
+          {%- elsif t contains 'bold' or t contains 'high' or t contains 'standard' or t contains 'cricket' or t contains 'game' -%}{%- assign ikey = 'bolt' -%}
+          {%- elsif t contains '220' or t contains '240' or t contains 'gsm' or t contains 'heavy' -%}{%- assign ikey = 'layers' -%}
+          {%- elsif t contains 'hot' or t contains 'fire' or t contains 'cockroach' or t contains 'society' -%}{%- assign ikey = 'flame' -%}
+          {%- else -%}{%- assign im = forloop.index0 | modulo: 7 -%}{%- assign ikey = icycle[im] -%}{%- endif -%}
           <button type="button" class="chip" data-cat="{{ c.handle }}" data-label="{{ c.title | escape }}" style="--rot:{{ rots[ri] }}">
-            <span class="tee">
-              <span class="collar"></span>
-              {%- if cimg -%}<img class="tee-img" src="{{ cimg | image_url: width: 120 }}" alt="" width="40" height="40">{%- else -%}<span class="tee-ico">{{ c.title | slice: 0 | upcase }}</span>{%- endif -%}
-            </span>
+            <span class="tee"><span class="collar"></span>{% render 'tee-icon', key: ikey %}</span>
             <span class="chip-lbl">{{ c.title }}</span>
           </button>
         {%- endunless -%}
