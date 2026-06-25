@@ -143,7 +143,7 @@ input { font-family: inherit; }
    Announcement bar
    ========================================================= */
 .announce {
-  position: fixed; top: calc(var(--appbar-h) + 8px); left: 0; right: 0; z-index: 69;
+  position: fixed; top: var(--appbar-h); left: 0; right: 0; z-index: 69;
   height: var(--announce-h);
   background: #0b0b0b;
   color: #fff;
