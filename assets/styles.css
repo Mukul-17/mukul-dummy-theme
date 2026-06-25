@@ -157,6 +157,7 @@ input { font-family: inherit; }
   padding-left: 1.1rem;
 }
 .announce__msg { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; }
+.announce__hl { color: var(--accent); }
 .announce__sep { color: var(--accent); font-size: 10px; flex-shrink: 0; }
 .announce__track i { width: 4px; height: 4px; border-radius: 50%; background: #000; opacity: 0.5; flex-shrink: 0; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }

@@ -3,7 +3,10 @@
   <div class="announce__track" style="animation-duration: {{ section.settings.speed | default: 26 }}s">
     {%- for n in (1..2) -%}
       {%- for m in msgs -%}
-        <span class="announce__msg">{{ m | strip }}</span>
+        <span class="announce__msg">
+          {%- assign words = m | strip | split: ' ' -%}
+          {%- for w in words -%}{%- if w contains '₹' -%}<span class="announce__hl">{{ w }}</span>{%- else -%}{{ w }}{%- endif -%}{%- unless forloop.last %} {% endunless -%}{%- endfor -%}
+        </span>
         <span class="announce__sep" aria-hidden="true">✦</span>
       {%- endfor -%}
     {%- endfor -%}
