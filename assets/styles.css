@@ -1656,22 +1656,27 @@ body.scrolled-past .appbar { top: 0; }
 /* =========================================================
    Category switcher — t-shirt "swing tags" (Collections)
    ========================================================= */
-.chips { position: relative; margin-top: 1.1rem; }
+/* Sticks below the fixed header + marquee while scrolling the category's tees */
+.chips { position: sticky; top: calc(var(--appbar-h) + var(--announce-h)); z-index: 50; margin-top: 1.1rem; background: var(--bg); box-shadow: 0 12px 16px -12px rgba(0, 0, 0, 0.18); }
 .chip-rod { position: absolute; top: 22px; left: var(--pad); right: var(--pad); height: 3px; z-index: 0; background: linear-gradient(90deg, rgba(255,255,255,0.55), rgba(255,255,255,0.14)); border-radius: 3px; }
+/* anchor end-caps on the rod (left + right) */
+.chip-rod::before, .chip-rod::after { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; border-radius: 50%; background: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.35); }
+.chip-rod::before { left: -5px; }
+.chip-rod::after { right: -5px; }
 .chips-scroll { position: relative; z-index: 1; display: flex; gap: 10px; overflow-x: auto; padding: 14px var(--pad) 18px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .chips-scroll::-webkit-scrollbar { display: none; }
 .chip { flex: 0 0 auto; padding: 14px 0 0; background: none; border: none; position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 .chip::before { content: ""; position: absolute; top: 0; left: 50%; width: 2px; height: 15px; background: rgba(255,255,255,0.5); transform: translateX(-50%); }
 .tee {
-  width: 76px; padding: 18px 6px 9px; background: var(--paper); position: relative;
+  width: 88px; padding: 22px 8px 11px; background: var(--paper); position: relative;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
   color: var(--ink); transform-origin: top center; transform: rotate(var(--rot, -4deg));
-  filter: drop-shadow(0 6px 9px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 7px 11px rgba(0,0,0,0.4));
   transition: filter 0.2s, transform 0.3s cubic-bezier(.34,1.56,.64,1), background 0.2s, color 0.2s;
   clip-path: polygon(0% 30%,16% 3%,37% 3%,50% 14%,63% 3%,84% 3%,100% 30%,100% 56%,84% 44%,84% 100%,16% 100%,16% 44%,0% 56%);
 }
-.tee .collar { position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 24px; height: 9px; border: 2px solid rgba(11,11,11,0.18); border-top: none; border-radius: 0 0 16px 16px; }
-.tee-img { width: 38px; height: 38px; border-radius: 8px; object-fit: cover; }
+.tee .collar { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 26px; height: 10px; border: 2px solid rgba(11,11,11,0.18); border-top: none; border-radius: 0 0 16px 16px; }
+.tee-img { width: 48px; height: 48px; border-radius: 9px; object-fit: cover; }
 .tee-ico { font-family: var(--display); font-size: 20px; line-height: 1; }
 .chip-lbl { font-family: var(--mono); font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.78); text-align: center; max-width: 80px; line-height: 1.1; }
 .chip:active .tee { filter: drop-shadow(0 3px 5px rgba(0,0,0,0.5)); }
