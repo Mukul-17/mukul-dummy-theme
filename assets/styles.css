@@ -517,10 +517,12 @@ body.scrolled-past .appbar { top: 0; }
 .bn .tap.l { left: 0; } .bn .tap.r { right: 0; width: 66%; }
 @media (hover: none) { .bn .tap { display: block; } }
 /* arrows hidden on mobile (swipe + tap zones navigate); shown on desktop */
-.bn .arrows { position: absolute; right: 14px; bottom: calc(var(--tabbar-h) + 30px); z-index: 21; display: none; gap: 8px; }
-@media (min-width: 881px) { .bn .arrows { display: flex; right: 7vw; bottom: 34px; } }
-.bn .arrows button { width: 42px; height: 42px; border: 1px solid rgba(250,248,244,.4); background: rgba(12,12,14,.45); color: var(--paper); font-size: 16px; cursor: pointer; backdrop-filter: blur(4px); transition: .25s; }
+/* prev/next slider controls — split to the left & right edges, centred vertically */
+.bn .arrows { position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); z-index: 21; display: flex; justify-content: space-between; padding: 0 12px; pointer-events: none; }
+@media (min-width: 881px) { .bn .arrows { padding: 0 max(16px, 3vw); } }
+.bn .arrows button { pointer-events: auto; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(250,248,244,.45); background: rgba(12,12,14,.4); color: var(--paper); font-size: 18px; line-height: 1; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: grid; place-items: center; transition: background .25s, color .25s, transform .15s; }
 .bn .arrows button:hover { background: var(--paper); color: var(--ink); }
+.bn .arrows button:active { transform: scale(0.9); }
 
 /* =========================================================
    Marquee strips
