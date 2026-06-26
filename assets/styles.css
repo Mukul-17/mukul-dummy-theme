@@ -59,7 +59,7 @@
 
   /* Chrome heights */
   --appbar-h: 56px;
-  --announce-h: 32px;  /* fixed announcement marquee bar */
+  --announce-h: 38px;  /* fixed announcement marquee bar */
   --tabbar-h: calc(62px + env(safe-area-inset-bottom, 0px));
 }
 
@@ -151,14 +151,14 @@ input { font-family: inherit; }
   display: flex; align-items: center;
 }
 .announce__track {
-  display: flex; align-items: center; gap: 1.1rem;
+  display: flex; align-items: center; gap: 1.7rem;
   white-space: nowrap;
   animation: marquee 26s linear infinite;
-  padding-left: 1.1rem;
+  padding-left: 1.7rem;
 }
-.announce__msg { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; }
-.announce__hl { color: var(--accent); }
-.announce__sep { color: var(--accent); font-size: 10px; flex-shrink: 0; }
+.announce__msg { font-size: 13.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; }
+.announce__hl { color: var(--accent); font-weight: 800; }
+.announce__sep { color: var(--accent); font-size: 12px; flex-shrink: 0; }
 .announce__track i { width: 4px; height: 4px; border-radius: 50%; background: #000; opacity: 0.5; flex-shrink: 0; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
