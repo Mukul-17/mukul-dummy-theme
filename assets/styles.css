@@ -2034,3 +2034,16 @@ body.scrolled-past .appbar { top: 0; }
   .catsec .chips-scroll { justify-content: space-between; padding-left: clamp(20px, 2.5vw, 44px); padding-right: clamp(20px, 2.5vw, 44px); }
   .catsec .chip-rod { left: clamp(20px, 2.5vw, 44px); right: clamp(20px, 2.5vw, 44px); }
 }
+
+/* =========================================================
+   DESKTOP: #ModrnInTheWild — big featured reel on top,
+   Instagram-style 3-column photo grid below. Mobile unchanged.
+   ========================================================= */
+@media (min-width: 900px) {
+  .social-grid { grid-template-columns: repeat(3, 1fr); grid-auto-rows: auto; gap: 0.9rem; max-width: var(--shell); margin: 0 auto; }
+  .social-grid .tile--video { grid-column: 1 / -1; grid-row: auto; height: 60vh; border-radius: var(--radius-lg); }
+  .social-grid .tile:not(.tile--video) { grid-row: auto; aspect-ratio: 1; }
+  /* slightly larger play glyph on the big reel */
+  .social-grid .tile--video .tile__play { width: 64px; height: 64px; }
+  .social-grid .tile--video .tile__play svg { width: 26px; height: 26px; }
+}
