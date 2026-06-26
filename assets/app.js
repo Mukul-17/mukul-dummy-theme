@@ -585,7 +585,10 @@
       if (!b) return;
       $$(".chip", chips).forEach((x) => x.classList.remove("is-active"));
       b.classList.add("is-active");
-      b.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      // center the tapped tee within the hanger horizontally only — never scroll
+      // the page vertically (that fights the sticky hanger and causes jitter)
+      const target = b.offsetLeft - (chips.clientWidth - b.offsetWidth) / 2;
+      chips.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
       apply(b.dataset.cat, b.dataset.label || b.textContent.trim());
       haptic();
     });
