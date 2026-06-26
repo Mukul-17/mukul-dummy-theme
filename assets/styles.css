@@ -1347,9 +1347,10 @@ body.scrolled-past .appbar { top: 0; }
    behind the tee. JS scrubs the active point 01->04 by scroll progress. */
 .a-pinwrap { position: relative; height: 300vh; }
 .a-pin {
-  position: sticky; top: 0; min-height: 100svh;
-  display: grid; grid-template-rows: auto auto; align-content: center; gap: 0.25rem;
-  padding: calc(var(--appbar-h) + 0.4rem) var(--pad) calc(var(--tabbar-h) + 0.4rem);
+  position: sticky; top: calc(var(--appbar-h) + var(--announce-h));
+  min-height: calc(100svh - var(--appbar-h) - var(--announce-h));
+  display: grid; grid-template-rows: auto auto; align-content: start; gap: 0.5rem;
+  padding: 0.75rem var(--pad) calc(var(--tabbar-h) + 0.4rem);
   overflow: hidden;
 }
 .anatomy__diagram { display: grid; place-items: center; padding: 0; }
@@ -1363,7 +1364,7 @@ body.scrolled-past .appbar { top: 0; }
 .a-progress i { display: block; height: 100%; width: 0; background: var(--accent); }
 @media (min-width: 720px) {
   .a-pinwrap { height: 280vh; }
-  .a-pin { grid-template-rows: none; grid-template-columns: 1.15fr 1fr; align-items: center; gap: clamp(2rem, 5vw, 5rem); max-width: 1200px; margin: 0 auto; }
+  .a-pin { grid-template-rows: none; grid-template-columns: 1.15fr 1fr; align-items: center; align-content: center; gap: clamp(2rem, 5vw, 5rem); max-width: 1200px; margin: 0 auto; }
   .a-pin .anatomy__diagram { width: 100%; }
   .a-pin .tee-svg { width: 100%; height: auto; max-height: 74vh; }
   .a-pin .astep__title { font-size: 1.5rem; }
