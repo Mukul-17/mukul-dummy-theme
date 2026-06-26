@@ -527,27 +527,30 @@
   });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && openStack.length) closeSheet(openStack[openStack.length - 1]); });
 
-  /* ---------------- card image gallery (glide to flip, dots track) ---------------- */
+  /* ---------------- card image gallery (swipe/scroll, dots track) ---------------- */
   function initCardGallery() {
     $$(".pcard--multi").forEach((card) => {
-      const media = card.querySelector(".pcard__media");
-      const imgs = $$(".pcard__img", card);
+      const track = card.querySelector(".pcard__track");
       const dots = $$(".pdot", card);
-      if (!media || imgs.length < 2) return;
-      let cur = 0;
-      const show = (i) => {
-        i = Math.max(0, Math.min(i, imgs.length - 1));
-        if (i === cur) return;
-        imgs[cur].classList.remove("is-on"); if (dots[cur]) dots[cur].classList.remove("is-on");
-        imgs[i].classList.add("is-on"); if (dots[i]) dots[i].classList.add("is-on");
-        cur = i;
-      };
-      media.addEventListener("pointermove", (e) => {
-        if (e.pointerType !== "mouse") return;
-        const r = media.getBoundingClientRect();
-        show(Math.floor(((e.clientX - r.left) / r.width) * imgs.length));
-      });
-      media.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") show(0); });
+      if (!track) return;
+      // dots follow the scroll position
+      let sraf = 0;
+      track.addEventListener("scroll", () => {
+        if (sraf) return;
+        sraf = requestAnimationFrame(() => {
+          sraf = 0;
+          const i = Math.round(track.scrollLeft / track.clientWidth);
+          dots.forEach((d, k) => d.classList.toggle("is-on", k === i));
+        });
+      }, { passive: true });
+      // desktop: click-drag to scroll (mouse); suppress the link click if dragged
+      let down = false, sx = 0, sl = 0, moved = false;
+      track.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; });
+      track.addEventListener("pointermove", (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; track.scrollLeft = sl - dx; });
+      const up = () => { down = false; };
+      track.addEventListener("pointerup", up);
+      track.addEventListener("pointerleave", up);
+      track.addEventListener("click", (e) => { if (moved) e.preventDefault(); }, true);
     });
   }
 

@@ -623,12 +623,16 @@ body.scrolled-past .appbar { top: 0; }
   background: var(--surface);
   border: 1px solid var(--line-soft);
 }
-.pcard__img {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; opacity: 0;
-  transition: transform 0.6s var(--ease), opacity 0.4s var(--ease);
+/* horizontal swipe/scroll gallery (no hover effect, no buttons) */
+.pcard__track {
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; overflow-x: auto;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
-.pcard__img.is-on { opacity: 1; }
+.pcard__track::-webkit-scrollbar { display: none; }
+.pcard__slide { flex: 0 0 100%; height: 100%; scroll-snap-align: center; display: block; }
+.pcard__img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* gallery dots — overlay near the bottom of the image */
 .pcard__dots {
   position: absolute; left: 0; right: 0; bottom: 0.7rem; z-index: 3;
@@ -1884,9 +1888,7 @@ body.scrolled-past .appbar { top: 0; }
   /* ---- General hover affordances (touch keeps its :active states) ---- */
   .pcard__add:hover  { background: var(--accent); color: #000; transform: scale(1.06); }
   .pcard__wish:hover { color: var(--accent); }
-  /* single-image cards zoom into the centre on hover; multi-image cards
-     glide through their photos instead (handled in JS, dots track position) */
-  .pcard:not(.pcard--multi):hover .pcard__img { transform: scale(1.1); }
+  /* product cards: no hover image effect — images are a swipe/scroll gallery */
   .bcard__img        { transition: transform 0.6s var(--ease); }
   .bcard:hover .bcard__img { transform: scale(1.04); }
   .rail-arrow:hover  { transform: scale(1.08); }
