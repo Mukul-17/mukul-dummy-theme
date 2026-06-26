@@ -1345,16 +1345,16 @@ body.scrolled-past .appbar { top: 0; }
 /* Anatomy = pinned scrollytelling. A tall track (.a-pinwrap) holds a sticky
    full-screen stage (.a-pin) with the tee + steps TOGETHER, so nothing scrolls
    behind the tee. JS scrubs the active point 01->04 by scroll progress. */
-.a-pinwrap { position: relative; height: 300vh; }
+.a-pinwrap { position: relative; height: 260vh; }
 .a-pin {
   position: sticky; top: calc(var(--appbar-h) + var(--announce-h));
-  min-height: calc(100svh - var(--appbar-h) - var(--announce-h));
-  display: grid; grid-template-rows: auto auto; align-content: start; gap: 0.5rem;
-  padding: 0.75rem var(--pad) calc(var(--tabbar-h) + 0.4rem);
+  min-height: calc(100svh - var(--appbar-h) - var(--announce-h) - 2.5rem);
+  display: grid; grid-template-rows: auto auto; align-content: center; gap: 0.6rem;
+  padding: 0.75rem var(--pad) 0.75rem;
   overflow: hidden;
 }
 .anatomy__diagram { display: grid; place-items: center; padding: 0; }
-.a-pin .tee-svg { width: auto; height: clamp(200px, 40vh, 380px); overflow: visible; }
+.a-pin .tee-svg { width: auto; height: clamp(220px, 46vh, 400px); overflow: visible; }
 .a-pin .anatomy__steps { padding: 0; width: 100%; max-width: 600px; margin: 0 auto; display: block; }
 .a-pin .astep { padding: 0.35rem 0; }
 .a-pin .astep__num { font-size: 10px; }
