@@ -1875,7 +1875,8 @@ body.scrolled-past .appbar { top: 0; }
   /* ---- General hover affordances (touch keeps its :active states) ---- */
   .pcard__add:hover  { background: var(--accent); color: #000; transform: scale(1.06); }
   .pcard__wish:hover { color: var(--accent); }
-  .chip:hover .tee   { filter: drop-shadow(0 11px 15px rgba(0, 0, 0, 0.6)); }
+  /* product image zooms into the centre on hover (in addition to the flip) */
+  .pcard:hover .pcard__img { transform: scale(1.1); }
   .bcard__img        { transition: transform 0.6s var(--ease); }
   .bcard:hover .bcard__img { transform: scale(1.04); }
   .rail-arrow:hover  { transform: scale(1.08); }
