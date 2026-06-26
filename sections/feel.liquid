@@ -13,15 +13,16 @@
   </div>
 
   <div class="feel__lensbox reveal" id="lensbox">
-    <img id="lensimg" src="{{ f1url }}" alt="Close-up of MODRN fabric and stitching" loading="lazy" decoding="async" width="1000" height="1000" />
+    <img id="lensimg" src="{{ f1url }}" alt="Close-up of MODRN fabric and stitching" loading="lazy" decoding="async" width="1000" height="1000" draggable="false" oncontextmenu="return false" />
     <div class="feel__lens" id="lens"></div>
-    <div class="feel__hint" id="lens-hint">Drag to zoom ↗</div>
+    <div class="feel__hint" id="lens-hint">Hover or tap to zoom ↗</div>
   </div>
+  <div class="feel__zoom" id="lenszoom" aria-hidden="true"></div>
 
   <div class="feel__thumbs" id="fab-thumbs">
-    <button class="is-active" data-src="{{ f1url }}" aria-label="Fabric close-up 1"><img src="{{ f1url }}" alt="" width="200" height="200" loading="lazy" /></button>
-    <button data-src="{{ f2url }}" aria-label="Fabric close-up 2"><img src="{{ f2url }}" alt="" width="200" height="200" loading="lazy" /></button>
-    <button data-src="{{ f3url }}" aria-label="Fabric close-up 3"><img src="{{ f3url }}" alt="" width="200" height="200" loading="lazy" /></button>
+    <button class="is-active" data-src="{{ f1url }}" aria-label="Fabric close-up 1"><img src="{{ f1url }}" alt="" width="200" height="200" loading="lazy" draggable="false" oncontextmenu="return false" /></button>
+    <button data-src="{{ f2url }}" aria-label="Fabric close-up 2"><img src="{{ f2url }}" alt="" width="200" height="200" loading="lazy" draggable="false" oncontextmenu="return false" /></button>
+    <button data-src="{{ f3url }}" aria-label="Fabric close-up 3"><img src="{{ f3url }}" alt="" width="200" height="200" loading="lazy" draggable="false" oncontextmenu="return false" /></button>
   </div>
 
   <div class="feel__weigh" id="weigh">

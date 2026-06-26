@@ -202,28 +202,62 @@
     update();
   }
 
-  /* ---------------- feel the fabric ---------------- */
+  /* ---------------- feel the fabric (Amazon-style zoom) ---------------- */
   function initFabric() {
     const box = $("#lensbox");
     if (!box) return;
-    const lens = $("#lens"), img = $("#lensimg"), thumbs = $("#fab-thumbs"), feel = $("#fabric");
-    const Z = 2.4, HALF = 75;
-    const setBg = () => { lens.style.backgroundImage = `url('${img.currentSrc || img.src}')`; };
+    const lens = $("#lens"), img = $("#lensimg"), thumbs = $("#fab-thumbs"), feel = $("#fabric"), zoom = $("#lenszoom");
+    if (!zoom) return;
+    const Z = 2.6;
+    let active = false;
+
+    const url = () => img.currentSrc || img.src;
+    const setBg = () => { zoom.style.backgroundImage = `url('${url()}')`; };
     if (img.complete) setBg(); else img.addEventListener("load", setBg, { once: true });
-    const moveLens = (cx, cy) => {
+
+    // place the zoom panel: right of the image on desktop, over the image on touch
+    function placePanel(rect, mouse) {
+      const vw = window.innerWidth, gap = 16;
+      if (mouse && vw >= 900) {
+        const roomRight = vw - rect.right - gap - 12;
+        if (roomRight >= 260) {
+          zoom.style.left = (rect.right + gap) + "px";
+          zoom.style.width = Math.min(roomRight, 460) + "px";
+          zoom.style.top = rect.top + "px";
+          zoom.style.height = rect.height + "px";
+          return;
+        }
+      }
+      zoom.style.left = rect.left + "px"; zoom.style.top = rect.top + "px";
+      zoom.style.width = rect.width + "px"; zoom.style.height = rect.height + "px";
+    }
+
+    function move(cx, cy) {
       const r = box.getBoundingClientRect();
-      let x = Math.max(0, Math.min(cx - r.left, r.width));
-      let y = Math.max(0, Math.min(cy - r.top, r.height));
-      lens.style.left = x + "px"; lens.style.top = y + "px";
-      lens.style.backgroundSize = `${r.width * Z}px ${r.height * Z}px`;
-      lens.style.backgroundPosition = `${-(x * Z - HALF)}px ${-(y * Z - HALF)}px`;
-    };
-    box.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") box.classList.add("is-zooming"); });
-    box.addEventListener("pointerleave", () => box.classList.remove("is-zooming"));
-    box.addEventListener("pointerdown", (e) => { box.classList.add("is-zooming"); try { box.setPointerCapture(e.pointerId); } catch (_) {} moveLens(e.clientX, e.clientY); });
-    box.addEventListener("pointermove", (e) => { if (box.classList.contains("is-zooming")) moveLens(e.clientX, e.clientY); });
-    box.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") box.classList.remove("is-zooming"); });
-    box.addEventListener("pointercancel", () => box.classList.remove("is-zooming"));
+      const zr = zoom.getBoundingClientRect();
+      const lw = zr.width / Z, lh = zr.height / Z;
+      const x = Math.max(0, Math.min(cx - r.left, r.width));
+      const y = Math.max(0, Math.min(cy - r.top, r.height));
+      const cxp = Math.max(lw / 2, Math.min(x, r.width - lw / 2));
+      const cyp = Math.max(lh / 2, Math.min(y, r.height - lh / 2));
+      lens.style.width = lw + "px"; lens.style.height = lh + "px";
+      lens.style.left = cxp + "px"; lens.style.top = cyp + "px";
+      zoom.style.backgroundSize = (r.width * Z) + "px " + (r.height * Z) + "px";
+      zoom.style.backgroundPosition = (-((cxp - lw / 2) * Z)) + "px " + (-((cyp - lh / 2) * Z)) + "px";
+    }
+
+    function start(e) { setBg(); placePanel(box.getBoundingClientRect(), e.pointerType === "mouse"); active = true; feel.classList.add("is-zooming"); move(e.clientX, e.clientY); }
+    function stop() { active = false; feel.classList.remove("is-zooming"); }
+
+    box.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") start(e); });
+    box.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") stop(); });
+    box.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") { start(e); try { box.setPointerCapture(e.pointerId); } catch (_) {} } });
+    box.addEventListener("pointermove", (e) => { if (active) { if (e.cancelable) e.preventDefault(); move(e.clientX, e.clientY); } }, { passive: false });
+    box.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") stop(); });
+    box.addEventListener("pointercancel", stop);
+    box.addEventListener("contextmenu", (e) => e.preventDefault());  // kill long-press save menu
+    window.addEventListener("scroll", () => { if (active) stop(); }, { passive: true });
+
     if (thumbs) thumbs.addEventListener("click", (e) => {
       const b = e.target.closest("button[data-src]"); if (!b) return;
       $$("button", thumbs).forEach((x) => x.classList.remove("is-active"));
@@ -232,6 +266,7 @@
       img.addEventListener("load", setBg, { once: true });
       haptic();
     });
+
     const weigh = $("#weigh");
     if (weigh && feel) {
       const armIO = new IntersectionObserver((es, o) => { es.forEach((e) => { if (e.isIntersecting) { feel.classList.add("is-armed"); o.disconnect(); } }); }, { threshold: 0.35 });
