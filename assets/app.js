@@ -266,9 +266,14 @@
     function stop() { active = false; feel.classList.remove("is-zooming"); if (raf) { cancelAnimationFrame(raf); raf = 0; } }
 
     box.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") start(e); });
+    box.addEventListener("pointerover", (e) => { if (e.pointerType === "mouse" && !active) start(e); });
     box.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") stop(); });
     box.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") { start(e); try { box.setPointerCapture(e.pointerId); } catch (_) {} } });
-    box.addEventListener("pointermove", (e) => { if (active) { if (e.cancelable) e.preventDefault(); queueMove(e.clientX, e.clientY); } }, { passive: false });
+    box.addEventListener("pointermove", (e) => {
+      // activate on the first mouse move too — pointerenter alone is unreliable
+      if (e.pointerType === "mouse" && !active) start(e);
+      if (active) { if (e.cancelable) e.preventDefault(); queueMove(e.clientX, e.clientY); }
+    }, { passive: false });
     box.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") stop(); });
     box.addEventListener("pointercancel", stop);
     box.addEventListener("contextmenu", (e) => e.preventDefault());  // kill long-press save menu
