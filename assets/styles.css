@@ -629,7 +629,7 @@ body.scrolled-past .appbar { top: 0; }
   transition: transform 0.9s var(--ease), opacity 0.6s var(--ease);
 }
 .pcard__img--alt { opacity: 0; }
-.pcard.is-flipped .pcard__img--main { opacity: 0; }
+.pcard--multi.is-flipped .pcard__img--main { opacity: 0; }   /* only fade out when a 2nd image exists */
 .pcard.is-flipped .pcard__img--alt { opacity: 1; }
 .pcard__badge {
   position: absolute; top: 0.7rem; left: 0.7rem; z-index: 2;
