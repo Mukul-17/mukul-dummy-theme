@@ -1808,7 +1808,7 @@ body.scrolled-past .appbar { top: 0; }
   /* ---- Feel the fabric → vertical thumbs | image | weigh-in (Amazon-like) ---- */
   .feel {
     display: grid;
-    grid-template-columns: auto minmax(0, 400px) 1fr;
+    grid-template-columns: auto 1.7fr 1fr;
     column-gap: clamp(1.25rem, 3vw, 3rem);
     align-items: start;
     max-width: var(--shell); margin-inline: auto;
@@ -1819,6 +1819,7 @@ body.scrolled-past .appbar { top: 0; }
   .feel .section__head { grid-area: head; padding-inline: 0; margin-bottom: 2.25rem; }
   .feel__thumbs  { grid-area: thumbs; flex-direction: column; max-width: none; padding: 0; gap: 0.7rem; }
   .feel__lensbox { grid-area: img; margin: 0; max-width: none; cursor: crosshair; align-self: start; }
+  .feel__lensbox img { aspect-ratio: 16 / 9; }   /* wide landscape on desktop, not tall */
   .feel__weigh   { grid-area: weigh; max-width: 480px; padding: 0; align-self: start; }
   .feel__thumbs button { transition: border-color 0.2s, transform 0.12s, opacity 0.2s; }
   .feel__thumbs button:hover { opacity: 1; border-color: rgba(20, 20, 20, 0.4); }
