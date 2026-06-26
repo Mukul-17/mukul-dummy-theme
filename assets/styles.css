@@ -1981,8 +1981,11 @@ body.scrolled-past .appbar { top: 0; }
 .appbar.is-home:not(.is-scrolled) .appbar__logo img.is-default { filter: brightness(0) invert(1); }
 
 @media (min-width: 900px) {
-  /* Category hanger: spread the tees across the full width on desktop.
+  /* Category hanger: spread the tees across the full width on desktop and
+     use a small gutter (not the wide page-centering --pad) so it fills the
+     bar instead of leaving big empty space left/right.
      When there are too many to fit, space-between collapses to flex-start
      so the row simply scrolls (packs toward the left) — no left cut-off. */
-  .chips-scroll { justify-content: space-between; }
+  .catsec .chips-scroll { justify-content: space-between; padding-left: clamp(20px, 2.5vw, 44px); padding-right: clamp(20px, 2.5vw, 44px); }
+  .catsec .chip-rod { left: clamp(20px, 2.5vw, 44px); right: clamp(20px, 2.5vw, 44px); }
 }
