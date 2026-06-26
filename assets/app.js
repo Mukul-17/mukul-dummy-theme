@@ -208,7 +208,7 @@
     if (!box) return;
     const lens = $("#lens"), img = $("#lensimg"), thumbs = $("#fab-thumbs"), feel = $("#fabric"), zoom = $("#lenszoom");
     if (!zoom) return;
-    const Z = 2.6;
+    const Z = 2.4, BASE = 1.5;   // BASE = default crop-in so the fabric fills the frame (matches CSS scale)
     let active = false;
 
     const url = () => img.currentSrc || img.src;
@@ -233,22 +233,32 @@
     }
 
     // cache geometry once per session so pointermove does no layout reads
-    let R = null, LW = 0, LH = 0, raf = 0, mx = 0, my = 0;
+    let R = null, PW = 0, PH = 0, CW = 0, CH = 0, HZ = 1, LW = 0, LH = 0, raf = 0, mx = 0, my = 0;
     function prime() {
       R = box.getBoundingClientRect();
       const zr = zoom.getBoundingClientRect();
-      LW = zr.width / Z; LH = zr.height / Z;
+      PW = zr.width; PH = zr.height;
+      const nw = img.naturalWidth || R.width, nh = img.naturalHeight || R.height;
+      const f = Math.max(R.width / nw, R.height / nh);   // cover factor for the box
+      CW = nw * f; CH = nh * f;                           // source scaled to cover the box
+      HZ = BASE * Z;                                      // panel magnification vs the cover image
+      LW = PW / Z; LH = PH / Z;                           // lens size on the (base-zoomed) source
       lens.style.width = LW + "px"; lens.style.height = LH + "px";
-      zoom.style.backgroundSize = (R.width * Z) + "px " + (R.height * Z) + "px";
+      zoom.style.backgroundSize = (CW * HZ) + "px " + (CH * HZ) + "px";
     }
     function move(cx, cy) {
       if (!R) return;
-      const x = Math.max(0, Math.min(cx - R.left, R.width));
-      const y = Math.max(0, Math.min(cy - R.top, R.height));
-      const cxp = Math.max(LW / 2, Math.min(x, R.width - LW / 2));
-      const cyp = Math.max(LH / 2, Math.min(y, R.height - LH / 2));
-      lens.style.left = cxp + "px"; lens.style.top = cyp + "px";
-      zoom.style.backgroundPosition = (-((cxp - LW / 2) * Z)) + "px " + (-((cyp - LH / 2) * Z)) + "px";
+      const bx = Math.max(0, Math.min(cx - R.left, R.width));
+      const by = Math.max(0, Math.min(cy - R.top, R.height));
+      const lcx = Math.max(LW / 2, Math.min(bx, R.width - LW / 2));
+      const lcy = Math.max(LH / 2, Math.min(by, R.height - LH / 2));
+      lens.style.left = lcx + "px"; lens.style.top = lcy + "px";
+      // box point -> point on the base-zoomed cover image -> source-cover coord
+      const covx = R.width / 2 + (lcx - R.width / 2) / BASE;
+      const covy = R.height / 2 + (lcy - R.height / 2) / BASE;
+      const scx = (CW - R.width) / 2 + covx;
+      const scy = (CH - R.height) / 2 + covy;
+      zoom.style.backgroundPosition = (PW / 2 - scx * HZ) + "px " + (PH / 2 - scy * HZ) + "px";
     }
     function queueMove(cx, cy) { mx = cx; my = cy; if (!raf) raf = requestAnimationFrame(() => { raf = 0; move(mx, my); }); }
 
