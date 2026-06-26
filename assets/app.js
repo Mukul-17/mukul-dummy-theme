@@ -232,27 +232,33 @@
       zoom.style.width = rect.width + "px"; zoom.style.height = rect.height + "px";
     }
 
-    function move(cx, cy) {
-      const r = box.getBoundingClientRect();
+    // cache geometry once per session so pointermove does no layout reads
+    let R = null, LW = 0, LH = 0, raf = 0, mx = 0, my = 0;
+    function prime() {
+      R = box.getBoundingClientRect();
       const zr = zoom.getBoundingClientRect();
-      const lw = zr.width / Z, lh = zr.height / Z;
-      const x = Math.max(0, Math.min(cx - r.left, r.width));
-      const y = Math.max(0, Math.min(cy - r.top, r.height));
-      const cxp = Math.max(lw / 2, Math.min(x, r.width - lw / 2));
-      const cyp = Math.max(lh / 2, Math.min(y, r.height - lh / 2));
-      lens.style.width = lw + "px"; lens.style.height = lh + "px";
-      lens.style.left = cxp + "px"; lens.style.top = cyp + "px";
-      zoom.style.backgroundSize = (r.width * Z) + "px " + (r.height * Z) + "px";
-      zoom.style.backgroundPosition = (-((cxp - lw / 2) * Z)) + "px " + (-((cyp - lh / 2) * Z)) + "px";
+      LW = zr.width / Z; LH = zr.height / Z;
+      lens.style.width = LW + "px"; lens.style.height = LH + "px";
+      zoom.style.backgroundSize = (R.width * Z) + "px " + (R.height * Z) + "px";
     }
+    function move(cx, cy) {
+      if (!R) return;
+      const x = Math.max(0, Math.min(cx - R.left, R.width));
+      const y = Math.max(0, Math.min(cy - R.top, R.height));
+      const cxp = Math.max(LW / 2, Math.min(x, R.width - LW / 2));
+      const cyp = Math.max(LH / 2, Math.min(y, R.height - LH / 2));
+      lens.style.left = cxp + "px"; lens.style.top = cyp + "px";
+      zoom.style.backgroundPosition = (-((cxp - LW / 2) * Z)) + "px " + (-((cyp - LH / 2) * Z)) + "px";
+    }
+    function queueMove(cx, cy) { mx = cx; my = cy; if (!raf) raf = requestAnimationFrame(() => { raf = 0; move(mx, my); }); }
 
-    function start(e) { setBg(); placePanel(box.getBoundingClientRect(), e.pointerType === "mouse"); active = true; feel.classList.add("is-zooming"); move(e.clientX, e.clientY); }
-    function stop() { active = false; feel.classList.remove("is-zooming"); }
+    function start(e) { setBg(); placePanel(box.getBoundingClientRect(), e.pointerType === "mouse"); prime(); active = true; feel.classList.add("is-zooming"); move(e.clientX, e.clientY); }
+    function stop() { active = false; feel.classList.remove("is-zooming"); if (raf) { cancelAnimationFrame(raf); raf = 0; } }
 
     box.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") start(e); });
     box.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") stop(); });
     box.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") { start(e); try { box.setPointerCapture(e.pointerId); } catch (_) {} } });
-    box.addEventListener("pointermove", (e) => { if (active) { if (e.cancelable) e.preventDefault(); move(e.clientX, e.clientY); } }, { passive: false });
+    box.addEventListener("pointermove", (e) => { if (active) { if (e.cancelable) e.preventDefault(); queueMove(e.clientX, e.clientY); } }, { passive: false });
     box.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") stop(); });
     box.addEventListener("pointercancel", stop);
     box.addEventListener("contextmenu", (e) => e.preventDefault());  // kill long-press save menu
