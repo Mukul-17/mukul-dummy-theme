@@ -7,14 +7,23 @@
 
 <article class="pcard{% if product.images[1] %} pcard--multi{% endif %}" data-card="{{ product.handle }}" data-product-handle="{{ product.handle }}"{% if cats %} data-cats="{{ cats }}"{% endif %}>
   <div class="pcard__media">
-    {%- if product.featured_image -%}
-      <img class="pcard__img pcard__img--main" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000">
-    {%- endif -%}
-    {%- if product.images[1] -%}
-      <img class="pcard__img pcard__img--alt" src="{{ product.images[1] | image_url: width: 1200 }}" alt="" loading="lazy" decoding="async" width="800" height="1000">
+    {%- assign imgs = product.images -%}
+    {%- if imgs.size > 0 -%}
+      {%- for image in imgs limit: 5 -%}
+        <img class="pcard__img{% if forloop.first %} is-on{% endif %}" data-i="{{ forloop.index0 }}" src="{{ image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000">
+      {%- endfor -%}
+    {%- elsif product.featured_image -%}
+      <img class="pcard__img is-on" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000">
     {%- endif -%}
 
     <a class="pcard__hit" href="{{ product.url }}" aria-label="{{ product.title | escape }}"></a>
+
+    {%- if imgs.size > 1 -%}
+      {%- assign dn = imgs.size | at_most: 5 -%}
+      <div class="pcard__dots" aria-hidden="true">
+        {%- for i in (1..dn) -%}<span class="pdot{% if forloop.first %} is-on{% endif %}"></span>{%- endfor -%}
+      </div>
+    {%- endif -%}
 
     {%- if rank -%}
       <span class="pcard__rank">{{ rank }}</span>

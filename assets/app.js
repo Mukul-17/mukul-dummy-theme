@@ -527,11 +527,27 @@
   });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && openStack.length) closeSheet(openStack[openStack.length - 1]); });
 
-  /* ---------------- card flip on hover ---------------- */
-  function initCardFlip() {
-    $$("[data-card]").forEach((card) => {
-      card.addEventListener("pointerenter", () => card.classList.add("is-flipped"));
-      card.addEventListener("pointerleave", () => card.classList.remove("is-flipped"));
+  /* ---------------- card image gallery (glide to flip, dots track) ---------------- */
+  function initCardGallery() {
+    $$(".pcard--multi").forEach((card) => {
+      const media = card.querySelector(".pcard__media");
+      const imgs = $$(".pcard__img", card);
+      const dots = $$(".pdot", card);
+      if (!media || imgs.length < 2) return;
+      let cur = 0;
+      const show = (i) => {
+        i = Math.max(0, Math.min(i, imgs.length - 1));
+        if (i === cur) return;
+        imgs[cur].classList.remove("is-on"); if (dots[cur]) dots[cur].classList.remove("is-on");
+        imgs[i].classList.add("is-on"); if (dots[i]) dots[i].classList.add("is-on");
+        cur = i;
+      };
+      media.addEventListener("pointermove", (e) => {
+        if (e.pointerType !== "mouse") return;
+        const r = media.getBoundingClientRect();
+        show(Math.floor(((e.clientX - r.left) / r.width) * imgs.length));
+      });
+      media.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") show(0); });
     });
   }
 
@@ -578,7 +594,7 @@
     initProduct();
     initSearch();
     initCatSwitch();
-    initCardFlip();
+    initCardGallery();
     $$(".rail-wrap").forEach(initRail);
     bindRailDots($("#drop-rail"), $(".rail__dots"));
     bindRailDots($("#reviews-track"), $("#review-dots"));
