@@ -545,12 +545,21 @@
       }, { passive: true });
       // desktop: click-drag to scroll (mouse); suppress the link click if dragged
       let down = false, sx = 0, sl = 0, moved = false;
-      track.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; });
-      track.addEventListener("pointermove", (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; track.scrollLeft = sl - dx; });
-      const up = () => { down = false; };
+      track.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "mouse") return;
+        down = true; moved = false; sx = e.clientX; sl = track.scrollLeft;
+        try { track.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+      track.addEventListener("pointermove", (e) => {
+        if (!down) return;
+        const dx = e.clientX - sx;
+        if (Math.abs(dx) > 3) { moved = true; track.classList.add("is-dragging"); }
+        track.scrollLeft = sl - dx;
+      });
+      const up = (e) => { down = false; track.classList.remove("is-dragging"); try { track.releasePointerCapture(e.pointerId); } catch (_) {} };
       track.addEventListener("pointerup", up);
-      track.addEventListener("pointerleave", up);
-      track.addEventListener("click", (e) => { if (moved) e.preventDefault(); }, true);
+      track.addEventListener("pointercancel", up);
+      track.addEventListener("click", (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
     });
   }
 

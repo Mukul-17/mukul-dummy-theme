@@ -11,10 +11,10 @@
     <div class="pcard__track">
       {%- if imgs.size > 0 -%}
         {%- for image in imgs limit: 5 -%}
-          <a class="pcard__slide" href="{{ product.url }}" aria-label="{{ product.title | escape }}"><img class="pcard__img" src="{{ image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000"></a>
+          <a class="pcard__slide" href="{{ product.url }}" aria-label="{{ product.title | escape }}" draggable="false"><img class="pcard__img" src="{{ image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000" draggable="false"></a>
         {%- endfor -%}
       {%- elsif product.featured_image -%}
-        <a class="pcard__slide" href="{{ product.url }}" aria-label="{{ product.title | escape }}"><img class="pcard__img" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000"></a>
+        <a class="pcard__slide" href="{{ product.url }}" aria-label="{{ product.title | escape }}" draggable="false"><img class="pcard__img" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async" width="800" height="1000" draggable="false"></a>
       {%- endif -%}
     </div>
 
