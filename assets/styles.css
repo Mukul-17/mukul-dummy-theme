@@ -1346,8 +1346,9 @@ body.scrolled-past .appbar { top: 0; }
 .a-progress i { display: block; height: 100%; width: 0; background: var(--accent); }
 @media (min-width: 720px) {
   .a-pinwrap { height: 280vh; }
-  .a-pin { grid-template-rows: none; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 3rem; max-width: 1080px; margin: 0 auto; }
-  .a-pin .tee-svg { width: auto; height: min(46vh, 440px); }
+  .a-pin { grid-template-rows: none; grid-template-columns: 1.15fr 1fr; align-items: center; gap: clamp(2rem, 5vw, 5rem); max-width: 1200px; margin: 0 auto; }
+  .a-pin .anatomy__diagram { width: 100%; }
+  .a-pin .tee-svg { width: 100%; height: auto; max-height: 74vh; }
   .a-pin .astep__title { font-size: 1.5rem; }
   .a-pin .astep__copy { font-size: var(--fs-sm); }
 }
