@@ -516,6 +516,9 @@ body.scrolled-past .appbar { top: 0; }
 .bn .tap { position: absolute; top: 0; bottom: 90px; width: 34%; z-index: 15; display: none; }
 .bn .tap.l { left: 0; } .bn .tap.r { right: 0; width: 66%; }
 @media (hover: none) { .bn .tap { display: block; } }
+/* lift the slide CTAs above the tap-to-navigate zones so the buttons are clickable */
+.bn .cta-wrap, .bn .cta-bar, .bn .row { z-index: 18; }
+.bn3 .cta-bar, .bn4 .row, .bn6 .cta-wrap { position: relative; }
 /* arrows hidden on mobile (swipe + tap zones navigate); shown on desktop */
 /* prev/next slider controls — split to the left & right edges, centred vertically */
 /* arrows hidden on mobile (swipe + tap zones navigate); shown on desktop */
