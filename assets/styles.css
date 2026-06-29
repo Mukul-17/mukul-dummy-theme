@@ -2048,3 +2048,20 @@ body.scrolled-past .appbar { top: 0; }
   .social-grid .tile--video .tile__play { width: 64px; height: 64px; }
   .social-grid .tile--video .tile__play svg { width: 26px; height: 26px; }
 }
+
+/* =========================================================
+   MOBILE: bigger hanging tees + a hanger hook over the rod so
+   each tee reads as "hung" on the rail.
+   ========================================================= */
+@media (max-width: 899px) {
+  .tee { width: 98px; padding: 26px 9px 12px; }
+  .tee svg { width: 40px; height: 40px; }
+  .tee .collar { width: 30px; height: 11px; top: 9px; }
+  .chip { padding-top: 18px; }
+  .chip::before { top: 5px; height: 15px; width: 2.5px; }              /* hanger neck */
+  .chip::after {                                                       /* hook curling over the rod */
+    content: ""; position: absolute; top: -3px; left: 50%; transform: translateX(-50%);
+    width: 13px; height: 10px; z-index: 2;
+    border: 2.5px solid var(--ink); border-bottom: none; border-radius: 8px 8px 0 0;
+  }
+}
