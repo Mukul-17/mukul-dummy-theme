@@ -2078,3 +2078,29 @@ body.scrolled-past .appbar { top: 0; }
   .pgrid { padding-left: 8px; padding-right: 8px; column-gap: 8px; }
   .catsec .feed-head { padding-left: 10px; padding-right: 10px; }
 }
+
+/* =========================================================
+   Section cards — content sections become distinct bordered,
+   shadowed panels. (Hero, category hanger + product grid, and
+   social stay full-bleed so their edge-to-edge designs hold.)
+   --pad is only ever a horizontal page gutter, so we zero it
+   inside the card and let the card own the inner padding.
+   ========================================================= */
+.anatomy, .feel, .trust, .stats, .reviews, .newsletter, .final {
+  --pad: 0rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 16px 44px -26px rgba(20, 20, 20, 0.34);
+  margin: 1.25rem 0.9rem;
+  padding: var(--section-y) 1.15rem;
+}
+.newsletter { background: var(--surface-2); }   /* deeper-beige panel (matches footer) */
+
+@media (min-width: 720px) {
+  .anatomy, .feel, .trust, .stats, .reviews, .newsletter, .final {
+    max-width: var(--shell);
+    margin-left: auto; margin-right: auto;
+    padding-left: 2.5rem; padding-right: 2.5rem;
+  }
+}
