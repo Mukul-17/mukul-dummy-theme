@@ -560,9 +560,10 @@ body.scrolled-past .appbar { top: 0; }
 .section--lines { border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
 .section__head { padding: 0 var(--pad); margin-bottom: 2rem; }
 .eyebrow {
-  display: flex; align-items: center; gap: 0.6rem;
-  font-size: var(--fs-eyebrow); letter-spacing: 0.28em; text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  font-size: var(--fs-eyebrow); letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent);
+  border: 1.5px solid var(--accent); padding: 0.34rem 0.72rem; border-radius: 999px;
   margin-bottom: 0.9rem;
 }
 .eyebrow__num { font-family: var(--mono); color: var(--accent); }
@@ -1005,7 +1006,7 @@ body.scrolled-past .appbar { top: 0; }
 /* =========================================================
    Footer
    ========================================================= */
-.footer { padding: 3.5rem var(--pad) 1.75rem; overflow: hidden; position: relative; }
+.footer { padding: 3.5rem var(--pad) 1.75rem; overflow: hidden; position: relative; background: var(--surface-2); border-top: 1px solid var(--line); }
 .footer__brand img { height: var(--flogo-h, 26px); width: auto; max-width: 200px; object-fit: contain; margin-bottom: 1rem; }
 .footer__brand img.is-default, .footer__brand img.is-inverted { filter: brightness(0) invert(1); }
 .footer__brand p { color: var(--muted); font-size: var(--fs-sm); max-width: 24rem; margin: 0 0 1.25rem; }
@@ -1897,7 +1898,7 @@ body.scrolled-past .appbar { top: 0; }
       "title form"
       "lead  trust";
   }
-  .newsletter .eyebrow   { grid-area: eye; justify-content: flex-start; margin-bottom: 0; }
+  .newsletter .eyebrow   { grid-area: eye; justify-content: flex-start; margin-bottom: 0; width: fit-content; justify-self: start; }
   .newsletter__title     { grid-area: title; }
   .newsletter__lead      { grid-area: lead; margin: 0.6rem 0 0; max-width: 40ch; }
   .newsletter__form      { grid-area: form; margin: 0; max-width: 440px; width: 100%; justify-self: end; }
@@ -1936,7 +1937,7 @@ body.scrolled-past .appbar { top: 0; }
 /* ---- Generic section headings / eyebrows / leads ---- */
 .t-muted { color: rgba(20, 20, 20, 0.3); }
 .section__title { color: var(--fg); }
-.eyebrow { color: rgba(20, 20, 20, 0.5); }
+.eyebrow { color: var(--accent); border-color: var(--accent); }
 .section__lead { color: var(--muted); }
 /* hide the [ 01 ] [ 02 ] … eyebrow numbers across all sections */
 .eyebrow__num { display: none; }
