@@ -898,7 +898,6 @@ body.scrolled-past .appbar { top: 0; }
   padding: 0 var(--pad);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-auto-rows: 40vw;
   gap: 0.7rem;
 }
 .tile {
@@ -908,9 +907,9 @@ body.scrolled-past .appbar { top: 0; }
   border: 1px solid var(--line-soft);
   background: var(--surface);
 }
-/* Big / small rhythm — two tall tiles, the rest short. Packs with no gaps. */
-.social-grid .tile:nth-child(1) { grid-row: span 2; }
-.social-grid .tile:nth-child(5) { grid-row: span 2; }
+/* Big reel on top (full width), then a clean square photo grid below — like desktop. */
+.social-grid .tile--video { grid-column: 1 / -1; aspect-ratio: 4 / 5; border-radius: var(--radius); }
+.social-grid .tile:not(.tile--video) { aspect-ratio: 1; }
 .tile img {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; display: block;
