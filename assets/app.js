@@ -585,16 +585,26 @@
       if (headingEl) headingEl.textContent = label;
       if (countEl) countEl.textContent = n + (n === 1 ? " piece" : " pieces");
     };
+    const cssPx = (name, dflt) => { const v = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name)); return isNaN(v) ? dflt : v; };
+    const feedHead = $(".feed-head", $("#collections")) || grid;
+    const stickyEl = chips.closest(".chips");
+    // jump to the start of the results (just under the pinned hanger)
+    const scrollToResults = () => {
+      const chipsH = stickyEl ? stickyEl.offsetHeight : 0;
+      const off = cssPx("--appbar-h", 56) + cssPx("--announce-h", 38) + chipsH + 6;
+      const y = feedHead.getBoundingClientRect().top + window.scrollY - off;
+      window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+    };
     chips.addEventListener("click", (e) => {
       const b = e.target.closest(".chip");
       if (!b) return;
       $$(".chip", chips).forEach((x) => x.classList.remove("is-active"));
       b.classList.add("is-active");
-      // center the tapped tee within the hanger horizontally only — never scroll
-      // the page vertically (that fights the sticky hanger and causes jitter)
+      // center the tapped tee within the hanger horizontally
       const target = b.offsetLeft - (chips.clientWidth - b.offsetWidth) / 2;
       chips.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
       apply(b.dataset.cat, b.dataset.label || b.textContent.trim());
+      scrollToResults();
       haptic();
     });
     const first = $(".chip.is-active", chips) || $(".chip", chips);
