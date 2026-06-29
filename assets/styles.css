@@ -2064,4 +2064,8 @@ body.scrolled-past .appbar { top: 0; }
     width: 13px; height: 10px; z-index: 2;
     border: 2.5px solid var(--ink); border-bottom: none; border-radius: 8px 8px 0 0;
   }
+
+  /* thin side bezel on the product grid so the images get more width */
+  .pgrid { padding-left: 8px; padding-right: 8px; column-gap: 8px; }
+  .catsec .feed-head { padding-left: 10px; padding-right: 10px; }
 }
