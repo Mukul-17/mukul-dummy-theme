@@ -1431,16 +1431,17 @@ body.scrolled-past .appbar { top: 0; }
   overflow: hidden;
   border: 1px solid var(--line);
   touch-action: pan-y;           /* vertical swipe scrolls; horizontal drag drives the lens */
+  aspect-ratio: 1 / 1;           /* mobile: confined square box so the crop lands on the neck, no scroll */
 }
 /* images: block the long-press save/callout & drag on touch + desktop */
 .feel__lensbox img, .feel__thumbs img {
-  width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block;
+  width: 100%; object-fit: cover; display: block;
   -webkit-user-select: none; user-select: none; -webkit-user-drag: none;
   -webkit-touch-callout: none; pointer-events: none;
 }
 .feel__thumbs img { aspect-ratio: 1; }
-/* base crop-in: focus on the fabric/neck, trim the empty gaps (matches JS BASE) */
-.feel__lensbox img { transform: scale(1.5); transform-origin: center; }
+/* fill the box (same treatment as desktop) + base crop-in focused on the fabric/neck (matches JS BASE) */
+.feel__lensbox img { position: absolute; inset: 0; height: 100%; object-fit: cover; transform: scale(1.5); transform-origin: center; }
 .feel__lensbox { cursor: crosshair; }
 /* lens = highlight rectangle showing the region being magnified */
 .feel__lens {
@@ -1855,7 +1856,7 @@ body.scrolled-past .appbar { top: 0; }
   .feel .section__head { grid-area: head; padding-inline: 0; margin-bottom: 2.25rem; }
   .feel__thumbs  { grid-area: thumbs; flex-direction: column; max-width: none; padding: 0; gap: 0.7rem; align-self: stretch; justify-content: space-between; }
   /* image height tracks the weigh-in content height (the MODRN t-shirt block) */
-  .feel__lensbox { grid-area: img; margin: 0; max-width: none; cursor: crosshair; align-self: stretch; }
+  .feel__lensbox { grid-area: img; margin: 0; max-width: none; cursor: crosshair; align-self: stretch; aspect-ratio: auto; }
   .feel__lensbox img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; aspect-ratio: auto; }
   .feel__weigh   { grid-area: weigh; max-width: 480px; padding: 0; align-self: start; }
   .feel__thumbs button { transition: border-color 0.2s, transform 0.12s, opacity 0.2s; }
