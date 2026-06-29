@@ -208,7 +208,7 @@
     if (!box) return;
     const lens = $("#lens"), img = $("#lensimg"), thumbs = $("#fab-thumbs"), feel = $("#fabric"), zoom = $("#lenszoom");
     if (!zoom) return;
-    const Z = 2.4, BASE = 1.5;   // BASE = default crop-in so the fabric fills the frame (matches CSS scale)
+    const Z = 2.4, BASE = 1;     // BASE = 1: show the complete image, no pre-zoom (matches CSS, zoom is on demand)
     let active = false;
 
     const url = () => img.currentSrc || img.src;
