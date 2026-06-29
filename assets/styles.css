@@ -629,7 +629,6 @@ body.scrolled-past .appbar { top: 0; }
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--surface);
-  border: 1px solid var(--line-soft);
 }
 /* horizontal swipe/scroll gallery (no hover effect, no buttons) */
 .pcard__track {
@@ -1618,6 +1617,7 @@ body.scrolled-past .appbar { top: 0; }
 @media (min-width: 720px) {
   :root { --pad: 2.5rem; --section-y: 4.5rem; }
   .pcard { flex-basis: 38%; }
+  .pcard__media { border: 1px solid var(--line-soft); }   /* border kept on larger screens; removed on mobile */
   .ccard { flex-basis: 44%; }
   .grid { grid-template-columns: repeat(3, 1fr); }
   .review { flex-basis: 46%; }
