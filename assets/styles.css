@@ -564,7 +564,7 @@ body.scrolled-past .appbar { top: 0; }
   align-self: flex-start;                      /* never stretch to full width in flex/grid heads */
   width: fit-content; max-width: 100%;
   font-size: var(--fs-eyebrow); letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--accent); background: var(--accent-dim);
+  color: var(--accent);
   border: 1.5px solid var(--accent); padding: 0.34rem 0.72rem; border-radius: 999px;
   margin-bottom: 0.9rem;
 }
