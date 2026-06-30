@@ -1646,7 +1646,7 @@ body.scrolled-past .appbar { top: 0; }
   content: ""; width: 7px; height: 7px; border-radius: 50%;
   background: var(--dot, var(--ink)); flex-shrink: 0;
 }
-.pay-strip--top .pay-pill b { color: var(--ink); font-weight: 600; letter-spacing: 0.04em; }
+.pay-strip--top .pay-pill b { color: var(--dot, var(--ink)); font-weight: 700; letter-spacing: 0.04em; }
 @media (max-width: 719px) {
   .pay-strip--top { border-top: none; border-bottom: none; padding: 0.7rem 0; }
 }
