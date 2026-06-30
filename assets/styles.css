@@ -1227,7 +1227,9 @@ body.scrolled-past .appbar { top: 0; }
   position: sticky; bottom: 0;
   margin-top: 0.5rem;
   padding: 1rem 1.25rem calc(1rem + env(safe-area-inset-bottom, 0px));
-  background: linear-gradient(to top, var(--bg-soft) 70%, transparent);
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -10px 24px -14px rgba(0, 0, 0, 0.25);
   display: flex; align-items: center; gap: 0.85rem;
 }
 .ps__qty {
