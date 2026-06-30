@@ -1612,6 +1612,8 @@ body.scrolled-past .appbar { top: 0; }
 .pay-track { display: inline-block; animation: marquee 22s linear infinite; }
 .pay-track span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-right: 3rem; color: var(--paper-grey); }
 .pay-track span b { color: var(--ink); font-weight: 700; }
+/* payment marquee placed above Collections — a self-contained band */
+.pay-strip--top { margin-top: 0; padding: 0.9rem 0; border-bottom: 1px solid var(--ink); }
 
 /* =========================================================
    Larger screens — graceful, not the focus

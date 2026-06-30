@@ -6,6 +6,16 @@
 {%- endcomment -%}
 {%- assign rots = "-4deg|3deg|-2deg|4deg|-3deg|2deg" | split: "|" -%}
 
+{%- comment -%} Payment marquee placed above Collections (separate copy; the Trust section keeps its own .pay-track). {%- endcomment -%}
+{%- assign cat_pay_methods = "UPI, Visa, Mastercard, RuPay, Net Banking, Cash on Delivery, Wallets" | split: ',' -%}
+<div class="pay-strip pay-strip--top" aria-hidden="true">
+  <div class="pay-track">
+    {%- for n in (1..2) -%}
+      <span>Pay your way —</span>{%- for m in cat_pay_methods -%}<span><b>{{ m | strip }}</b></span>{%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
 <section id="collections" class="section catsec">
   <div class="section__head reveal">
     <div class="eyebrow"><span class="eyebrow__num">{{ section.settings.eyebrow_num }}</span><span>{{ section.settings.eyebrow_label }}</span></div>
