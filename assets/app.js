@@ -485,7 +485,7 @@
       if (priceEl) priceEl.textContent = fmt(vt.price);
       if (vt.compare_at_price && vt.compare_at_price > vt.price) {
         if (compareEl) compareEl.textContent = fmt(vt.compare_at_price);
-        if (discEl) discEl.textContent = "−" + Math.round((vt.compare_at_price - vt.price) * 100 / vt.compare_at_price) + "%";
+        if (discEl) discEl.innerHTML = '<span class="ps__disc-sign">−</span>' + Math.round((vt.compare_at_price - vt.price) * 100 / vt.compare_at_price) + "%";
       }
       if (addBtn) { addBtn.disabled = !vt.available; addBtn.textContent = vt.available ? "Add to bag" : "Sold out"; }
       if (vt.featured_image && vt.featured_image.src && pform.__swapImg) pform.__swapImg(vt.featured_image.src);

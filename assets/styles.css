@@ -1147,7 +1147,9 @@ body.scrolled-past .appbar { top: 0; }
 .ps__price b { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; order: 2; }
 .ps__price s { color: var(--muted); }
 .ps__price em { order: 1; font-style: normal; color: #fff; font-weight: 800; font-size: 0.9rem; font-family: var(--mono); background: var(--accent); padding: 0.28rem 0.55rem; border-radius: 7px; letter-spacing: 0.04em; line-height: 1; }
-.ps__mrp { order: 3; flex-basis: 100%; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 0.35rem; }
+.ps__disc-sign { margin-right: 3px; }   /* gap between - and the number */
+.ps__mrp { order: 3; flex-basis: 100%; font-family: var(--mono); font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-top: 0.4rem; }
+.ps__mrp s { font-size: 15px; font-weight: 700; color: var(--fg); opacity: 0.7; }
 
 /* colour swatches — clean round dots (selected colour name shows in the header) */
 .ps__swatches { display: flex; gap: 0.7rem; flex-wrap: wrap; }
