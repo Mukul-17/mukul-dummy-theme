@@ -3,7 +3,7 @@
 {%- if v.compare_at_price > v.price -%}{%- assign on_sale = true -%}{%- endif -%}
 
 <section class="ps-page template-product__inner">
-  <div class="ps__gallery">
+  <div class="ps__gallery" id="ps-gallery">
     {%- if product.featured_image -%}
       <img id="ps-main-img" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" width="1200" height="1500">
     {%- endif -%}
@@ -30,7 +30,7 @@
     {%- endif -%}
 
     <div class="ps__price">
-      {%- if on_sale -%}<em>−{{ pct }}%</em>{%- endif -%}
+      {%- if on_sale -%}<em id="ps-disc">−{{ pct }}%</em>{%- endif -%}
       <b id="ps-price">₹{{ v.price | money_without_currency | split: '.' | first }}</b>
       {%- if on_sale -%}
         <span class="ps__mrp">M.R.P. <s id="ps-compare">₹{{ v.compare_at_price | money_without_currency | split: '.' | first }}</s></span>
@@ -38,27 +38,51 @@
     </div>
 
     <form id="product-form" action="{{ routes.cart_url }}/add" method="post">
-      <div class="ps__group">
-        <div class="ps__label">Size <span class="ps__chosen" id="ps-size-chosen">{{ v.title }}</span></div>
-        <div class="ps__sizes" id="ps-sizes">
-          {%- for variant in product.variants -%}
-            <button type="button"
-                    class="ps__size{% if variant.id == v.id %} is-active{% endif %}{% unless variant.available %} is-disabled{% endunless %}"
-                    data-variant-id="{{ variant.id }}"
-                    data-price="₹{{ variant.price | money_without_currency | split: '.' | first }}"
-                    {% if variant.compare_at_price > variant.price %}data-compare="₹{{ variant.compare_at_price | money_without_currency | split: '.' | first }}"{% endif %}
-                    data-title="{{ variant.title | escape }}">
-              {{ variant.title }}
-            </button>
-          {%- endfor -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign oname = option.name | downcase -%}
+        {%- assign is_color = false -%}
+        {%- if oname contains 'color' or oname contains 'colour' -%}{%- assign is_color = true -%}{%- endif -%}
+        <div class="ps__group">
+          <div class="ps__label">{{ option.name }} <span class="ps__chosen" data-chosen="{{ option.position }}">{{ option.selected_value }}</span></div>
+          {%- if is_color -%}
+            <div class="ps__swatches" data-option-position="{{ option.position }}">
+              {%- for value in option.values -%}
+                {%- assign cn = value | downcase -%}
+                {%- assign sw = '#cbb89a' -%}
+                {%- if cn contains 'white' -%}{%- assign sw = '#f1f1ee' -%}
+                {%- elsif cn contains 'black' -%}{%- assign sw = '#1a1a1a' -%}
+                {%- elsif cn contains 'navy' -%}{%- assign sw = '#22304f' -%}
+                {%- elsif cn contains 'blue' -%}{%- assign sw = '#2f5fae' -%}
+                {%- elsif cn contains 'red' -%}{%- assign sw = '#c0392b' -%}
+                {%- elsif cn contains 'green' -%}{%- assign sw = '#3a7d44' -%}
+                {%- elsif cn contains 'grey' or cn contains 'gray' -%}{%- assign sw = '#8a8a8a' -%}
+                {%- elsif cn contains 'beige' or cn contains 'sand' or cn contains 'cream' -%}{%- assign sw = '#e3dac0' -%}
+                {%- elsif cn contains 'brown' -%}{%- assign sw = '#7a5230' -%}
+                {%- elsif cn contains 'olive' -%}{%- assign sw = '#6b6a3a' -%}
+                {%- endif -%}
+                <button type="button" class="ps__swatch{% if option.selected_value == value %} is-active{% endif %}" data-position="{{ option.position }}" data-value="{{ value | escape }}" aria-label="{{ value | escape }}"><span class="ps__swatch-dot" style="background:{{ sw }}"></span><span class="ps__swatch-lbl">{{ value }}</span></button>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <div class="ps__sizes" data-option-position="{{ option.position }}">
+              {%- for value in option.values -%}
+                <button type="button" class="ps__size{% if option.selected_value == value %} is-active{% endif %}" data-position="{{ option.position }}" data-value="{{ value | escape }}">{{ value }}</button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         </div>
-      </div>
+      {%- endfor -%}
 
       <input type="hidden" name="id" id="ps-variant-id" value="{{ v.id }}">
     </form>
 
+    <script type="application/json" id="ps-variant-data">{{ product.variants | json }}</script>
+
     {%- if product.description != blank -%}
-      <div class="ps__group ps__desc rte">{{ product.description }}</div>
+      <div class="ps__group ps__details">
+        <h2 class="ps__details-title">Product details</h2>
+        <div class="ps__desc rte">{{ product.description }}</div>
+      </div>
     {%- endif -%}
   </div>
 

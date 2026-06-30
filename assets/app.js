@@ -464,23 +464,59 @@
   function initProduct() {
     const pform = $("#product-form");
     if (!pform) return;
-    const idInput = $("#ps-variant-id"), priceEl = $("#ps-price"), compareEl = $("#ps-compare"), chosen = $("#ps-size-chosen"), qtyEl = $("#ps-qty"), mainImg = $("#ps-main-img");
-    const sizes = $("#ps-sizes");
-    if (sizes) sizes.addEventListener("click", (e) => {
-      const btn = e.target.closest(".ps__size"); if (!btn || btn.classList.contains("is-disabled")) return;
-      $$(".ps__size", pform).forEach((b) => b.classList.remove("is-active"));
+    const idInput = $("#ps-variant-id"), priceEl = $("#ps-price"), compareEl = $("#ps-compare"), discEl = $("#ps-disc"), qtyEl = $("#ps-qty"), mainImg = $("#ps-main-img"), addBtn = $("#ps-add");
+
+    // multi-option variant picker (colour + size etc.)
+    let variants = [];
+    const dataEl = $("#ps-variant-data");
+    if (dataEl) { try { variants = JSON.parse(dataEl.textContent); } catch (_) {} }
+    const selected = {};
+    $$(".ps__size.is-active, .ps__swatch.is-active", pform).forEach((b) => { selected[b.dataset.position] = b.dataset.value; });
+    const fmt = (cents) => "₹" + Math.round(cents / 100).toLocaleString("en-IN");
+    const matchVariant = () => variants.find((vt) =>
+      (selected["1"] == null || vt.option1 === selected["1"]) &&
+      (selected["2"] == null || vt.option2 === selected["2"]) &&
+      (selected["3"] == null || vt.option3 === selected["3"]));
+    function update() {
+      $$(".ps__chosen", pform).forEach((s) => { const p = s.dataset.chosen; if (selected[p]) s.textContent = selected[p]; });
+      const vt = matchVariant();
+      if (!vt) { if (addBtn) { addBtn.disabled = true; addBtn.textContent = "Unavailable"; } return; }
+      idInput.value = vt.id;
+      if (priceEl) priceEl.textContent = fmt(vt.price);
+      if (vt.compare_at_price && vt.compare_at_price > vt.price) {
+        if (compareEl) compareEl.textContent = fmt(vt.compare_at_price);
+        if (discEl) discEl.textContent = "−" + Math.round((vt.compare_at_price - vt.price) * 100 / vt.compare_at_price) + "%";
+      }
+      if (addBtn) { addBtn.disabled = !vt.available; addBtn.textContent = vt.available ? "Add to bag" : "Sold out"; }
+      if (mainImg && vt.featured_image && vt.featured_image.src) mainImg.src = vt.featured_image.src;
+    }
+    pform.addEventListener("click", (e) => {
+      const btn = e.target.closest(".ps__size, .ps__swatch"); if (!btn) return;
+      const pos = btn.dataset.position;
+      $$(`.ps__size[data-position="${pos}"], .ps__swatch[data-position="${pos}"]`, pform).forEach((b) => b.classList.remove("is-active"));
       btn.classList.add("is-active");
-      idInput.value = btn.dataset.variantId;
-      if (priceEl && btn.dataset.price) priceEl.textContent = btn.dataset.price;
-      if (compareEl) compareEl.textContent = btn.dataset.compare || "";
-      if (chosen) chosen.textContent = btn.dataset.title || "";
+      selected[pos] = btn.dataset.value;
       haptic();
+      update();
     });
+
     const getQty = () => parseInt(qtyEl.textContent, 10) || 1;
     $("#ps-minus")?.addEventListener("click", () => { qtyEl.textContent = Math.max(1, getQty() - 1); });
     $("#ps-plus")?.addEventListener("click", () => { qtyEl.textContent = getQty() + 1; });
-    $("#ps-add")?.addEventListener("click", () => { if (!idInput.value) { toast("Please choose a size", false); return; } addToCart(idInput.value, getQty()); });
+    $("#ps-add")?.addEventListener("click", () => { if (!idInput.value) { toast("Please choose options", false); return; } addToCart(idInput.value, getQty()); });
     $$(".ps-thumb").forEach((t) => t.addEventListener("click", () => { if (mainImg && t.dataset.full) mainImg.src = t.dataset.full; }));
+
+    // click-to-zoom on the main image (pan by pointer position)
+    const gallery = $("#ps-gallery");
+    if (gallery && mainImg) {
+      gallery.addEventListener("click", (e) => { if (e.target.closest(".ps-thumb")) return; gallery.classList.toggle("is-zoom"); });
+      gallery.addEventListener("pointermove", (e) => {
+        if (!gallery.classList.contains("is-zoom")) return;
+        const r = gallery.getBoundingClientRect();
+        mainImg.style.transformOrigin = ((e.clientX - r.left) / r.width * 100) + "% " + ((e.clientY - r.top) / r.height * 100) + "%";
+      });
+      gallery.addEventListener("pointerleave", () => gallery.classList.remove("is-zoom"));
+    }
   }
 
   /* ---------------- global click delegation ---------------- */
