@@ -2173,3 +2173,7 @@ body.scrolled-past .appbar { top: 0; }
 
 /* drawer About item: present but non-navigating */
 .drawer__item--static { cursor: default; }
+
+/* non-home pages: push content below the fixed header + marquee
+   (home is full-bleed under the transparent header, so it's excluded) */
+body:not(.template-index) main { padding-top: calc(var(--appbar-h) + var(--announce-h)); }
