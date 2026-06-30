@@ -87,6 +87,31 @@
     {%- endif -%}
   </div>
 
+  {%- assign cur_gsm = product.metafields.custom.gsm.value -%}
+  {%- if cur_gsm != blank -%}
+    {%- assign sim_count = 0 -%}
+    {%- for p in collections.all.products -%}
+      {%- if p.id != product.id and p.metafields.custom.gsm.value == cur_gsm -%}{%- assign sim_count = sim_count | plus: 1 -%}{%- endif -%}
+    {%- endfor -%}
+    {%- if sim_count > 0 -%}
+      <section class="similar" aria-label="Similar products">
+        <div class="similar__head">
+          <h2 class="similar__title">Similar Products</h2>
+          <span class="similar__sub">{{ cur_gsm }} GSM</span>
+        </div>
+        <div class="similar__rail">
+          {%- assign shown = 0 -%}
+          {%- for p in collections.all.products -%}
+            {%- if p.id != product.id and p.metafields.custom.gsm.value == cur_gsm and shown < 10 -%}
+              {% render 'product-card', product: p %}
+              {%- assign shown = shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </section>
+    {%- endif -%}
+  {%- endif -%}
+
   <div class="sizechart" id="ps-sizechart" hidden>
     <div class="sizechart__backdrop" data-sizechart-close></div>
     <div class="sizechart__panel" role="dialog" aria-modal="true" aria-label="Size chart">

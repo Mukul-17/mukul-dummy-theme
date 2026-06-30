@@ -1181,6 +1181,15 @@ body.scrolled-past .appbar { top: 0; }
 .sizechart__table th { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
 .sizechart__table td:first-child { font-weight: 700; }
 
+/* similar products rail (product page) */
+.similar { margin-top: 1.75rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.similar__head { display: flex; align-items: baseline; gap: 0.6rem; padding: 0 var(--pad); margin-bottom: 1rem; }
+.similar__title { font-family: var(--display); font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.02em; margin: 0; color: var(--fg); }
+.similar__sub { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.similar__rail { display: flex; gap: 0.8rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 0 var(--pad) 0.5rem; scrollbar-width: none; }
+.similar__rail::-webkit-scrollbar { display: none; }
+.similar__rail .pcard { scroll-snap-align: start; }
+
 /* hover (mouse) / press-drag (touch) to magnify the section under the pointer.
    touch-action:none so a finger drag drives the zoom (not a page scroll) and
    is never cancelled mid-drag. */
