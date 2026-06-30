@@ -1490,6 +1490,14 @@ body.scrolled-past .appbar { top: 0; }
 .feel__kicker, .trust__kicker {
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
 }
+/* mobile: give the trust kicker the same red-border pill as the eyebrows */
+@media (max-width: 719px) {
+  .trust__kicker {
+    display: inline-flex; align-self: flex-start; width: fit-content;
+    border: 1.5px solid var(--accent); border-radius: 999px;
+    padding: 0.34rem 0.72rem; margin-bottom: 0.9rem;
+  }
+}
 .feel__weigh-intro p { color: var(--muted); font-size: var(--fs-sm); margin: 0.5rem 0 2rem; max-width: 44ch; }
 .gsm-row { margin-bottom: 1.5rem; }
 .gsm-lbl { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.6rem; color: var(--muted); }
