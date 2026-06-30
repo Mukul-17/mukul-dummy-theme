@@ -633,6 +633,7 @@ body.scrolled-past .appbar { top: 0; }
   overflow: hidden;
   background: var(--surface);
 }
+@media (max-width: 719px) { .pcard__media { border-radius: 0; } }
 /* horizontal swipe/scroll gallery (no hover effect, no buttons) */
 .pcard__track {
   position: absolute; inset: 0; z-index: 0;
