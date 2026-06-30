@@ -1170,7 +1170,8 @@ body.scrolled-past .appbar { top: 0; }
 /* hover (mouse) / press-drag (touch) to magnify the section under the pointer.
    touch-action:none so a finger drag drives the zoom (not a page scroll) and
    is never cancelled mid-drag. */
-.ps__gallery { touch-action: none; }
+.ps__gallery { touch-action: pan-y; cursor: zoom-in; }
+.ps__gallery.is-zoom { touch-action: none; cursor: zoom-out; }
 .ps__gallery img { transition: transform 0.2s ease-out; transform-origin: center; }
 .ps__gallery.is-zoom img { transform: scale(2.3); }
 .ps__hint {

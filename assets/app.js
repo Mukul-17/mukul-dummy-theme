@@ -514,20 +514,15 @@
         const y = Math.max(0, Math.min((cy - r.top) / r.height, 1)) * 100;
         mainImg.style.transformOrigin = x + "% " + y + "%";
       };
-      const on = (e) => { gallery.classList.add("is-zoom"); apply(e.clientX, e.clientY); };
-      const off = () => gallery.classList.remove("is-zoom");
-
-      // PRESS-AND-HOLD (mouse click-hold or finger): zoom stays + follows the
-      // pointer the whole time it's held; only releasing ends it.
-      gallery.addEventListener("pointerdown", (e) => {
-        on(e);
-        if (e.cancelable) e.preventDefault();
-        const move = (ev) => { if (ev.cancelable) ev.preventDefault(); apply(ev.clientX, ev.clientY); };
-        const end = () => { off(); document.removeEventListener("pointermove", move); document.removeEventListener("pointerup", end); document.removeEventListener("pointercancel", end); };
-        document.addEventListener("pointermove", move, { passive: false });
-        document.addEventListener("pointerup", end);
-        document.addEventListener("pointercancel", end);
+      let zoomed = false;
+      // CLICK / TAP TO TOGGLE: one click zooms and stays; move to pan; click again to exit.
+      gallery.addEventListener("click", (e) => {
+        zoomed = !zoomed;
+        gallery.classList.toggle("is-zoom", zoomed);
+        if (zoomed) apply(e.clientX, e.clientY);
       });
+      // while zoomed, the spot under the pointer/finger pans
+      gallery.addEventListener("pointermove", (e) => { if (zoomed) { if (e.cancelable) e.preventDefault(); apply(e.clientX, e.clientY); } }, { passive: false });
     }
 
     const swapImg = (src) => { if (mainImg && src) mainImg.src = src; };
