@@ -22,7 +22,7 @@
 
     {%- if on_sale -%}
       {%- assign pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
-      <span class="pcard__disc">−{{ pct }}%</span>
+      <span class="pcard__disc">{{ pct }}% OFF</span>
     {%- endif -%}
 
     {%- unless product.available -%}<span class="pcard__badge" style="background:#444;color:#fff;">Sold out</span>{%- endunless -%}
@@ -37,8 +37,8 @@
       <div class="pcard__sub">{{ product.metafields.custom.gsm }} GSM · Oversized</div>
     {%- endif -%}
     <div class="pcard__price">
-      <b>{{ product.price | money }}</b>
-      {%- if on_sale -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+      <b>₹{{ product.price | money_without_currency | split: '.' | first }}</b>
+      {%- if on_sale -%}<s>₹{{ product.compare_at_price | money_without_currency | split: '.' | first }}</s><span class="pcard__off">({{ pct }}% off)</span>{%- endif -%}
     </div>
   </div>
 </article>

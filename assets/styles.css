@@ -561,8 +561,10 @@ body.scrolled-past .appbar { top: 0; }
 .section__head { padding: 0 var(--pad); margin-bottom: 2rem; }
 .eyebrow {
   display: inline-flex; align-items: center; gap: 0.45rem;
+  align-self: flex-start;                      /* never stretch to full width in flex/grid heads */
+  width: fit-content; max-width: 100%;
   font-size: var(--fs-eyebrow); letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent); background: var(--accent-dim);
   border: 1.5px solid var(--accent); padding: 0.34rem 0.72rem; border-radius: 999px;
   margin-bottom: 0.9rem;
 }
@@ -664,10 +666,10 @@ body.scrolled-past .appbar { top: 0; }
 }
 .pcard__disc {
   position: absolute; top: 0.7rem; right: 0.7rem; z-index: 2;
-  padding: 0.25rem 0.55rem; border-radius: 9999px;
-  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
-  color: var(--accent);
-  font-size: 11px; font-weight: 600; font-family: var(--mono);
+  padding: 0.3rem 0.6rem; border-radius: 8px;
+  background: var(--accent); color: #fff;
+  font-size: 10px; font-weight: 700; font-family: var(--mono);
+  letter-spacing: 0.06em; box-shadow: 0 4px 12px -4px rgba(224,62,31,0.6);
 }
 .pcard__add {
   position: absolute; bottom: 0.7rem; right: 0.7rem; z-index: 3;
@@ -698,6 +700,7 @@ body.scrolled-past .appbar { top: 0; }
 .pcard__price { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.5rem; }
 .pcard__price b { font-size: var(--fs-body); font-weight: 600; color: #fff; }
 .pcard__price s { font-size: 12px; color: var(--faint); }
+.pcard__off { font-size: 11px; font-weight: 600; color: #1aa85a; }   /* (59% off) */
 
 /* rank medallion (bestsellers) */
 .pcard__rank {
@@ -840,20 +843,20 @@ body.scrolled-past .appbar { top: 0; }
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  scroll-padding-left: var(--pad);
+  scroll-padding-left: 1rem;
 }
 .review {
   flex: 0 0 86%;
   scroll-snap-align: center;
-  margin: 0 calc(var(--pad) / 2);
+  margin: 0 0.5rem;
   padding: 1.5rem 1.4rem;
   border-radius: var(--radius);
   border: 1px solid var(--line);
   background: linear-gradient(160deg, var(--surface), var(--bg-soft));
   display: flex; flex-direction: column;
 }
-.review:first-child { margin-left: var(--pad); }
-.review:last-child { margin-right: var(--pad); }
+.review:first-child { margin-left: 1rem; }
+.review:last-child { margin-right: 1rem; }
 .review__top { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
 .review__avatar {
   height: 42px; width: 42px; border-radius: 50%; flex-shrink: 0;
@@ -1614,10 +1617,19 @@ body.scrolled-past .appbar { top: 0; }
 .pay-track span b { color: var(--ink); font-weight: 700; }
 /* payment marquee placed above Collections — a self-contained band */
 .pay-strip--top { margin-top: 0; padding: 0.9rem 0; border-bottom: 1px solid var(--ink); }
-/* mobile: render the methods as dot-pills (desktop keeps the plain marquee) */
+.pay-fixed { display: none; }   /* desktop: hidden (the in-track intro is used instead) */
+/* mobile: fixed "Pay your way" label pinned left + methods as dot-pills scrolling under it */
 @media (max-width: 719px) {
-  .pay-strip--top { border-top: none; border-bottom: none; padding: 1rem 0; }
-  .pay-strip--top .pay-intro { margin-right: 0.7rem; }
+  .pay-strip--top { position: relative; border-top: none; border-bottom: none; padding: 0.7rem 0; }
+  .pay-fixed {
+    position: absolute; left: 0; top: 0; bottom: 0; z-index: 3;
+    display: inline-flex; align-items: center;
+    padding: 0 0.7rem; background: var(--bg);
+    border: 1.5px solid var(--accent); border-radius: 8px; color: var(--accent);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+    white-space: nowrap;
+  }
+  .pay-strip--top .pay-intro { display: none; }   /* replaced by the fixed label; pills scroll under it */
   .pay-strip--top .pay-pill {
     display: inline-flex; align-items: center; gap: 0.45rem;
     background: var(--surface-2); border-radius: 999px;
@@ -1764,6 +1776,7 @@ body.scrolled-past .appbar { top: 0; }
 
 .catsec .feed-head { display: flex; align-items: baseline; justify-content: space-between; padding: 1.75rem var(--pad) 1.35rem; }
 .catsec .feed-head h3 { font-family: var(--display); text-transform: uppercase; font-size: clamp(1.15rem, 3.2vw, 1.45rem); line-height: 1; margin: 0; color: #fff; white-space: nowrap; }
+@media (max-width: 719px) { .catsec .feed-head h3 { font-family: inherit; font-weight: 700; } }   /* mobile: drop the heavy display face */
 .catsec .feed-head .count { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
 .catgrid .pcard[hidden] { display: none; }
 
