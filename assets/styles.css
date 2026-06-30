@@ -1167,12 +1167,12 @@ body.scrolled-past .appbar { top: 0; }
 .ps__details { border-top: 1px solid var(--line); padding-top: 1.35rem; }
 .ps__details-title { font-family: var(--display); font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.03em; margin: 0 0 0.85rem; color: var(--fg); }
 
-/* hover / drag to magnify the section under the pointer in place — mobile only.
+/* hover (mouse) / press-drag (touch) to magnify the section under the pointer.
    touch-action:none so a finger drag drives the zoom (not a page scroll) and
-   never gets cancelled mid-drag. */
+   is never cancelled mid-drag. */
 .ps__gallery { touch-action: none; }
-.ps__gallery img { transition: transform 0.18s ease-out; transform-origin: center; }
-.ps__gallery.is-zoom img { transform: scale(2.3); transition: none; }
+.ps__gallery img { transition: transform 0.2s ease-out; transform-origin: center; }
+.ps__gallery.is-zoom img { transform: scale(2.3); }
 .ps__hint {
   position: absolute; left: 14px; bottom: 14px; z-index: 3;
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
@@ -1180,8 +1180,6 @@ body.scrolled-past .appbar { top: 0; }
   transition: opacity 0.25s; pointer-events: none;
 }
 .ps__gallery.is-zoom .ps__hint { opacity: 0; }
-/* desktop: no zoom UI (mobile-only feature) */
-@media (min-width: 900px) { .ps__hint { display: none; } }
 .ps__group { margin-bottom: 1.5rem; }
 .ps__label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.75rem; }
 .ps__label .ps__chosen { color: #fff; letter-spacing: 0; text-transform: none; font-size: 13px; }

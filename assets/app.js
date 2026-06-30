@@ -504,27 +504,34 @@
     $("#ps-minus")?.addEventListener("click", () => { qtyEl.textContent = Math.max(1, getQty() - 1); });
     $("#ps-plus")?.addEventListener("click", () => { qtyEl.textContent = getQty() + 1; });
     $("#ps-add")?.addEventListener("click", () => { if (!idInput.value) { toast("Please choose options", false); return; } addToCart(idInput.value, getQty()); });
-    // hover / tap a section of the tee → magnify that section in place (mobile)
+    // hover (mouse) / press-drag (touch) → magnify the section under the pointer.
+    // Stays zoomed the whole time the finger/cursor is down/over; closes only on release.
     const gallery = $("#ps-gallery");
     if (gallery && mainImg) {
-      const zoomOn = (e) => {
-        if (window.innerWidth >= 900) return;            // mobile only
+      const apply = (cx, cy) => {
         const r = gallery.getBoundingClientRect();
-        const x = Math.max(0, Math.min((e.clientX - r.left) / r.width, 1)) * 100;
-        const y = Math.max(0, Math.min((e.clientY - r.top) / r.height, 1)) * 100;
+        const x = Math.max(0, Math.min((cx - r.left) / r.width, 1)) * 100;
+        const y = Math.max(0, Math.min((cy - r.top) / r.height, 1)) * 100;
         mainImg.style.transformOrigin = x + "% " + y + "%";
-        gallery.classList.add("is-zoom");
-        if (e.cancelable && e.pointerType !== "mouse") e.preventDefault();
       };
-      const zoomOff = () => gallery.classList.remove("is-zoom");
-      // mouse: zoom while hovering, off when the cursor leaves
-      gallery.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") zoomOn(e); });
-      gallery.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") zoomOff(); });
-      // touch: zoom on press, follow the finger (even outside the image) until lift
-      gallery.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") { zoomOn(e); try { gallery.setPointerCapture(e.pointerId); } catch (_) {} } });
-      gallery.addEventListener("pointermove", zoomOn, { passive: false });
-      gallery.addEventListener("pointerup", zoomOff);
-      gallery.addEventListener("pointercancel", zoomOff);
+      const on = (e) => { gallery.classList.add("is-zoom"); apply(e.clientX, e.clientY); };
+      const off = () => gallery.classList.remove("is-zoom");
+
+      // touch/pen: hold + drag anywhere; only a real lift ends it
+      gallery.addEventListener("pointerdown", (e) => {
+        if (e.pointerType === "mouse") return;
+        on(e);
+        const move = (ev) => { if (ev.cancelable) ev.preventDefault(); apply(ev.clientX, ev.clientY); };
+        const end = () => { off(); document.removeEventListener("pointermove", move); document.removeEventListener("pointerup", end); document.removeEventListener("pointercancel", end); };
+        document.addEventListener("pointermove", move, { passive: false });
+        document.addEventListener("pointerup", end);
+        document.addEventListener("pointercancel", end);
+      });
+
+      // mouse: zoom while hovering
+      gallery.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") on(e); });
+      gallery.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") apply(e.clientX, e.clientY); });
+      gallery.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") off(); });
     }
 
     const swapImg = (src) => { if (mainImg && src) mainImg.src = src; };
