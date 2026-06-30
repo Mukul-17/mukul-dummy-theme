@@ -8,11 +8,12 @@
 
 {%- comment -%} Payment marquee placed above Collections (separate copy; the Trust section keeps its own .pay-track). {%- endcomment -%}
 {%- assign cat_pay_methods = "UPI, Visa, Mastercard, RuPay, Net Banking, Cash on Delivery, Wallets" | split: ',' -%}
+{%- assign pay_palette = "#e03e1f,#1aa85a,#2f6fed,#e2a400,#9b51e0,#e84393,#00b8a9" | split: ',' -%}
 <div class="pay-strip pay-strip--top" aria-hidden="true">
   <span class="pay-fixed">Pay your way</span>
   <div class="pay-track">
     {%- for n in (1..2) -%}
-      <span class="pay-intro">Pay your way —</span>{%- for m in cat_pay_methods -%}<span class="pay-pill"><b>{{ m | strip }}</b></span>{%- endfor -%}
+      <span class="pay-intro">Pay your way —</span>{%- for m in cat_pay_methods -%}{%- assign pci = forloop.index0 | modulo: 7 -%}<span class="pay-pill" style="--dot:{{ pay_palette[pci] }}"><b>{{ m | strip }}</b></span>{%- endfor -%}
     {%- endfor -%}
   </div>
 </div>

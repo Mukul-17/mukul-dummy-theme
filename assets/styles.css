@@ -1636,20 +1636,19 @@ body.scrolled-past .appbar { top: 0; }
   font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
   white-space: nowrap;
 }
-/* mobile: methods as dot-pills (desktop keeps the plain text marquee) */
+/* methods as dot-pills, each with its own dot colour (both views) */
+.pay-strip--top .pay-pill {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  background: var(--surface-2); border-radius: 999px;
+  padding: 0.42rem 0.8rem; margin-right: 0.5rem;
+}
+.pay-strip--top .pay-pill::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--dot, var(--ink)); flex-shrink: 0;
+}
+.pay-strip--top .pay-pill b { color: var(--ink); font-weight: 600; letter-spacing: 0.04em; }
 @media (max-width: 719px) {
   .pay-strip--top { border-top: none; border-bottom: none; padding: 0.7rem 0; }
-  .pay-strip--top .pay-pill {
-    display: inline-flex; align-items: center; gap: 0.45rem;
-    background: var(--surface-2); border-radius: 999px;
-    padding: 0.42rem 0.8rem; margin-right: 0.5rem;
-  }
-  .pay-strip--top .pay-pill::before {
-    content: ""; width: 7px; height: 7px; border-radius: 50%;
-    background: var(--ink); flex-shrink: 0;
-  }
-  .pay-strip--top .pay-pill:nth-child(even)::before { background: var(--accent); }
-  .pay-strip--top .pay-pill b { color: var(--ink); font-weight: 600; letter-spacing: 0.04em; }
 }
 
 /* =========================================================
