@@ -87,27 +87,31 @@
     {%- endif -%}
   </div>
 
+  {%- comment -%} current GSM: metafield first, else parse the number before "GSM" in the title {%- endcomment -%}
   {%- assign cur_gsm = product.metafields.custom.gsm.value -%}
+  {%- if cur_gsm == blank and product.title contains 'GSM' -%}
+    {%- assign cur_gsm = product.title | split: 'GSM' | first | strip | split: ' ' | last -%}
+  {%- endif -%}
   {%- if cur_gsm != blank -%}
-    {%- assign sim_count = 0 -%}
-    {%- for p in collections.all.products -%}
-      {%- if p.id != product.id and p.metafields.custom.gsm.value == cur_gsm -%}{%- assign sim_count = sim_count | plus: 1 -%}{%- endif -%}
-    {%- endfor -%}
-    {%- if sim_count > 0 -%}
+    {%- capture sim_cards -%}
+      {%- assign shown = 0 -%}
+      {%- for p in collections.all.products -%}
+        {%- if p.id == product.id -%}{%- continue -%}{%- endif -%}
+        {%- assign pg = p.metafields.custom.gsm.value -%}
+        {%- if pg == blank and p.title contains 'GSM' -%}{%- assign pg = p.title | split: 'GSM' | first | strip | split: ' ' | last -%}{%- endif -%}
+        {%- if pg == cur_gsm and shown < 10 -%}
+          {% render 'product-card', product: p %}
+          {%- assign shown = shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if shown > 0 -%}
       <section class="similar" aria-label="Similar products">
         <div class="similar__head">
           <h2 class="similar__title">Similar Products</h2>
           <span class="similar__sub">{{ cur_gsm }} GSM</span>
         </div>
-        <div class="similar__rail">
-          {%- assign shown = 0 -%}
-          {%- for p in collections.all.products -%}
-            {%- if p.id != product.id and p.metafields.custom.gsm.value == cur_gsm and shown < 10 -%}
-              {% render 'product-card', product: p %}
-              {%- assign shown = shown | plus: 1 -%}
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
+        <div class="similar__rail">{{ sim_cards }}</div>
       </section>
     {%- endif -%}
   {%- endif -%}
