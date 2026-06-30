@@ -11,10 +11,8 @@
       {%- assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round -%}
       <span class="ps__disc">−{{ pct }}%</span>
     {%- endif -%}
-    <div class="ps__lens" id="ps-lens" aria-hidden="true"></div>
-    <div class="ps__hint" id="ps-hint">Tap to zoom ↗</div>
+    <div class="ps__hint" id="ps-hint">Hover / tap to zoom ↗</div>
   </div>
-  <div class="ps__zoom" id="ps-zoom" aria-hidden="true"></div>
 
   {%- if product.images.size > 1 -%}
     <div class="rail" style="margin-top:0.75rem;">

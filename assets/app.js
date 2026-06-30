@@ -504,11 +504,28 @@
     $("#ps-minus")?.addEventListener("click", () => { qtyEl.textContent = Math.max(1, getQty() - 1); });
     $("#ps-plus")?.addEventListener("click", () => { qtyEl.textContent = getQty() + 1; });
     $("#ps-add")?.addEventListener("click", () => { if (!idInput.value) { toast("Please choose options", false); return; } addToCart(idInput.value, getQty()); });
-    // Amazon-style lens + panel zoom (hover or tap)
+    // hover / tap a section of the tee → magnify that section in place (mobile)
     const gallery = $("#ps-gallery");
-    const pzoom = lensZoom(gallery, mainImg, $("#ps-lens"), $("#ps-zoom"), gallery, false);
+    if (gallery && mainImg) {
+      const zoomOn = (e) => {
+        if (window.innerWidth >= 900) return;            // mobile only
+        const r = gallery.getBoundingClientRect();
+        const x = Math.max(0, Math.min((e.clientX - r.left) / r.width, 1)) * 100;
+        const y = Math.max(0, Math.min((e.clientY - r.top) / r.height, 1)) * 100;
+        mainImg.style.transformOrigin = x + "% " + y + "%";
+        gallery.classList.add("is-zoom");
+        if (e.cancelable && e.pointerType !== "mouse") e.preventDefault();
+      };
+      const zoomOff = () => gallery.classList.remove("is-zoom");
+      gallery.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") zoomOn(e); });
+      gallery.addEventListener("pointermove", zoomOn, { passive: false });
+      gallery.addEventListener("pointerleave", zoomOff);
+      gallery.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") { zoomOn(e); try { gallery.setPointerCapture(e.pointerId); } catch (_) {} } });
+      gallery.addEventListener("pointerup", zoomOff);
+      gallery.addEventListener("pointercancel", zoomOff);
+    }
 
-    const swapImg = (src) => { if (mainImg && src) { mainImg.src = src; if (pzoom) mainImg.addEventListener("load", pzoom.setBg, { once: true }); } };
+    const swapImg = (src) => { if (mainImg && src) mainImg.src = src; };
     $$(".ps-thumb").forEach((t) => t.addEventListener("click", () => swapImg(t.dataset.full)));
     pform.__swapImg = swapImg;
   }
