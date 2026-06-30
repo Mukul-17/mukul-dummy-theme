@@ -1205,6 +1205,17 @@ body.scrolled-past .appbar { top: 0; }
   transition: opacity 0.25s; pointer-events: none;
 }
 .ps__gallery.is-zoom .ps__hint { opacity: 0; }
+.ps__wish {
+  position: absolute; top: 0.8rem; right: 0.8rem; z-index: 4;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92); color: #1a1a1a;
+  display: grid; place-items: center; border: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s, background 0.2s, color 0.2s;
+}
+.ps__wish:active { transform: scale(0.88); }
+.ps__wish.is-wished { background: var(--accent); color: #fff; }
+.ps__wish.is-wished svg { fill: currentColor; }
 .ps__group { margin-bottom: 1.5rem; }
 .ps__label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.75rem; }
 .ps__label .ps__chosen { color: #fff; letter-spacing: 0; text-transform: none; font-size: 13px; }

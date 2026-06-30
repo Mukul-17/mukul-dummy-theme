@@ -507,6 +507,7 @@
     // hover (mouse) / press-drag (touch) → magnify the section under the pointer.
     // Stays zoomed the whole time the finger/cursor is down/over; closes only on release.
     const gallery = $("#ps-gallery");
+    const killZoom = () => { if (gallery) gallery.classList.remove("is-zoom"); };
     if (gallery && mainImg) {
       const apply = (cx, cy) => {
         const r = gallery.getBoundingClientRect();
@@ -514,18 +515,19 @@
         const y = Math.max(0, Math.min((cy - r.top) / r.height, 1)) * 100;
         mainImg.style.transformOrigin = x + "% " + y + "%";
       };
-      let zoomed = false;
       // CLICK / TAP TO TOGGLE: one click zooms and stays; move to pan; click again to exit.
       gallery.addEventListener("click", (e) => {
-        zoomed = !zoomed;
-        gallery.classList.toggle("is-zoom", zoomed);
-        if (zoomed) apply(e.clientX, e.clientY);
+        if (e.target.closest(".ps__wish")) return;   // heart button isn't a zoom toggle
+        const on = !gallery.classList.contains("is-zoom");
+        gallery.classList.toggle("is-zoom", on);
+        if (on) apply(e.clientX, e.clientY);
       });
       // while zoomed, the spot under the pointer/finger pans
-      gallery.addEventListener("pointermove", (e) => { if (zoomed) { if (e.cancelable) e.preventDefault(); apply(e.clientX, e.clientY); } }, { passive: false });
+      gallery.addEventListener("pointermove", (e) => { if (gallery.classList.contains("is-zoom")) { if (e.cancelable) e.preventDefault(); apply(e.clientX, e.clientY); } }, { passive: false });
     }
 
-    const swapImg = (src) => { if (mainImg && src) mainImg.src = src; };
+    // switching the image via a thumbnail kills any active zoom
+    const swapImg = (src) => { if (mainImg && src) mainImg.src = src; killZoom(); };
     $$(".ps-thumb").forEach((t) => t.addEventListener("click", () => swapImg(t.dataset.full)));
     pform.__swapImg = swapImg;
 
