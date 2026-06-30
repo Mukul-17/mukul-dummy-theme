@@ -1614,6 +1614,22 @@ body.scrolled-past .appbar { top: 0; }
 .pay-track span b { color: var(--ink); font-weight: 700; }
 /* payment marquee placed above Collections — a self-contained band */
 .pay-strip--top { margin-top: 0; padding: 0.9rem 0; border-bottom: 1px solid var(--ink); }
+/* mobile: render the methods as dot-pills (desktop keeps the plain marquee) */
+@media (max-width: 719px) {
+  .pay-strip--top { border-top: none; border-bottom: none; padding: 1rem 0; }
+  .pay-strip--top .pay-intro { margin-right: 0.7rem; }
+  .pay-strip--top .pay-pill {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    background: var(--surface-2); border-radius: 999px;
+    padding: 0.42rem 0.8rem; margin-right: 0.5rem;
+  }
+  .pay-strip--top .pay-pill::before {
+    content: ""; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--ink); flex-shrink: 0;
+  }
+  .pay-strip--top .pay-pill:nth-child(even)::before { background: var(--accent); }
+  .pay-strip--top .pay-pill b { color: var(--ink); font-weight: 600; letter-spacing: 0.04em; }
+}
 
 /* =========================================================
    Larger screens — graceful, not the focus

@@ -11,7 +11,7 @@
 <div class="pay-strip pay-strip--top" aria-hidden="true">
   <div class="pay-track">
     {%- for n in (1..2) -%}
-      <span>Pay your way —</span>{%- for m in cat_pay_methods -%}<span><b>{{ m | strip }}</b></span>{%- endfor -%}
+      <span class="pay-intro">Pay your way —</span>{%- for m in cat_pay_methods -%}<span class="pay-pill"><b>{{ m | strip }}</b></span>{%- endfor -%}
     {%- endfor -%}
   </div>
 </div>
