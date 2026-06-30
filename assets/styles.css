@@ -628,7 +628,7 @@ body.scrolled-past .appbar { top: 0; }
 }
 .pcard__media {
   position: relative;
-  aspect-ratio: 1 / 2;
+  aspect-ratio: 1 / 1.6;   /* height reduced to 80% of the old 1/2 */
   /* border-radius: var(--radius); */
   overflow: hidden;
   background: var(--surface);
