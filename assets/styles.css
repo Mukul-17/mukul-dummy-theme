@@ -164,6 +164,15 @@ input { font-family: inherit; }
 }
 .announce__sep { color: var(--accent); font-size: 12px; flex-shrink: 0; }
 .announce__track i { width: 4px; height: 4px; border-radius: 50%; background: #000; opacity: 0.5; flex-shrink: 0; }
+/* Inline marquee rendered above Collections. Mobile-home: show this in-flow band
+   and hide the fixed top bar (and zero --announce-h so sticky offsets stay right).
+   Desktop + non-home pages: keep the fixed top bar, hide the inline one. */
+.announce--inline { position: static; top: auto; height: 38px; }
+@media (min-width: 720px) { .announce--inline { display: none; } }
+@media (max-width: 719px) {
+  .template-index { --announce-h: 0px; }
+  .template-index .announce:not(.announce--inline) { display: none; }
+}
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* =========================================================

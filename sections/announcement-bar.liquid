@@ -1,20 +1,4 @@
-{%- assign msgs = section.settings.messages | default: 'LAUNCH SALE, FLAT ₹450 OFF, FREE SHIPPING' | split: ',' -%}
-<div class="announce" role="status" aria-label="Announcements">
-  <div class="announce__track" style="animation-duration: {{ section.settings.speed | default: 26 | times: 4 }}s">
-    {%- for n in (1..8) -%}
-      {%- for m in msgs -%}
-        {%- assign m = m | strip -%}
-        {%- if m contains '₹' -%}
-          {%- assign mp = m | split: '₹' -%}
-          <span class="announce__msg">{% if mp[0] != blank %}{{ mp[0] | strip }}&nbsp;{% endif %}<b class="announce__hl">₹{{ mp[1] | strip }}</b></span>
-        {%- else -%}
-          <span class="announce__msg">{{ m }}</span>
-        {%- endif -%}
-        <span class="announce__sep" aria-hidden="true">✦</span>
-      {%- endfor -%}
-    {%- endfor -%}
-  </div>
-</div>
+{% render 'marquee', messages: section.settings.messages, speed: section.settings.speed %}
 
 {% schema %}
 {

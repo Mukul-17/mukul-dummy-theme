@@ -1,0 +1,26 @@
+{%- comment -%}
+  Scrolling announcement marquee. Params:
+    messages    — comma-separated string (defaults below)
+    speed       — base seconds (range 12–50)
+    extra_class — extra class on the .announce wrapper (e.g. 'announce--inline')
+  Used by sections/announcement-bar.liquid (fixed top bar) and rendered inline
+  at the top of the Collections section on mobile.
+{%- endcomment -%}
+{%- assign mq_msgs = messages | default: 'LAUNCH SALE, FLAT ₹450 OFF, FREE SHIPPING' | split: ',' -%}
+{%- assign mq_speed = speed | default: 26 -%}
+<div class="announce {{ extra_class }}" role="status" aria-label="Announcements">
+  <div class="announce__track" style="animation-duration: {{ mq_speed | times: 4 }}s">
+    {%- for n in (1..8) -%}
+      {%- for m in mq_msgs -%}
+        {%- assign m = m | strip -%}
+        {%- if m contains '₹' -%}
+          {%- assign mp = m | split: '₹' -%}
+          <span class="announce__msg">{% if mp[0] != blank %}{{ mp[0] | strip }}&nbsp;{% endif %}<b class="announce__hl">₹{{ mp[1] | strip }}</b></span>
+        {%- else -%}
+          <span class="announce__msg">{{ m }}</span>
+        {%- endif -%}
+        <span class="announce__sep" aria-hidden="true">✦</span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
