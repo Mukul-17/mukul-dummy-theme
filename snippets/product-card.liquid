@@ -22,7 +22,7 @@
 
     {%- if on_sale -%}
       {%- assign pct = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round -%}
-      <span class="pcard__disc">{{ pct }}% OFF</span>
+      <span class="pcard__disc">−{{ pct }}% OFF</span>
     {%- endif -%}
 
     {%- unless product.available -%}<span class="pcard__badge" style="background:#444;color:#fff;">Sold out</span>{%- endunless -%}
