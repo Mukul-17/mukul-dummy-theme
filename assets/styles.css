@@ -1623,21 +1623,20 @@ body.scrolled-past .appbar { top: 0; }
 .pay-track { display: inline-block; animation: marquee 22s linear infinite; }
 .pay-track span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-right: 3rem; color: var(--paper-grey); }
 .pay-track span b { color: var(--ink); font-weight: 700; }
-/* payment marquee placed above Collections — a self-contained band */
+/* payment band above Collections — "Pay your way" label on top, methods marquee below (both views) */
 .pay-strip--top { margin-top: 0; padding: 0.9rem 0; border-bottom: 1px solid var(--ink); }
-.pay-fixed { display: none; }   /* desktop: hidden (the in-track intro is used instead) */
-/* mobile: fixed "Pay your way" label pinned left + methods as dot-pills scrolling under it */
+.pay-strip--top .pay-intro { display: none; }   /* the top label replaces the in-track intro */
+.pay-fixed {
+  display: flex; width: fit-content; align-items: center;
+  margin: 0 var(--pad) 0.6rem;
+  padding: 0.3rem 0.7rem;
+  border: 1.5px solid var(--accent); border-radius: 999px; color: var(--accent);
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700;
+  white-space: nowrap;
+}
+/* mobile: methods as dot-pills (desktop keeps the plain text marquee) */
 @media (max-width: 719px) {
-  .pay-strip--top { position: relative; border-top: none; border-bottom: none; padding: 0.7rem 0; }
-  .pay-fixed {
-    position: absolute; left: 0; top: 0; bottom: 0; z-index: 3;
-    display: inline-flex; align-items: center;
-    padding: 0 0.7rem; background: var(--bg);
-    border: 1.5px solid var(--accent); border-radius: 8px; color: var(--accent);
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
-    white-space: nowrap;
-  }
-  .pay-strip--top .pay-intro { display: none; }   /* replaced by the fixed label; pills scroll under it */
+  .pay-strip--top { border-top: none; border-bottom: none; padding: 0.7rem 0; }
   .pay-strip--top .pay-pill {
     display: inline-flex; align-items: center; gap: 0.45rem;
     background: var(--surface-2); border-radius: 999px;
