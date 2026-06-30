@@ -517,10 +517,12 @@
         if (e.cancelable && e.pointerType !== "mouse") e.preventDefault();
       };
       const zoomOff = () => gallery.classList.remove("is-zoom");
+      // mouse: zoom while hovering, off when the cursor leaves
       gallery.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") zoomOn(e); });
-      gallery.addEventListener("pointermove", zoomOn, { passive: false });
-      gallery.addEventListener("pointerleave", zoomOff);
+      gallery.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") zoomOff(); });
+      // touch: zoom on press, follow the finger (even outside the image) until lift
       gallery.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") { zoomOn(e); try { gallery.setPointerCapture(e.pointerId); } catch (_) {} } });
+      gallery.addEventListener("pointermove", zoomOn, { passive: false });
       gallery.addEventListener("pointerup", zoomOff);
       gallery.addEventListener("pointercancel", zoomOff);
     }
