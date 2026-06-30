@@ -528,6 +528,15 @@
     const swapImg = (src) => { if (mainImg && src) mainImg.src = src; };
     $$(".ps-thumb").forEach((t) => t.addEventListener("click", () => swapImg(t.dataset.full)));
     pform.__swapImg = swapImg;
+
+    // size chart modal
+    const scOpen = $("#ps-sizechart-open"), sc = $("#ps-sizechart");
+    if (scOpen && sc) {
+      const closeSC = () => { sc.hidden = true; document.body.style.overflow = ""; };
+      scOpen.addEventListener("click", () => { sc.hidden = false; document.body.style.overflow = "hidden"; });
+      sc.addEventListener("click", (e) => { if (e.target.closest("[data-sizechart-close]")) closeSC(); });
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !sc.hidden) closeSC(); });
+    }
   }
 
   /* ---------------- global click delegation ---------------- */
