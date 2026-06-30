@@ -202,47 +202,38 @@
     update();
   }
 
-  /* ---------------- feel the fabric (Amazon-style zoom) ---------------- */
-  function initFabric() {
-    const box = $("#lensbox");
-    if (!box) return;
-    const lens = $("#lens"), img = $("#lensimg"), thumbs = $("#fab-thumbs"), feel = $("#fabric"), zoom = $("#lenszoom");
-    if (!zoom) return;
-    const Z = 2.4, BASE = 1;     // BASE = 1: show the complete image, no pre-zoom (matches CSS, zoom is on demand)
+  /* ---------------- reusable Amazon-style lens zoom ----------------
+     box=hover/tap target, img=source, lens=highlight rect, zoom=result panel,
+     host=element that gets .is-zooming. touchOnly=true binds touch only. */
+  function lensZoom(box, img, lens, zoom, host, touchOnly) {
+    if (!box || !img || !lens || !zoom) return null;
+    const Z = 2.4, BASE = 1;
     let active = false;
-
     const url = () => img.currentSrc || img.src;
     const setBg = () => { zoom.style.backgroundImage = `url('${url()}')`; };
     if (img.complete) setBg(); else img.addEventListener("load", setBg, { once: true });
 
-    // place the zoom panel: right of the image on desktop, over the image on touch
     function placePanel(rect, mouse) {
       const vw = window.innerWidth, gap = 16;
       if (mouse && vw >= 900) {
         const roomRight = vw - rect.right - gap - 12;
         if (roomRight >= 260) {
-          zoom.style.left = (rect.right + gap) + "px";
-          zoom.style.width = Math.min(roomRight, 460) + "px";
-          zoom.style.top = rect.top + "px";
-          zoom.style.height = rect.height + "px";
-          return;
+          zoom.style.left = (rect.right + gap) + "px"; zoom.style.width = Math.min(roomRight, 460) + "px";
+          zoom.style.top = rect.top + "px"; zoom.style.height = rect.height + "px"; return;
         }
       }
       zoom.style.left = rect.left + "px"; zoom.style.top = rect.top + "px";
       zoom.style.width = rect.width + "px"; zoom.style.height = rect.height + "px";
     }
 
-    // cache geometry once per session so pointermove does no layout reads
     let R = null, PW = 0, PH = 0, CW = 0, CH = 0, HZ = 1, LW = 0, LH = 0, raf = 0, mx = 0, my = 0;
     function prime() {
       R = box.getBoundingClientRect();
       const zr = zoom.getBoundingClientRect();
       PW = zr.width; PH = zr.height;
       const nw = img.naturalWidth || R.width, nh = img.naturalHeight || R.height;
-      const f = Math.max(R.width / nw, R.height / nh);   // cover factor for the box
-      CW = nw * f; CH = nh * f;                           // source scaled to cover the box
-      HZ = BASE * Z;                                      // panel magnification vs the cover image
-      LW = PW / Z; LH = PH / Z;                           // lens size on the (base-zoomed) source
+      const f = Math.max(R.width / nw, R.height / nh);
+      CW = nw * f; CH = nh * f; HZ = BASE * Z; LW = PW / Z; LH = PH / Z;
       lens.style.width = LW + "px"; lens.style.height = LH + "px";
       zoom.style.backgroundSize = (CW * HZ) + "px " + (CH * HZ) + "px";
     }
@@ -253,7 +244,6 @@
       const lcx = Math.max(LW / 2, Math.min(bx, R.width - LW / 2));
       const lcy = Math.max(LH / 2, Math.min(by, R.height - LH / 2));
       lens.style.left = lcx + "px"; lens.style.top = lcy + "px";
-      // box point -> point on the base-zoomed cover image -> source-cover coord
       const covx = R.width / 2 + (lcx - R.width / 2) / BASE;
       const covy = R.height / 2 + (lcy - R.height / 2) / BASE;
       const scx = (CW - R.width) / 2 + covx;
@@ -261,30 +251,40 @@
       zoom.style.backgroundPosition = (PW / 2 - scx * HZ) + "px " + (PH / 2 - scy * HZ) + "px";
     }
     function queueMove(cx, cy) { mx = cx; my = cy; if (!raf) raf = requestAnimationFrame(() => { raf = 0; move(mx, my); }); }
+    function start(e) { setBg(); placePanel(box.getBoundingClientRect(), e.pointerType === "mouse"); prime(); active = true; host.classList.add("is-zooming"); move(e.clientX, e.clientY); }
+    function stop() { active = false; host.classList.remove("is-zooming"); if (raf) { cancelAnimationFrame(raf); raf = 0; } }
 
-    function start(e) { setBg(); placePanel(box.getBoundingClientRect(), e.pointerType === "mouse"); prime(); active = true; feel.classList.add("is-zooming"); move(e.clientX, e.clientY); }
-    function stop() { active = false; feel.classList.remove("is-zooming"); if (raf) { cancelAnimationFrame(raf); raf = 0; } }
-
-    box.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") start(e); });
-    box.addEventListener("pointerover", (e) => { if (e.pointerType === "mouse" && !active) start(e); });
-    box.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") stop(); });
+    if (!touchOnly) {
+      box.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") start(e); });
+      box.addEventListener("pointerover", (e) => { if (e.pointerType === "mouse" && !active) start(e); });
+      box.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") stop(); });
+    }
     box.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") { start(e); try { box.setPointerCapture(e.pointerId); } catch (_) {} } });
     box.addEventListener("pointermove", (e) => {
-      // activate on the first mouse move too — pointerenter alone is unreliable
-      if (e.pointerType === "mouse" && !active) start(e);
+      if (!touchOnly && e.pointerType === "mouse" && !active) start(e);
       if (active) { if (e.cancelable) e.preventDefault(); queueMove(e.clientX, e.clientY); }
     }, { passive: false });
     box.addEventListener("pointerup", (e) => { if (e.pointerType !== "mouse") stop(); });
     box.addEventListener("pointercancel", stop);
-    box.addEventListener("contextmenu", (e) => e.preventDefault());  // kill long-press save menu
+    box.addEventListener("contextmenu", (e) => e.preventDefault());
     window.addEventListener("scroll", () => { if (active) stop(); }, { passive: true });
+    return { setBg, stop };
+  }
+
+  /* ---------------- feel the fabric (Amazon-style zoom) ---------------- */
+  function initFabric() {
+    const box = $("#lensbox");
+    if (!box) return;
+    const lens = $("#lens"), img = $("#lensimg"), thumbs = $("#fab-thumbs"), feel = $("#fabric"), zoom = $("#lenszoom");
+    if (!zoom) return;
+    const z = lensZoom(box, img, lens, zoom, feel, false);
 
     if (thumbs) thumbs.addEventListener("click", (e) => {
       const b = e.target.closest("button[data-src]"); if (!b) return;
       $$("button", thumbs).forEach((x) => x.classList.remove("is-active"));
       b.classList.add("is-active");
       img.src = b.dataset.src;
-      img.addEventListener("load", setBg, { once: true });
+      if (z) img.addEventListener("load", z.setBg, { once: true });
       haptic();
     });
 
@@ -488,7 +488,7 @@
         if (discEl) discEl.textContent = "−" + Math.round((vt.compare_at_price - vt.price) * 100 / vt.compare_at_price) + "%";
       }
       if (addBtn) { addBtn.disabled = !vt.available; addBtn.textContent = vt.available ? "Add to bag" : "Sold out"; }
-      if (mainImg && vt.featured_image && vt.featured_image.src) mainImg.src = vt.featured_image.src;
+      if (vt.featured_image && vt.featured_image.src && pform.__swapImg) pform.__swapImg(vt.featured_image.src);
     }
     pform.addEventListener("click", (e) => {
       const btn = e.target.closest(".ps__size, .ps__swatch"); if (!btn) return;
@@ -504,19 +504,13 @@
     $("#ps-minus")?.addEventListener("click", () => { qtyEl.textContent = Math.max(1, getQty() - 1); });
     $("#ps-plus")?.addEventListener("click", () => { qtyEl.textContent = getQty() + 1; });
     $("#ps-add")?.addEventListener("click", () => { if (!idInput.value) { toast("Please choose options", false); return; } addToCart(idInput.value, getQty()); });
-    $$(".ps-thumb").forEach((t) => t.addEventListener("click", () => { if (mainImg && t.dataset.full) mainImg.src = t.dataset.full; }));
-
-    // click-to-zoom on the main image (pan by pointer position)
+    // tap-to-zoom (Amazon-style lens + panel) — mobile/touch only
     const gallery = $("#ps-gallery");
-    if (gallery && mainImg) {
-      gallery.addEventListener("click", (e) => { if (e.target.closest(".ps-thumb")) return; gallery.classList.toggle("is-zoom"); });
-      gallery.addEventListener("pointermove", (e) => {
-        if (!gallery.classList.contains("is-zoom")) return;
-        const r = gallery.getBoundingClientRect();
-        mainImg.style.transformOrigin = ((e.clientX - r.left) / r.width * 100) + "% " + ((e.clientY - r.top) / r.height * 100) + "%";
-      });
-      gallery.addEventListener("pointerleave", () => gallery.classList.remove("is-zoom"));
-    }
+    const pzoom = lensZoom(gallery, mainImg, $("#ps-lens"), $("#ps-zoom"), gallery, true);
+
+    const swapImg = (src) => { if (mainImg && src) { mainImg.src = src; if (pzoom) mainImg.addEventListener("load", pzoom.setBg, { once: true }); } };
+    $$(".ps-thumb").forEach((t) => t.addEventListener("click", () => swapImg(t.dataset.full)));
+    pform.__swapImg = swapImg;
   }
 
   /* ---------------- global click delegation ---------------- */
