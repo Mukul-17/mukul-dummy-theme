@@ -2144,3 +2144,32 @@ body.scrolled-past .appbar { top: 0; }
     padding-left: 2.5rem; padding-right: 2.5rem;
   }
 }
+
+/* =========================================================
+   Contact page form (rendered on the Contact page)
+   ========================================================= */
+.contact-wrap { padding: 0 var(--pad); max-width: 760px; margin: 1.5rem auto 0; }
+.contact-form { display: flex; flex-direction: column; gap: 0.85rem; }
+.contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+.contact-in {
+  width: 100%; padding: 0.85rem 1rem;
+  background: transparent; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  color: var(--fg); font-family: inherit; font-size: var(--fs-body); outline: none;
+}
+.contact-in::placeholder { color: var(--muted); }
+.contact-in:focus { border-color: var(--accent); }
+.contact-area { resize: vertical; min-height: 130px; }
+.contact-send {
+  align-self: flex-start; margin-top: 0.4rem;
+  background: var(--fg); color: var(--bg); border: 0; border-radius: 999px;
+  padding: 0.85rem 2.1rem; font-weight: 700; cursor: pointer;
+  transition: transform 0.15s, opacity 0.2s;
+}
+.contact-send:active { transform: scale(0.96); }
+.contact-note { padding: 0.8rem 1rem; border-radius: var(--radius-sm); font-size: var(--fs-sm); margin: 0; }
+.contact-note--ok { background: rgba(26, 168, 90, 0.12); color: #1aa85a; }
+.contact-note--err { background: var(--accent-dim); color: var(--accent); }
+@media (max-width: 600px) { .contact-row { grid-template-columns: 1fr; } }
+
+/* drawer About item: present but non-navigating */
+.drawer__item--static { cursor: default; }

@@ -1,8 +1,14 @@
+{%- assign page_id = page.handle | append: ' ' | append: page.title | downcase -%}
 <section class="section">
   <div class="section__head reveal">
     <h1 class="section__title">{{ page.title }}</h1>
   </div>
-  <div class="rte" style="padding:0 var(--pad);max-width:780px;margin:0 auto;">{{ page.content }}</div>
+  {%- if page.content != blank -%}
+    <div class="rte" style="padding:0 var(--pad);max-width:780px;margin:0 auto;">{{ page.content }}</div>
+  {%- endif -%}
+  {%- if page_id contains 'contact' -%}
+    {% render 'contact-form' %}
+  {%- endif -%}
 </section>
 
 {% schema %}

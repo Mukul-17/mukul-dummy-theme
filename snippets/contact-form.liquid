@@ -1,0 +1,17 @@
+{%- comment -%} Shopify contact form — rendered on the Contact page (see main-page.liquid). {%- endcomment -%}
+<div class="contact-wrap">
+  {%- form 'contact', class: 'contact-form' -%}
+    {%- if form.posted_successfully? -%}
+      <p class="contact-note contact-note--ok">Thanks — your message has been sent. We’ll get back to you shortly.</p>
+    {%- elsif form.errors -%}
+      <p class="contact-note contact-note--err">{{ form.errors | default_errors }}</p>
+    {%- endif -%}
+    <div class="contact-row">
+      <input class="contact-in" type="text" name="contact[name]" placeholder="Name" value="{{ form.name }}" autocomplete="name">
+      <input class="contact-in" type="email" name="contact[email]" placeholder="Email *" required value="{{ form.email }}" autocomplete="email">
+    </div>
+    <input class="contact-in" type="tel" name="contact[phone]" placeholder="Phone number" value="{{ form.phone }}" autocomplete="tel">
+    <textarea class="contact-in contact-area" name="contact[body]" placeholder="Comment" rows="5">{{ form.body }}</textarea>
+    <button type="submit" class="contact-send">Send</button>
+  {%- endform -%}
+</div>
