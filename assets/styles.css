@@ -2218,4 +2218,4 @@ body.scrolled-past .appbar { top: 0; }
 
 /* non-home pages: push content below the fixed header + marquee
    (home is full-bleed under the transparent header, so it's excluded) */
-body:not(.template-index) main { padding-top: calc(var(--appbar-h) + var(--announce-h)); }
+body:not(.template-index) main { padding-top: var(--appbar-h); }   /* no marquee off-home, just clear the header */

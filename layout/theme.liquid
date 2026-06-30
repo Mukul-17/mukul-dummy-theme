@@ -21,7 +21,7 @@
 <body class="template-{{ request.page_type }}">
   <div id="scroll-progress" aria-hidden="true"></div>
 
-  {% section 'announcement-bar' %}
+  {% if request.page_type == 'index' %}{% section 'announcement-bar' %}{% endif %}
   {% section 'header' %}
 
   <main id="top" data-main>
