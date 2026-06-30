@@ -16,8 +16,8 @@
   {%- if product.images.size > 1 -%}
     <div class="rail" style="margin-top:0.75rem;">
       {%- for image in product.images -%}
-        <button type="button" class="ps-thumb" data-full="{{ image | image_url: width: 1200 }}" style="flex:0 0 64px;border-radius:10px;overflow:hidden;border:1px solid var(--line);">
-          <img src="{{ image | image_url: width: 160 }}" alt="" width="160" height="200" style="width:64px;height:80px;object-fit:cover;display:block;">
+        <button type="button" class="ps-thumb" data-full="{{ image | image_url: width: 1200 }}" style="flex:0 0 64px;height:80px;padding:0;border-radius:10px;overflow:hidden;border:1px solid var(--line);">
+          <img src="{{ image | image_url: width: 160 }}" alt="" width="160" height="200" style="width:100%;height:100%;object-fit:cover;display:block;">
         </button>
       {%- endfor -%}
     </div>
@@ -30,10 +30,10 @@
     {%- endif -%}
 
     <div class="ps__price">
-      <b id="ps-price">{{ v.price | money }}</b>
+      {%- if on_sale -%}<em>−{{ pct }}%</em>{%- endif -%}
+      <b id="ps-price">₹{{ v.price | money_without_currency | split: '.' | first }}</b>
       {%- if on_sale -%}
-        <s id="ps-compare">{{ v.compare_at_price | money }}</s>
-        <em>−{{ pct }}%</em>
+        <span class="ps__mrp">M.R.P. <s id="ps-compare">₹{{ v.compare_at_price | money_without_currency | split: '.' | first }}</s></span>
       {%- endif -%}
     </div>
 
@@ -45,8 +45,8 @@
             <button type="button"
                     class="ps__size{% if variant.id == v.id %} is-active{% endif %}{% unless variant.available %} is-disabled{% endunless %}"
                     data-variant-id="{{ variant.id }}"
-                    data-price="{{ variant.price | money }}"
-                    {% if variant.compare_at_price > variant.price %}data-compare="{{ variant.compare_at_price | money }}"{% endif %}
+                    data-price="₹{{ variant.price | money_without_currency | split: '.' | first }}"
+                    {% if variant.compare_at_price > variant.price %}data-compare="₹{{ variant.compare_at_price | money_without_currency | split: '.' | first }}"{% endif %}
                     data-title="{{ variant.title | escape }}">
               {{ variant.title }}
             </button>

@@ -1135,12 +1135,13 @@ body.scrolled-past .appbar { top: 0; }
   background: var(--sale); color: #fff; font-size: 11px; font-weight: 700; font-family: var(--mono);
 }
 .ps__body { padding: 1.5rem 1.25rem 0; }
-.ps__name { font-family: var(--display); font-size: 2.5rem; line-height: 0.95; margin: 0; color: #fff; }
+.ps__name { font-family: var(--display); font-size: clamp(1.4rem, 5.5vw, 2rem); line-height: 1.05; margin: 0; color: #fff; }
 .ps__tagline { color: var(--muted); font-style: italic; font-size: var(--fs-sm); margin: 0.4rem 0 0; }
-.ps__price { display: flex; align-items: baseline; gap: 0.65rem; margin: 1rem 0 1.5rem; }
-.ps__price b { font-size: 1.6rem; font-weight: 600; color: #fff; }
-.ps__price s { color: var(--faint); }
-.ps__price em { font-style: normal; padding: 0.2rem 0.5rem; border-radius: 6px; background: var(--accent-dim); color: var(--accent); font-size: 12px; font-family: var(--mono); }
+.ps__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem; margin: 1rem 0 1.5rem; }
+.ps__price b { font-size: 2rem; font-weight: 700; color: #fff; }
+.ps__price s { color: var(--muted); }
+.ps__price em { font-style: normal; color: var(--accent); font-weight: 700; font-size: 1rem; font-family: var(--mono); }
+.ps__mrp { flex-basis: 100%; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 0.1rem; }
 .ps__group { margin-bottom: 1.5rem; }
 .ps__label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.75rem; }
 .ps__label .ps__chosen { color: #fff; letter-spacing: 0; text-transform: none; font-size: 13px; }
