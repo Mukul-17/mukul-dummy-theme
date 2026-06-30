@@ -1,14 +1,14 @@
 <section class="section">
   <div class="section__head reveal">
     <div class="eyebrow"><span>{{ collection.products_count }} {% if collection.products_count == 1 %}piece{% else %}pieces{% endif %}</span></div>
-    <h2 class="section__title">{{ collection.title }}</h2>
+    <h3 class="coll-title">{{ collection.title }}</h3>
     {%- if collection.description != blank -%}
       <p class="section__lead">{{ collection.description }}</p>
     {%- endif -%}
   </div>
 
   {%- paginate collection.products by 24 -%}
-    <div class="pgrid">
+    <div class="pgrid" id="collection-grid">
       {%- for product in collection.products -%}
         {% render 'product-card', product: product %}
       {%- else -%}
@@ -16,10 +16,9 @@
       {%- endfor -%}
     </div>
 
-    {%- if paginate.pages > 1 -%}
-      <div class="section__cta" style="display:flex;justify-content:center;gap:0.5rem;margin-top:2rem;">
-        {%- if paginate.previous -%}<a class="btn" href="{{ paginate.previous.url }}">← Prev</a>{%- endif -%}
-        {%- if paginate.next -%}<a class="btn btn--primary" href="{{ paginate.next.url }}">More →</a>{%- endif -%}
+    {%- if paginate.next -%}
+      <div class="section__cta load-more-wrap" style="display:flex;justify-content:center;margin-top:2rem;">
+        <button type="button" class="btn btn--primary load-more" data-next="{{ paginate.next.url }}">More →</button>
       </div>
     {%- endif -%}
   {%- endpaginate -%}

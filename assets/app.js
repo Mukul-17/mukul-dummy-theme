@@ -568,6 +568,38 @@
     });
   }
 
+  /* ---------------- collection: load more (no page reload) ---------------- */
+  function initLoadMore() {
+    const grid = $("#collection-grid");
+    const btn = $(".load-more");
+    if (!grid || !btn) return;
+    let busy = false;
+    btn.addEventListener("click", async () => {
+      const url = btn.dataset.next;
+      if (!url || busy) return;
+      busy = true; btn.disabled = true; btn.textContent = "Loading…";
+      try {
+        const res = await fetch(url, { headers: { "X-Requested-With": "fetch" } });
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const fresh = doc.querySelectorAll("#collection-grid > *");
+        fresh.forEach((node) => grid.appendChild(document.importNode(node, true)));
+        const nextBtn = doc.querySelector(".load-more");
+        if (nextBtn && nextBtn.dataset.next) {
+          btn.dataset.next = nextBtn.dataset.next;
+          btn.disabled = false; btn.textContent = "More →";
+        } else {
+          btn.closest(".load-more-wrap")?.remove();
+        }
+        applyWish();
+      } catch (_) {
+        btn.disabled = false; btn.textContent = "More →";
+      } finally {
+        busy = false;
+      }
+    });
+  }
+
   /* ---------------- category switcher (tee tags) ---------------- */
   function initCatSwitch() {
     const chips = $("#cat-chips"), grid = $("#cat-grid");
@@ -625,6 +657,7 @@
     initSearch();
     initCatSwitch();
     initCardGallery();
+    initLoadMore();
     $$(".rail-wrap").forEach(initRail);
     bindRailDots($("#drop-rail"), $(".rail__dots"));
     bindRailDots($("#reviews-track"), $("#review-dots"));

@@ -1761,6 +1761,9 @@ body.scrolled-past .appbar { top: 0; }
 .catsec .feed-head { display: flex; align-items: baseline; justify-content: space-between; padding: 1.75rem var(--pad) 1.35rem; }
 .catsec .feed-head h3 { font-family: var(--display); text-transform: uppercase; font-size: clamp(1.15rem, 3.2vw, 1.45rem); line-height: 1; margin: 0; color: #fff; white-space: nowrap; }
 @media (max-width: 719px) { .catsec .feed-head h3 { font-family: inherit; font-weight: 700; } }   /* mobile: drop the heavy display face */
+/* collection page heading — matches the category feed heading */
+.coll-title { font-family: var(--display); text-transform: uppercase; font-size: clamp(1.15rem, 3.2vw, 1.45rem); line-height: 1; margin: 0; color: var(--fg); }
+@media (max-width: 719px) { .coll-title { font-family: inherit; font-weight: 700; } }
 .catsec .feed-head .count { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
 .catgrid .pcard[hidden] { display: none; }
 
