@@ -656,6 +656,34 @@
     });
   }
 
+  /* ---------------- announcement marquee: fixed only over the hero ----------------
+     Pinned below the header while the hero slider is on screen; once the hero
+     scrolls past, it releases (absolute at the hero's end) and scrolls away. */
+  function initAnnounce() {
+    const announce = $(".announce");
+    const hero = $("#bnSlider");
+    if (!announce || !hero) return;
+    const appbarH = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue("--appbar-h"), 10) || 56;
+    let raf = 0;
+    const update = () => {
+      const rect = hero.getBoundingClientRect();
+      const aH = announce.offsetHeight || 38;
+      const ab = appbarH();
+      if (rect.bottom <= ab + aH) {
+        // hero has scrolled past — drop the marquee at the hero's end and let it scroll away
+        announce.style.position = "absolute";
+        announce.style.top = (window.scrollY + rect.bottom - aH) + "px";
+      } else {
+        announce.style.position = "fixed";
+        announce.style.top = ab + "px";
+      }
+    };
+    const onScroll = () => { if (raf) return; raf = requestAnimationFrame(() => { raf = 0; update(); }); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
+  }
+
   /* ---------------- category switcher (tee tags) ---------------- */
   function initCatSwitch() {
     const chips = $("#cat-chips"), grid = $("#cat-grid");
@@ -714,6 +742,7 @@
     initCatSwitch();
     initCardGallery();
     initLoadMore();
+    initAnnounce();
     $$(".rail-wrap").forEach(initRail);
     bindRailDots($("#drop-rail"), $(".rail__dots"));
     bindRailDots($("#reviews-track"), $("#review-dots"));
