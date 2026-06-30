@@ -6,9 +6,6 @@
 {%- endcomment -%}
 {%- assign rots = "-4deg|3deg|-2deg|4deg|-3deg|2deg" | split: "|" -%}
 
-{%- comment -%} Mobile: the marquee sits here (in-flow) above Collections; CSS hides the fixed top bar on mobile-home. Desktop keeps the fixed top bar. {%- endcomment -%}
-{% render 'marquee', extra_class: 'announce--inline' %}
-
 <section id="collections" class="section catsec">
   <div class="section__head reveal">
     <div class="eyebrow"><span class="eyebrow__num">{{ section.settings.eyebrow_num }}</span><span>{{ section.settings.eyebrow_label }}</span></div>
