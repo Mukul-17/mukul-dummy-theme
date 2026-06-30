@@ -504,9 +504,9 @@
     $("#ps-minus")?.addEventListener("click", () => { qtyEl.textContent = Math.max(1, getQty() - 1); });
     $("#ps-plus")?.addEventListener("click", () => { qtyEl.textContent = getQty() + 1; });
     $("#ps-add")?.addEventListener("click", () => { if (!idInput.value) { toast("Please choose options", false); return; } addToCart(idInput.value, getQty()); });
-    // tap-to-zoom (Amazon-style lens + panel) — mobile/touch only
+    // Amazon-style lens + panel zoom (hover or tap)
     const gallery = $("#ps-gallery");
-    const pzoom = lensZoom(gallery, mainImg, $("#ps-lens"), $("#ps-zoom"), gallery, true);
+    const pzoom = lensZoom(gallery, mainImg, $("#ps-lens"), $("#ps-zoom"), gallery, false);
 
     const swapImg = (src) => { if (mainImg && src) { mainImg.src = src; if (pzoom) mainImg.addEventListener("load", pzoom.setBg, { once: true }); } };
     $$(".ps-thumb").forEach((t) => t.addEventListener("click", () => swapImg(t.dataset.full)));

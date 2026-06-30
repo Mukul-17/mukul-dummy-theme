@@ -63,7 +63,7 @@
                 {%- elsif cn contains 'brown' -%}{%- assign sw = '#7a5230' -%}
                 {%- elsif cn contains 'olive' -%}{%- assign sw = '#6b6a3a' -%}
                 {%- endif -%}
-                <button type="button" class="ps__swatch{% if option.selected_value == value %} is-active{% endif %}" data-position="{{ option.position }}" data-value="{{ value | escape }}" aria-label="{{ value | escape }}"><span class="ps__swatch-dot" style="background:{{ sw }}"></span><span class="ps__swatch-lbl">{{ value }}</span></button>
+                <button type="button" class="ps__swatch{% if option.selected_value == value %} is-active{% endif %}" data-position="{{ option.position }}" data-value="{{ value | escape }}" title="{{ value | escape }}" aria-label="{{ value | escape }}"><span class="ps__swatch-dot" style="background:{{ sw }}"></span></button>
               {%- endfor -%}
             </div>
           {%- else -%}
