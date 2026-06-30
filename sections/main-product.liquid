@@ -7,10 +7,7 @@
     {%- if product.featured_image -%}
       <img id="ps-main-img" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" width="1200" height="1500">
     {%- endif -%}
-    {%- if on_sale -%}
-      {%- assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round -%}
-      <span class="ps__disc"><span class="ps__disc-sign">−</span>{{ pct }}%</span>
-    {%- endif -%}
+    {%- if on_sale -%}{%- assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round -%}{%- endif -%}
     <div class="ps__hint" id="ps-hint">Tap to zoom · tap again to exit ↗</div>
   </div>
 
@@ -34,7 +31,7 @@
       {%- if on_sale -%}<em id="ps-disc"><span class="ps__disc-sign">−</span>{{ pct }}%</em>{%- endif -%}
       <b id="ps-price">₹{{ v.price | money_without_currency | split: '.' | first }}</b>
       {%- if on_sale -%}
-        <span class="ps__mrp">M.R.P. <s id="ps-compare">₹{{ v.compare_at_price | money_without_currency | split: '.' | first }}</s></span>
+        <span class="ps__mrp">MRP. <s id="ps-compare">₹{{ v.compare_at_price | money_without_currency | split: '.' | first }}</s></span>
       {%- endif -%}
     </div>
 

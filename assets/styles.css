@@ -1137,11 +1137,10 @@ body.scrolled-past .appbar { top: 0; }
   box-shadow: 0 6px 16px -6px rgba(224, 62, 31, 0.7);
 }
 @media (max-width: 899px) {
-  .ps__gallery { margin: 0; border-radius: 0; }   /* full-bleed image (no side margin) */
-  .ps-page { padding-top: 1.75rem; }              /* clear gap between the marquee and the image */
+  .ps__gallery { margin: 0; border-radius: 0; }   /* full-bleed image (no side margin), flush under the marquee */
 }
 .ps__body { padding: 1.5rem 1.25rem 0; }
-.ps__name { font-family: var(--display); font-size: clamp(1.4rem, 5.5vw, 2rem); line-height: 1.05; margin: 0; color: #fff; }
+.ps__name { font-size: clamp(1.4rem, 5.5vw, 2rem); line-height: 1.05; margin: 0; color: #fff; }
 .ps__tagline { color: var(--muted); font-style: italic; font-size: var(--fs-sm); margin: 0.4rem 0 0; }
 .ps__price { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin: 0.85rem 0 1.5rem; }
 .ps__price b { font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; order: 2; }
