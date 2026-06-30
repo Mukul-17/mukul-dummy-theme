@@ -517,21 +517,17 @@
       const on = (e) => { gallery.classList.add("is-zoom"); apply(e.clientX, e.clientY); };
       const off = () => gallery.classList.remove("is-zoom");
 
-      // touch/pen: hold + drag anywhere; only a real lift ends it
+      // PRESS-AND-HOLD (mouse click-hold or finger): zoom stays + follows the
+      // pointer the whole time it's held; only releasing ends it.
       gallery.addEventListener("pointerdown", (e) => {
-        if (e.pointerType === "mouse") return;
         on(e);
+        if (e.cancelable) e.preventDefault();
         const move = (ev) => { if (ev.cancelable) ev.preventDefault(); apply(ev.clientX, ev.clientY); };
         const end = () => { off(); document.removeEventListener("pointermove", move); document.removeEventListener("pointerup", end); document.removeEventListener("pointercancel", end); };
         document.addEventListener("pointermove", move, { passive: false });
         document.addEventListener("pointerup", end);
         document.addEventListener("pointercancel", end);
       });
-
-      // mouse: zoom while hovering
-      gallery.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") on(e); });
-      gallery.addEventListener("pointermove", (e) => { if (e.pointerType === "mouse") apply(e.clientX, e.clientY); });
-      gallery.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") off(); });
     }
 
     const swapImg = (src) => { if (mainImg && src) mainImg.src = src; };
