@@ -16,15 +16,25 @@
   <div class="chips" aria-label="Shop by category">
     <div class="chip-rod" aria-hidden="true"></div>
     <div class="chips-scroll" id="cat-chips">
-      <button type="button" class="chip is-active" data-cat="__all" data-label="{{ section.settings.all_label | escape }}" style="--rot:-3deg">
+      <button type="button" class="chip" data-cat="__all" data-label="{{ section.settings.all_label | escape }}" style="--rot:-3deg">
         <span class="tee"><span class="collar"></span>{% render 'tee-icon', key: 'grid' %}</span>
         <span class="chip-lbl">{{ section.settings.all_label }}</span>
       </button>
       {%- assign icycle = "sparkle,flame,helmet,compass,coffee,bolt,layers" | split: "," -%}
+      {%- comment -%} Featured collection right after ALL, auto-selected on load {%- endcomment -%}
       {%- for c in collections -%}
-        {%- unless c.handle == 'frontpage' -%}
+        {%- assign ct = c.title | downcase -%}
+        {%- if ct contains 'featured' -%}
+          <button type="button" class="chip is-active" data-cat="{{ c.handle }}" data-label="{{ c.title | escape }}" style="--rot:3deg">
+            <span class="tee"><span class="collar"></span>{% render 'tee-icon', key: 'sparkle' %}</span>
+            <span class="chip-lbl">{{ c.title }}</span>
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- for c in collections -%}
+        {%- assign t = c.title | downcase -%}
+        {%- unless c.handle == 'frontpage' or t contains 'featured' -%}
           {%- assign ri = forloop.index0 | modulo: 6 -%}
-          {%- assign t = c.title | downcase -%}
           {%- if t contains 'machine' or t contains 'moto' or t contains 'rider' or t contains 'road' or t contains 'wheel' -%}{%- assign ikey = 'helmet' -%}
           {%- elsif t contains 'vacation' or t contains 'travel' or t contains 'trip' or t contains 'airplane' -%}{%- assign ikey = 'compass' -%}
           {%- elsif t contains 'coffee' or t contains 'caffeine' -%}{%- assign ikey = 'coffee' -%}

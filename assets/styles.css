@@ -1790,7 +1790,7 @@ body.scrolled-past .appbar { top: 0; }
 .chip-rod::before, .chip-rod::after { content: ""; position: absolute; top: -2px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
 .chip-rod::before { left: 0; }
 .chip-rod::after { right: 0; }
-.chips-scroll { position: relative; z-index: 1; display: flex; gap: 9px; overflow-x: auto; padding: 16px var(--pad) 18px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.chips-scroll { position: relative; z-index: 1; display: flex; gap: 9px; overflow-x: auto; padding: 11px var(--pad) 11px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .chips-scroll::-webkit-scrollbar { display: none; }
 .chip { flex: 0 0 auto; padding: 16px 0 0; background: none; border: none; position: relative; display: flex; flex-direction: column; align-items: center; gap: 5px; }
 .chip::before { content: ""; position: absolute; top: 2px; left: 50%; width: 2px; height: 17px; background: var(--ink); opacity: 0.55; transform: translateX(-50%); }
