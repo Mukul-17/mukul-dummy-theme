@@ -1136,9 +1136,9 @@ body.scrolled-past .appbar { top: 0; }
   font-size: 11px; font-weight: 700; font-family: var(--mono); letter-spacing: 0.06em;
   box-shadow: 0 6px 16px -6px rgba(224, 62, 31, 0.7);
 }
-@media (max-width: 719px) {
+@media (max-width: 899px) {
   .ps__gallery { margin: 0; border-radius: 0; }   /* full-bleed image (no side margin) */
-  .ps-page { padding-top: 0.9rem; }               /* gap between the marquee and the image */
+  .ps-page { padding-top: 1.75rem; }              /* clear gap between the marquee and the image */
 }
 .ps__body { padding: 1.5rem 1.25rem 0; }
 .ps__name { font-family: var(--display); font-size: clamp(1.4rem, 5.5vw, 2rem); line-height: 1.05; margin: 0; color: #fff; }
