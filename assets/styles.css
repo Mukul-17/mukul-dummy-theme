@@ -672,6 +672,7 @@ body.scrolled-past .appbar { top: 0; }
   font-size: 10px; font-weight: 700; font-family: var(--mono);
   letter-spacing: 0.06em; box-shadow: 0 4px 12px -4px rgba(224,62,31,0.6);
 }
+.pcard__disc-sign { margin-right: 2px; }   /* little gap between - and the number */
 .pcard__add {
   position: absolute; bottom: 0.7rem; right: 0.7rem; z-index: 3;
   height: 40px; width: 40px; border-radius: 50%;
