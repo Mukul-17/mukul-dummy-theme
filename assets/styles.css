@@ -1760,7 +1760,7 @@ body.scrolled-past .appbar { top: 0; }
    ========================================================= */
 #MainContent { padding-top: var(--appbar-h); padding-bottom: calc(var(--tabbar-h) + 1rem); min-height: 60vh; }
 .ps-page { padding-bottom: 1.5rem; }
-.ps-page .ps__bar { position: sticky; bottom: var(--tabbar-h); z-index: 20; }
+.ps-page .ps__bar { position: static; }   /* inline after the details; Similar Products follow below */
 .template-product #MainContent { padding-bottom: 0; }
 .rte { font-size: var(--fs-sm); color: var(--muted); }
 .rte p { line-height: 1.6; margin: 0.5rem 0; }

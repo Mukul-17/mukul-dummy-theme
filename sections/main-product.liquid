@@ -87,6 +87,17 @@
     {%- endif -%}
   </div>
 
+  <div class="ps__bar">
+    <div class="ps__qty">
+      <button type="button" id="ps-minus" aria-label="Decrease quantity">−</button>
+      <span id="ps-qty">1</span>
+      <button type="button" id="ps-plus" aria-label="Increase quantity">+</button>
+    </div>
+    <button type="button" class="btn btn--primary ps__add" id="ps-add"{% unless product.available %} disabled{% endunless %}>
+      {% if product.available %}Add to bag{% else %}Sold out{% endif %}
+    </button>
+  </div>
+
   {%- comment -%} current GSM: metafield first, else parse the number before "GSM" in the title {%- endcomment -%}
   {%- assign cur_gsm = product.metafields.custom.gsm.value -%}
   {%- if cur_gsm == blank and product.title contains 'GSM' -%}
@@ -135,17 +146,6 @@
         </tbody>
       </table>
     </div>
-  </div>
-
-  <div class="ps__bar">
-    <div class="ps__qty">
-      <button type="button" id="ps-minus" aria-label="Decrease quantity">−</button>
-      <span id="ps-qty">1</span>
-      <button type="button" id="ps-plus" aria-label="Increase quantity">+</button>
-    </div>
-    <button type="button" class="btn btn--primary ps__add" id="ps-add"{% unless product.available %} disabled{% endunless %}>
-      {% if product.available %}Add to bag{% else %}Sold out{% endif %}
-    </button>
   </div>
 </section>
 
