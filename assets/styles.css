@@ -369,7 +369,7 @@ body.scrolled-past .appbar { top: 0; }
 .bn .sbtn.r { background: var(--sale); color: #fff; } .bn .sbtn.r:hover { background: var(--paper); color: var(--ink); }
 .bn .sbtn.o { border: 1px solid rgba(250,248,244,.5); color: var(--paper); } .bn .sbtn.o:hover { background: rgba(250,248,244,.12); }
 /* S1 poster */
-.bn1 { background: #17161A; justify-content: center; align-items: center; }
+.bn1 { background: var(--faint); justify-content: center; align-items: center; }
 .bn1 .s1-letters { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: .07; }
 .bn1 .s1-letters span { position: absolute; font-family: var(--display); color: #fff; font-size: clamp(150px, 42vw, 300px); line-height: .8; }
 .bn1 .s1-letters .l1 { top: 3%; left: -5%; } .bn1 .s1-letters .l2 { top: 32%; right: -7%; } .bn1 .s1-letters .l3 { bottom: -8%; left: 32%; }
