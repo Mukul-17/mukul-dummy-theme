@@ -517,7 +517,7 @@ body.scrolled-past .appbar { top: 0; }
 .bn .seg { flex: 1; height: 3px; background: rgba(250,248,244,.3); border-radius: 3px; overflow: hidden; }
 .bn .seg i { display: block; height: 100%; width: 0; background: var(--paper); }
 .bn .seg.done i { width: 100%; }
-.bn .tap { position: absolute; top: 0; bottom: 90px; width: 34%; z-index: 15; display: none; }
+.bn .tap { position: absolute; top: 0; bottom: 90px; width: 34%; z-index: 15; display: none; pointer-events: none; }
 .bn .tap.l { left: 0; } .bn .tap.r { right: 0; width: 66%; }
 @media (hover: none) { .bn .tap { display: block; } }
 /* lift the slide CTAs above the tap-to-navigate zones so the buttons are clickable */

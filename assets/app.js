@@ -139,6 +139,17 @@
     if (tapR) tapR.addEventListener("click", () => go(i + 1));
     if (tapL) tapL.addEventListener("click", () => go(i - 1));
 
+    // Touch: tap the left third to go back, elsewhere to advance — BUT a tap on a
+    // CTA link/button falls through so the button works (it lives inside the slide's
+    // own stacking context, below the tap zones, so z-index alone can't rescue it).
+    const touchNav = window.matchMedia("(hover: none)").matches;
+    slider.addEventListener("click", (e) => {
+      if (e.target.closest("a, button")) return;   // let CTAs / links do their thing
+      if (!touchNav) return;                         // desktop uses the arrows
+      const r = slider.getBoundingClientRect();
+      if ((e.clientX - r.left) < r.width * 0.34) go(i - 1); else go(i + 1);
+    });
+
     // (auto-advance never pauses on hover or tap-hold — keeps running continuously)
 
     let visible = true;
