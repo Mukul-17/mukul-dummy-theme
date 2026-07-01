@@ -2163,10 +2163,10 @@ body.scrolled-past .appbar { top: 0; }
   .tee .collar { width: 28px; height: 11px; top: 9px; }
   .chip-lbl { font-size: 10px; max-width: 84px; }
   .chip { padding-top: 18px; }
-  .chip::before { top: 5px; height: 15px; width: 2.5px; }              /* hanger neck */
-  .chip::after {                                                       /* hook curling over the rod */
-    content: ""; position: absolute; top: -3px; left: 50%; transform: translateX(-50%);
-    width: 13px; height: 10px; z-index: 2;
+  .chip::before { top: 12px; height: 10px; width: 2px; }              /* hanger neck: rod → tee */
+  .chip::after {                                                      /* hook curling over the rod */
+    content: ""; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+    width: 12px; height: 11px; z-index: 2;
     border: 2.5px solid var(--ink); border-bottom: none; border-radius: 8px 8px 0 0;
   }
 
