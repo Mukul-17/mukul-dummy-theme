@@ -566,7 +566,7 @@
     const back = e.target.closest("[data-back]");
     if (back) { e.preventDefault(); const v = back.closest(".drawer__subview"); if (v) v.classList.remove("is-current"); return; }
     // close
-    if (e.target.closest("[data-close]") || e.target.classList.contains("sheet__backdrop")) {
+    if (e.target.closest("[data-close]") || e.target.closest("[data-cart-close]") || e.target.classList.contains("sheet__backdrop")) {
       if (e.target.closest("[data-cart-close]")) { closeSheet("cart-root"); return; }
       const root = e.target.closest(".sheet-root"); if (root) closeSheet(root.id); return;
     }
