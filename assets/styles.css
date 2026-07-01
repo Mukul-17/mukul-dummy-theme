@@ -369,39 +369,43 @@ body.scrolled-past .appbar { top: 0; }
 .bn .sbtn.r { background: var(--sale); color: #fff; } .bn .sbtn.r:hover { background: var(--paper); color: var(--ink); }
 .bn .sbtn.o { border: 1px solid rgba(250,248,244,.5); color: var(--paper); } .bn .sbtn.o:hover { background: rgba(250,248,244,.12); }
 /* S1 poster */
-.bn1 { background: #d8311a; }
-.bn1 .wm { position: absolute; inset: 0; font-family: var(--display); font-size: clamp(120px,30vw,300px); line-height: .86; color: rgba(255,255,255,.06); text-transform: uppercase; word-break: break-all; user-select: none; }
-.bn1 .ribbon { position: absolute; left: 0; right: 0; background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; padding: 9px 0; white-space: nowrap; overflow: hidden; z-index: 3; }
-.bn1 .ribbon span { display: inline-block; animation: bnRib 16s linear infinite; }
-.bn1 .ribbon.r1 { top: calc(var(--appbar-h) + 6px); rotate: 0deg; } .bn1 .ribbon.r2 { bottom: 8%; rotate: 5deg; }
-.bn1 .top { position: relative; z-index: 2; text-align: center; padding: 11svh 22px 0; }
-.bn1 .script { font-family: 'Caveat', cursive; font-size: clamp(34px,9vw,58px); color: #ffe3da; display: inline-block; line-height: 1.05; margin-bottom: 0.1em; }
-.bn1 h1 { font-family: var(--display); font-size: clamp(52px,16vw,84px); line-height: .9; text-transform: uppercase; color: #fff; text-shadow: 0 6px 0 rgba(0,0,0,.18); letter-spacing: -.01em; margin: 0; }
-.bn1 .sub { font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: #ffd9cf; margin-top: 12px; }
-.bn1 .spark { position: absolute; font-size: 30px; color: #fff; animation: bnWig 1.8s ease-in-out infinite; z-index: 2; }
-.bn1 .sp1 { left: 8%; top: 33%; } .bn1 .sp2 { right: 9%; top: 26%; animation-delay: .5s; font-size: 22px; }
-.bn1 .prod { position: absolute; left: 50%; bottom: 13%; translate: -50% 0; width: min(56vw,235px); z-index: 2; }
-.bn1 .prod img { width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center top; border: 6px solid #fff; border-bottom: 0; box-shadow: 0 -24px 60px rgba(0,0,0,.35); animation: bnWigS 3.4s ease-in-out infinite; }
-.bn1 .price-tag { position: absolute; top: -16px; right: -8px; background: var(--ink); color: #fff; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; padding: 11px 14px; rotate: 7deg; animation: bnWig 2.6s ease-in-out infinite; z-index: 3; }
-.bn1 .cta-wrap { position: absolute; left: 0; right: 0; bottom: calc(var(--tabbar-h) + 2.75rem); display: flex; justify-content: center; z-index: 4; }
-.bn1 .cta-wrap .sbtn { box-shadow: 0 14px 30px rgba(0,0,0,.35); }
+.bn1 { background: #17161A; justify-content: center; align-items: center; }
+.bn1 .s1-letters { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: .07; }
+.bn1 .s1-letters span { position: absolute; font-family: var(--display); color: #fff; font-size: clamp(150px, 42vw, 300px); line-height: .8; }
+.bn1 .s1-letters .l1 { top: 3%; left: -5%; } .bn1 .s1-letters .l2 { top: 32%; right: -7%; } .bn1 .s1-letters .l3 { bottom: -8%; left: 32%; }
+.bn1 .s1-in { position: relative; z-index: 2; width: 100%; max-width: 600px; margin: auto; padding: calc(var(--appbar-h) + 3.5svh) 22px calc(var(--tabbar-h) + 2.5svh); text-align: center; }
+.bn1 .s1-tag { position: absolute; top: calc(var(--appbar-h) + 12px); right: 14px; z-index: 5; background: var(--sale); color: #fff; font-family: var(--display); font-size: clamp(13px, 4vw, 17px); letter-spacing: .03em; padding: 8px 12px; border-radius: 7px; box-shadow: 0 6px 16px -6px rgba(0,0,0,.5); transform: rotate(3deg); animation: s1Pulse 2.8s ease-in-out infinite; }
+.bn1 .s1-sale { font-family: 'Caveat', cursive; font-weight: 700; color: #fff; font-size: clamp(32px, 9vw, 50px); line-height: 1; transform: rotate(-3deg); }
+.bn1 .s1-live { font-family: var(--display); color: #fff; font-size: clamp(56px, 16vw, 96px); line-height: .9; letter-spacing: .02em; text-transform: uppercase; text-shadow: 4px 7px 0 rgba(0,0,0,.28); margin: .04em 0 0; }
+.bn1 .s1-sub { font-family: var(--mono); color: #fff; opacity: .82; font-weight: 600; font-size: clamp(11px, 3.2vw, 14px); letter-spacing: .16em; text-transform: uppercase; margin-top: 12px; }
+.bn1 .s1-row { display: flex; justify-content: center; align-items: center; gap: clamp(8px, 2.5vw, 16px); margin: clamp(20px, 4svh, 30px) auto clamp(22px, 4svh, 28px); animation: s1Rise .8s ease both; }
+.bn1 .s1-slot { flex: 1 1 0; max-width: 172px; animation: s1Float 5.2s ease-in-out infinite; }
+.bn1 .s1-slot:nth-child(2) { animation-duration: 6s; animation-delay: -1.6s; }
+.bn1 .s1-slot:nth-child(3) { animation-duration: 5.6s; animation-delay: -3.1s; }
+.bn1 .s1-frame { position: relative; background: #fff; padding: 6px; border-radius: 5px; overflow: hidden; box-shadow: 0 16px 30px -16px rgba(0,0,0,.6); }
+.bn1 .s1-slot:nth-child(1) .s1-frame { transform: rotate(-3deg); }
+.bn1 .s1-slot:nth-child(2) .s1-frame { transform: rotate(2deg); }
+.bn1 .s1-slot:nth-child(3) .s1-frame { transform: rotate(-2deg); }
+.bn1 .s1-pic { position: relative; overflow: hidden; border-radius: 2px; }
+.bn1 .s1-pic img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; animation: s1Breathe 8s ease-in-out infinite; }
+.bn1 .s1-slot:nth-child(2) .s1-pic img { animation-delay: -2.6s; }
+.bn1 .s1-slot:nth-child(3) .s1-pic img { animation-delay: -5s; }
+.bn1 .s1-shine { position: absolute; top: -40%; left: 0; width: 45%; height: 180%; pointer-events: none; background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,.38) 50%, transparent 100%); transform: translateX(-180%) rotate(8deg); animation: s1Shine 5.5s ease-in-out infinite; }
+.bn1 .s1-slot:nth-child(2) .s1-shine { animation-delay: -1.8s; }
+.bn1 .s1-slot:nth-child(3) .s1-shine { animation-delay: -3.6s; }
+.bn1 .s1-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--sale); color: #fff; font-family: var(--mono); font-weight: 700; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; padding: 16px 34px; border-radius: 8px; box-shadow: 0 14px 30px -10px rgba(0,0,0,.5); }
+.bn1 .s1-cta:active { transform: scale(.98); }
+@keyframes s1Float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+@keyframes s1Breathe { 0%, 100% { transform: scale(1.02); } 50% { transform: scale(1.09); } }
+@keyframes s1Shine { 0%, 55% { transform: translateX(-180%) rotate(8deg); } 85%, 100% { transform: translateX(340%) rotate(8deg); } }
+@keyframes s1Pulse { 0%, 100% { transform: rotate(3deg) scale(1); } 50% { transform: rotate(3deg) scale(1.07); } }
+@keyframes s1Rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @media (min-width: 881px) {
-  /* Desktop: clean centred stack like mobile — text, then product image
-     (keeps its wobble), then the Shop button below. Image is capped by vh
-     so the whole stack fits one screen. */
-  .bn1 { flex-direction: column; justify-content: center; align-items: center; gap: 1vh; padding: calc(var(--appbar-h) + 3vh) 5vw calc(var(--tabbar-h) + 3vh); }
-  .bn1 .top { order: 1; text-align: center; padding: 0; max-width: 92%; }
-  .bn1 .script { font-size: 40px; }
-  .bn1 h1 { font-size: clamp(56px, 6.5vw, 104px); }
-  .bn1 .sub { font-size: 13px; margin: 10px auto 0; }
-  .bn1 .prod { order: 2; position: relative; left: auto; bottom: auto; translate: none; align-self: center; width: min(26vw, 32vh); margin: 1.5vh auto 0; z-index: 2; }
-  .bn1 .cta-wrap { order: 3; position: static; justify-content: center; margin: 1.5vh auto 0; z-index: 4; }
-}
-@media (max-width: 880px) {
-  .bn1 { justify-content: center; align-items: center; gap: 1.6vh; padding: calc(var(--appbar-h) + 7svh) 22px calc(var(--tabbar-h) + 1.5rem); }
-  .bn1 .top { padding: 0; order: 1; }
-  .bn1 .prod { position: relative; left: auto; bottom: auto; translate: none; margin: 0; order: 2; width: min(60vw, 31vh); }
-  .bn1 .cta-wrap { position: relative; left: auto; right: auto; bottom: auto; order: 3; margin: 0; }
+  /* Desktop: bigger headline + polaroids for the redesigned sale slide */
+  .bn1 .s1-live { font-size: clamp(72px, 8vw, 120px); }
+  .bn1 .s1-sale { font-size: clamp(44px, 4.5vw, 64px); }
+  .bn1 .s1-sub { font-size: 15px; }
+  .bn1 .s1-slot { max-width: 200px; }
 }
 /* S2 video */
 .bn2 video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; background: var(--ink); }
