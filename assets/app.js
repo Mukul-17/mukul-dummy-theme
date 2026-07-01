@@ -531,6 +531,11 @@
     $$(".ps-thumb").forEach((t) => t.addEventListener("click", () => swapImg(t.dataset.full)));
     pform.__swapImg = swapImg;
 
+    // tapping anywhere outside the image also closes the zoom
+    document.addEventListener("click", (e) => {
+      if (gallery && gallery.classList.contains("is-zoom") && !e.target.closest("#ps-gallery")) killZoom();
+    });
+
     // size chart modal
     const scOpen = $("#ps-sizechart-open"), sc = $("#ps-sizechart");
     if (scOpen && sc) {
