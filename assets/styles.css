@@ -1447,6 +1447,7 @@ body.scrolled-past .appbar { top: 0; }
 .a-pin .anatomy__steps { padding: 0; width: 100%; max-width: 600px; margin: 0 auto; display: block; }
 .a-pin .astep { padding: 0.35rem 0; }
 .a-pin .astep__num { font-size: 10px; }
+@media (max-width: 719px) { .a-pin .astep__num { font-size: 13px; } }
 .a-pin .astep__title { font-size: clamp(0.95rem, 4vw, 1.15rem); margin: 0.1rem 0 0.18rem; line-height: 1; }
 .a-pin .astep__copy { font-size: 0.72rem; line-height: 1.35; }
 .a-progress { height: 2px; background: var(--line); border-radius: 2px; margin-top: 0.6rem; overflow: hidden; }
