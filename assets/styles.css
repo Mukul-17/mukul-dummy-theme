@@ -2158,10 +2158,10 @@ body.scrolled-past .appbar { top: 0; }
    each tee reads as "hung" on the rail.
    ========================================================= */
 @media (max-width: 899px) {
-  .tee { width: 116px; padding: 30px 11px 14px; }
-  .tee svg { width: 48px; height: 48px; }
-  .tee .collar { width: 34px; height: 13px; top: 11px; }
-  .chip-lbl { font-size: 10.5px; max-width: 96px; }
+  .tee { width: 94px; padding: 24px 9px 12px; }
+  .tee svg { width: 38px; height: 38px; }
+  .tee .collar { width: 28px; height: 11px; top: 9px; }
+  .chip-lbl { font-size: 10px; max-width: 84px; }
   .chip { padding-top: 18px; }
   .chip::before { top: 5px; height: 15px; width: 2.5px; }              /* hanger neck */
   .chip::after {                                                       /* hook curling over the rod */
