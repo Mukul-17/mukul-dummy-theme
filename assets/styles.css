@@ -1218,7 +1218,7 @@ body.scrolled-past .appbar { top: 0; }
 .ps__wish.is-wished { background: var(--accent); color: #fff; }
 .ps__wish.is-wished svg { fill: currentColor; }
 .ps__group { margin-bottom: 1.5rem; }
-.ps__label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); margin-bottom: 0.75rem; }
+.ps__label { display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(20, 20, 20, 0.72); margin-bottom: 0.75rem; }
 .ps__label .ps__chosen { color: #fff; letter-spacing: 0; text-transform: none; font-size: 13px; }
 .ps__sizes { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .ps__size {
