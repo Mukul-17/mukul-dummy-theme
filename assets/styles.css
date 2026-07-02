@@ -847,6 +847,11 @@ body.scrolled-past .appbar { top: 0; }
 .reviews__score { font-weight: 600; color: #fff; }
 .reviews__count { font-size: 12px; color: var(--muted); }
 .reviews__viewport { overflow: hidden; }
+
+/* Live Judge.me reviews carousel on the home "Customer voices" section (both views) */
+.reviews__jdgm { margin-top: 1.1rem; }
+.reviews__jdgm .jdgm-carousel-wrapper { margin: 0; }
+.reviews__jdgm .jdgm-carousel-title-and-link { display: none; }   /* our eyebrow + rating already head the section */
 .reviews__track {
   display: flex;
   overflow-x: auto;
