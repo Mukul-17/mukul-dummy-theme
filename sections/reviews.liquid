@@ -7,7 +7,7 @@
     <div class="reviews__rating">
       <div class="reviews__stars" id="review-stars">{{ star_svg }}{{ star_svg }}{{ star_svg }}{{ star_svg }}{{ star_svg }}</div>
       <span class="reviews__score">{% if jm.all_reviews_rating != blank %}{{ jm.all_reviews_rating | round: 1 }}{% else %}{{ section.settings.score }}{% endif %}</span>
-      <span class="reviews__count">{% if jm.all_reviews_count != blank %}{{ jm.all_reviews_count }} reviews{% else %}{{ section.settings.count_text }}{% endif %}</span>
+      <span class="reviews__count">{% if jm.all_reviews_count != blank %}from {{ jm.all_reviews_count }} reviews{% else %}{{ section.settings.count_text }}{% endif %}</span>
     </div>
   </div>
 
