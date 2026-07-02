@@ -686,7 +686,9 @@
       requestAnimationFrame(() => {
         ticking = false;
         const y = window.scrollY, dy = y - lastY;
-        if (Math.abs(dy) < 12) { lastY = y; return; }
+        // don't reset lastY on tiny moves — let the delta accumulate so slow
+        // scrolling still triggers (this was the bug: it only reacted to fast scrolls)
+        if (Math.abs(dy) < 8) return;
         const stuck = chips.getBoundingClientRect().top <= appbarH() + 1;
         if (dy > 0 && stuck) chips.classList.add("is-hidden");   // scrolling down while pinned → hide
         else if (dy < 0) chips.classList.remove("is-hidden");    // scrolling up → reveal
