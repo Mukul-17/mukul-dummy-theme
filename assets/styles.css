@@ -899,11 +899,24 @@ body.scrolled-past .appbar { top: 0; }
   .reviews__jdgm .jdgm-carousel-item__review-title { display: none; }
   .reviews__jdgm .jdgm-carousel-item__review-content { min-width: 0; }
   .reviews__jdgm .jdgm-carousel-item__review-body { color: var(--muted); line-height: 1.5; font-size: 0.85rem; margin: 0; }
-  .reviews__jdgm .jdgm-carousel-item__review-body p {
-    margin: 0;
-    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-  }
+  .reviews__jdgm .jdgm-carousel-item__review-body p { margin: 0; }
+  .reviews__jdgm .jdgm-more { display: inline; padding: 0; margin: 0; border: 0; background: none; font: inherit; font-weight: 600; color: var(--accent); text-decoration: underline; cursor: pointer; }
 }
+
+/* full-review popup opened from a review card's "more" link */
+.rvmodal { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.rvmodal[hidden] { display: none; }
+.rvmodal__backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5); }
+.rvmodal__panel { position: relative; z-index: 1; width: 100%; max-width: 420px; max-height: 85vh; overflow-y: auto; background: var(--surface); border-radius: 16px; padding: 1.4rem; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5); }
+.rvmodal__close { position: absolute; top: 0.55rem; right: 0.7rem; background: none; border: 0; font-size: 1.7rem; line-height: 1; color: var(--muted); cursor: pointer; }
+.rvmodal__head { display: flex; gap: 0.9rem; align-items: center; margin-bottom: 0.85rem; padding-right: 1.5rem; }
+.rvmodal__img { width: 72px; height: 72px; flex: 0 0 auto; border-radius: 12px; object-fit: cover; }
+.rvmodal__product { font-family: var(--display); font-weight: 700; color: var(--fg); font-size: 0.98rem; line-height: 1.2; }
+.rvmodal__stars { margin-top: 0.35rem; color: #ea5936; letter-spacing: 2px; }
+.rvmodal__who { display: flex; align-items: baseline; gap: 0.55rem; margin-bottom: 0.55rem; }
+.rvmodal__name { font-family: var(--display); color: var(--fg); }
+.rvmodal__date { font-family: var(--mono); font-size: 11px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--muted); }
+.rvmodal__text { margin: 0; color: var(--fg); line-height: 1.6; font-size: 0.95rem; }
 .reviews__track {
   display: flex;
   overflow-x: auto;

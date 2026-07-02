@@ -343,6 +343,77 @@
     }, 5000);
   }
 
+  /* -------- home reviews: 50-char preview + "more" opens a full-review popup (mobile) -------- */
+  function initHomeReviews() {
+    const wrap = $(".reviews__jdgm");
+    if (!wrap) return;
+    if (!window.matchMedia("(max-width: 899px)").matches) return;   // mobile pass only
+    const LIMIT = 50;
+
+    const modal = document.createElement("div");
+    modal.className = "rvmodal";
+    modal.hidden = true;
+    modal.innerHTML =
+      '<div class="rvmodal__backdrop" data-rv-close></div>' +
+      '<div class="rvmodal__panel" role="dialog" aria-modal="true" aria-label="Customer review">' +
+        '<button type="button" class="rvmodal__close" data-rv-close aria-label="Close">×</button>' +
+        '<div class="rvmodal__head">' +
+          '<img class="rvmodal__img" alt="" width="72" height="72">' +
+          '<div><div class="rvmodal__product"></div><div class="rvmodal__stars" aria-hidden="true"></div></div>' +
+        '</div>' +
+        '<div class="rvmodal__who"><b class="rvmodal__name"></b><span class="rvmodal__date"></span></div>' +
+        '<p class="rvmodal__text"></p>' +
+      '</div>';
+    document.body.appendChild(modal);
+    const mq = (s) => modal.querySelector(s);
+    const closeModal = () => { modal.hidden = true; document.body.style.overflow = ""; };
+    const openModal = (d) => {
+      mq(".rvmodal__img").src = d.img; mq(".rvmodal__img").alt = d.product;
+      mq(".rvmodal__product").textContent = d.product;
+      mq(".rvmodal__stars").textContent = "★".repeat(d.stars) + "☆".repeat(5 - d.stars);
+      mq(".rvmodal__name").textContent = d.name;
+      mq(".rvmodal__date").textContent = d.date;
+      mq(".rvmodal__text").textContent = d.text;
+      modal.hidden = false; document.body.style.overflow = "hidden";
+    };
+    modal.addEventListener("click", (e) => { if (e.target.closest("[data-rv-close]")) closeModal(); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !modal.hidden) closeModal(); });
+
+    const readItem = (item) => {
+      const img = item.querySelector(".jdgm-carousel-item__product-image");
+      const nameEl = item.querySelector(".jdgm-carousel-item__reviewer-name");
+      const dateEl = item.querySelector(".jdgm-carousel-item__timestamp");
+      return {
+        product: img ? (img.getAttribute("alt") || "") : "",
+        img: img ? (img.getAttribute("data-src") || img.getAttribute("src") || "") : "",
+        name: nameEl ? nameEl.textContent.trim() : "Anonymous",
+        date: dateEl ? (dateEl.getAttribute("data-time") || dateEl.textContent.trim()) : "",
+        stars: item.querySelectorAll(".jdgm-star.jdgm--on").length || 5,
+        text: (item.__mvFull || "").trim(),
+      };
+    };
+
+    const enhance = () => {
+      wrap.querySelectorAll(".jdgm-carousel-item").forEach((item) => {
+        const p = item.querySelector(".jdgm-carousel-item__review-body p");
+        if (!p || p.dataset.mvDone) return;
+        const full = p.textContent.trim();
+        item.__mvFull = full;
+        p.dataset.mvDone = "1";
+        if (full.length > LIMIT) {
+          const short = full.slice(0, LIMIT).replace(/\s+\S*$/, "").trim();
+          p.textContent = short + "… ";
+          const btn = document.createElement("button");
+          btn.type = "button"; btn.className = "jdgm-more"; btn.textContent = "more";
+          btn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); openModal(readItem(item)); });
+          p.appendChild(btn);
+        }
+      });
+    };
+    enhance();
+    new MutationObserver(enhance).observe(wrap, { childList: true, subtree: true });
+  }
+
   /* ---------------- chrome: progress, appbar, active tab ---------------- */
   function initChrome() {
     const progress = $("#scroll-progress");
@@ -791,6 +862,7 @@
     initLoadMore();
     initAnnounce();
     initHangerHide();
+    initHomeReviews();
     $$(".rail-wrap").forEach(initRail);
     bindRailDots($("#drop-rail"), $(".rail__dots"));
     bindRailDots($("#reviews-track"), $("#review-dots"));
