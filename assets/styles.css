@@ -848,10 +848,37 @@ body.scrolled-past .appbar { top: 0; }
 .reviews__count { font-size: 12px; color: var(--muted); }
 .reviews__viewport { overflow: hidden; }
 
-/* Live Judge.me reviews carousel on the home "Customer voices" section (both views) */
+/* Live Judge.me reviews carousel on the home "Customer voices" section */
 .reviews__jdgm { margin-top: 1.1rem; }
 .reviews__jdgm .jdgm-carousel-wrapper { margin: 0; }
 .reviews__jdgm .jdgm-carousel-title-and-link { display: none; }   /* our eyebrow + rating already head the section */
+/* brand the widget via Judge.me's own CSS variables (safe — respects its internals) */
+.reviews__jdgm { --jdgm-primary-color: var(--accent); --jdgm-snippet-star-color: var(--accent); --jdgm-border-radius: 16px; }
+
+/* ---- MOBILE: format the carousel card to match MODRN (visuals only, layout untouched) ---- */
+@media (max-width: 899px) {
+  .reviews__jdgm { padding: 0 2px; }
+  .reviews__jdgm .jdgm-carousel-item {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.15rem 1.15rem 1.25rem;
+    box-shadow: 0 12px 26px -20px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+  }
+  .reviews__jdgm .jdgm-carousel-item__review-rating { margin-bottom: 0.5rem; }
+  .reviews__jdgm .jdgm-star { color: var(--accent) !important; }
+  .reviews__jdgm .jdgm-carousel-item__review-title { font-family: var(--display); font-size: 0.95rem; color: var(--fg); margin-bottom: 0.35rem; }
+  .reviews__jdgm .jdgm-carousel-item__review-body { color: var(--muted); line-height: 1.6; font-size: 0.92rem; }
+  .reviews__jdgm .jdgm-carousel-item__reviewer-name { font-family: var(--display); font-weight: 700; color: var(--fg); }
+  .reviews__jdgm .jdgm-carousel-item__timestamp { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+  .reviews__jdgm .jdgm-carousel-item__product { border-top: 1px solid var(--line); margin-top: 0.9rem; padding-top: 0.8rem; }
+  .reviews__jdgm .jdgm-carousel-item__product-image { border-radius: 10px; }
+  .reviews__jdgm .jdgm-carousel-item__product-title { color: var(--muted); font-size: 0.85rem; }
+  /* arrows: subtle, on-brand */
+  .reviews__jdgm .jdgm-carousel__left-arrow,
+  .reviews__jdgm .jdgm-carousel__right-arrow { color: var(--ink); opacity: 0.55; }
+}
 .reviews__track {
   display: flex;
   overflow-x: auto;
