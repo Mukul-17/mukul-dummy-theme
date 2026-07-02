@@ -25,6 +25,7 @@
   {%- endif -%}
 
   <div class="ps__body">
+    <div class="jdgm-widget jdgm-preview-badge ps__reviews-badge" data-id="{{ product.id }}" data-product-title="{{ product.title | escape }}">{{ product.metafields.judgeme.badge }}</div>
     <h1 class="ps__name">{{ product.title }}</h1>
     {%- if product.metafields.custom.gsm != blank -%}
       <p class="ps__tagline">{{ product.metafields.custom.gsm }} GSM · Oversized</p>
@@ -100,6 +101,10 @@
       {% if product.available %}Add to bag{% else %}Sold out{% endif %}
     </button>
   </div>
+
+  <section class="ps-reviews" id="reviews" aria-label="Customer reviews">
+    <div class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}" data-product-title="{{ product.title | escape }}">{{ product.metafields.judgeme.widget }}</div>
+  </section>
 
   {%- comment -%} current GSM: metafield first, else parse the number before "GSM" in the title {%- endcomment -%}
   {%- assign cur_gsm = product.metafields.custom.gsm.value -%}
