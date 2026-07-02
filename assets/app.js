@@ -679,7 +679,9 @@
     const chips = $(".chips");
     if (!chips) return;
     const appbarH = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue("--appbar-h"), 10) || 56;
-    let lastY = window.scrollY, ticking = false;
+    let lastY = window.scrollY, ticking = false, hidden = false;
+    const hide = () => { if (hidden) return; chips.style.marginBottom = (-chips.offsetHeight) + "px"; chips.classList.add("is-hidden"); hidden = true; };
+    const show = () => { if (!hidden) return; chips.style.marginBottom = ""; chips.classList.remove("is-hidden"); hidden = false; };
     window.addEventListener("scroll", () => {
       if (ticking) return;
       ticking = true;
@@ -687,11 +689,11 @@
         ticking = false;
         const y = window.scrollY, dy = y - lastY;
         // don't reset lastY on tiny moves — let the delta accumulate so slow
-        // scrolling still triggers (this was the bug: it only reacted to fast scrolls)
+        // scrolling still triggers (bug fix: it only reacted to fast scrolls)
         if (Math.abs(dy) < 8) return;
         const stuck = chips.getBoundingClientRect().top <= appbarH() + 1;
-        if (dy > 0 && stuck) chips.classList.add("is-hidden");   // scrolling down while pinned → hide
-        else if (dy < 0) chips.classList.remove("is-hidden");    // scrolling up → reveal
+        if (dy > 0 && stuck) hide();      // scrolling down while pinned → slide away + reclaim space
+        else if (dy < 0) show();          // scrolling up → reveal
         lastY = y;
       });
     }, { passive: true });
