@@ -674,29 +674,29 @@
     });
   }
 
-  /* ---------------- category hanger: hide once you scroll into the grid, show on scroll-up ----------------
-     Only hide after the heading (#cat-heading) has scrolled up to the hanger — i.e. the user has left the
-     feed-head and is browsing products. Reveal on any scroll-up. A short lock prevents rapid re-toggling. */
+  /* ---------------- category hanger: hide on scroll-down (while pinned), show on scroll-up ----------------
+     Net-scroll accumulator so slow scrolling still triggers; reset on reversal + a short lock so momentum
+     jitter can't flicker it. Only hides while the hanger is actually pinned at the top. */
   function initHangerHide() {
     const chips = $(".chips");
-    const heading = $("#cat-heading");
-    if (!chips || !heading) return;
+    if (!chips) return;
     const appbarH = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue("--appbar-h"), 10) || 56;
-    let lastY = window.scrollY, ticking = false, hidden = false, locked = false;
-    const lock = () => { locked = true; setTimeout(() => { locked = false; }, 600); };
-    const hide = () => { if (hidden || locked) return; chips.style.marginBottom = (-chips.offsetHeight) + "px"; chips.classList.add("is-hidden"); hidden = true; lock(); };
-    const show = () => { if (!hidden || locked) return; chips.style.marginBottom = ""; chips.classList.remove("is-hidden"); hidden = false; lock(); };
+    let lastY = window.scrollY, acc = 0, ticking = false, hidden = false, locked = false;
+    const lock = () => { locked = true; setTimeout(() => { locked = false; }, 520); };
+    const hide = () => { chips.style.marginBottom = (-chips.offsetHeight) + "px"; chips.classList.add("is-hidden"); hidden = true; lock(); };
+    const show = () => { chips.style.marginBottom = ""; chips.classList.remove("is-hidden"); hidden = false; lock(); };
     window.addEventListener("scroll", () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
         ticking = false;
         const y = window.scrollY, dy = y - lastY; lastY = y;
-        if (Math.abs(dy) < 3) return;
-        // heading has reached the hanger (user is now in the product grid, past the feed-head)
-        const reachedHanger = heading.getBoundingClientRect().top <= appbarH() + chips.offsetHeight;
-        if (dy > 0 && reachedHanger) hide();   // scrolling down & past the heading → hide
-        else if (dy < 0) show();               // scrolling up → reveal
+        if (dy === 0 || locked) return;
+        if ((dy > 0) !== (acc > 0)) acc = 0;   // direction reversed → reset accumulator (absorbs jitter)
+        acc += dy;
+        const pinned = chips.getBoundingClientRect().top <= appbarH() + 2;
+        if (acc > 30 && pinned && !hidden) { hide(); acc = 0; }   // committed scroll down while pinned → hide
+        else if (acc < -30 && hidden) { show(); acc = 0; }        // committed scroll up → reveal
       });
     }, { passive: true });
   }
