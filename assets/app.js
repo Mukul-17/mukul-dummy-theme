@@ -680,6 +680,8 @@
   function initHangerHide() {
     const chips = $(".chips");
     if (!chips) return;
+    // Desktop keeps the hanger as a plain sticky bar; the scroll-driven hide/show is mobile-only.
+    if (window.matchMedia("(min-width: 900px)").matches) return;
     const appbarH = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue("--appbar-h"), 10) || 56;
     let lastY = window.scrollY, acc = 0, ticking = false, hidden = false, locked = false;
     const lock = () => { locked = true; setTimeout(() => { locked = false; }, 520); };
