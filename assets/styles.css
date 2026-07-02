@@ -1182,6 +1182,10 @@ body.scrolled-past .appbar { top: 0; }
 .sizechart__panel { position: relative; z-index: 1; background: var(--surface); color: var(--fg); border-radius: var(--radius); padding: 1.1rem 1.25rem 1.5rem; width: min(420px, 92vw); box-shadow: 0 30px 80px rgba(0,0,0,0.4); }
 .sizechart__head { display: flex; align-items: center; justify-content: space-between; }
 .sizechart__head h3 { margin: 0; }   /* styled via .ps__name (same as the product title) */
+/* Mobile: give the Size Chart heading the "Product details" typographic look, keep its size */
+@media (max-width: 899px) {
+  .sizechart__title { font-family: var(--display); text-transform: uppercase; letter-spacing: 0.03em; }
+}
 .sizechart__close { width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 10px; display: grid; place-items: center; font-size: 1.5rem; line-height: 1; color: var(--fg); }
 .sizechart__sub { font-family: "Archivo", system-ui, sans-serif; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 0.75rem 0; }
 .sizechart__table { width: 100%; border-collapse: collapse; }
@@ -1793,7 +1797,6 @@ body.scrolled-past .appbar { top: 0; }
 .ps__reviews-badge { margin-bottom: 0.5rem; min-height: 1.1rem; }
 .ps__reviews-badge:empty { display: none; }
 .ps-reviews { margin-top: 1.75rem; padding: 1.5rem var(--pad) 0; border-top: 1px solid var(--line); }
-.ps-reviews .jdgm-review-widget:empty { display: none; }
 
 /* =========================================================
    Editable hero slides (block-based)

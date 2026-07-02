@@ -103,7 +103,14 @@
   </div>
 
   <section class="ps-reviews" id="reviews" aria-label="Customer reviews">
-    <div class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}" data-product-title="{{ product.title | escape }}">{{ product.metafields.judgeme.widget }}</div>
+    {%- assign has_legacy = false -%}
+    {%- if product.metafields.judgeme.widget.size > 20 -%}{%- assign has_legacy = true -%}{%- endif -%}
+    <div id="judgeme_product_reviews" class="jdgm-widget jdgm-review-widget" data-product-title="{{ product.title | escape }}" data-id="{{ product.id }}" data-product-id="{{ product.id }}" data-widget="review" data-auto-install="false" data-shop-reviews-count="{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}" data-entry-point="review_widget.js" data-entry-key="review-widget/main.js">
+      {%- if has_legacy -%}<div class="jdgm-legacy-widget-content" style="display:none;">{{ product.metafields.judgeme.widget }}</div>{%- endif -%}
+    </div>
+    {%- if product.metafields.judgeme.review_widget_data -%}
+      <script>jdgm.data = jdgm.data || {}; jdgm.data.reviewWidget = jdgm.data.reviewWidget || {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>
+    {%- endif -%}
   </section>
 
   {%- comment -%} current GSM: metafield first, else parse the number before "GSM" in the title {%- endcomment -%}
@@ -139,7 +146,7 @@
     <div class="sizechart__backdrop" data-sizechart-close></div>
     <div class="sizechart__panel" role="dialog" aria-modal="true" aria-label="Size chart">
       <div class="sizechart__head">
-        <h3 class="ps__name">Size Chart</h3>
+        <h3 class="ps__name sizechart__title">Size Chart</h3>
         <button type="button" class="sizechart__close" data-sizechart-close aria-label="Close">×</button>
       </div>
       <p class="sizechart__sub">IN · Regular fit (inches)</p>
