@@ -674,6 +674,27 @@
     });
   }
 
+  /* ---------------- category hanger: hide on scroll-down, show on scroll-up ---------------- */
+  function initHangerHide() {
+    const chips = $(".chips");
+    if (!chips) return;
+    const appbarH = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue("--appbar-h"), 10) || 56;
+    let lastY = window.scrollY, ticking = false;
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        const y = window.scrollY, dy = y - lastY;
+        if (Math.abs(dy) < 6) { lastY = y; return; }
+        const stuck = chips.getBoundingClientRect().top <= appbarH() + 1;
+        if (dy > 0 && stuck) chips.classList.add("is-hidden");   // scrolling down while pinned → hide
+        else if (dy < 0) chips.classList.remove("is-hidden");    // scrolling up → reveal
+        lastY = y;
+      });
+    }, { passive: true });
+  }
+
   /* ---------------- announcement marquee: fixed only over the hero ----------------
      Pinned below the header while the hero slider is on screen; once the hero
      scrolls past, it releases (absolute at the hero's end) and scrolls away. */
@@ -761,6 +782,7 @@
     initCardGallery();
     initLoadMore();
     initAnnounce();
+    initHangerHide();
     $$(".rail-wrap").forEach(initRail);
     bindRailDots($("#drop-rail"), $(".rail__dots"));
     bindRailDots($("#reviews-track"), $("#review-dots"));
