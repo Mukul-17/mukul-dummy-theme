@@ -2191,7 +2191,7 @@ body.scrolled-past .appbar { top: 0; }
 /* category hanger hides on scroll-down, returns on scroll-up (more product area).
    Slide it up (no clipping) + reclaim its space via a negative margin set in JS,
    so there's no leftover gap and no ugly squish. */
-.chips { transition: transform 0.42s var(--ease-out), margin 0.42s var(--ease-out), opacity 0.3s var(--ease-out), box-shadow 0.3s; will-change: transform, margin; }
+.chips { transition: transform 0.58s var(--ease-out), margin 0.58s var(--ease-out), opacity 0.42s var(--ease-out), box-shadow 0.42s; will-change: transform, margin; }
 .chips.is-hidden { transform: translateY(-108%); opacity: 0; margin-top: 0; box-shadow: none; }
 
 /* =========================================================

@@ -683,7 +683,7 @@
     if (!chips || !heading) return;
     const appbarH = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue("--appbar-h"), 10) || 56;
     let lastY = window.scrollY, ticking = false, hidden = false, locked = false;
-    const lock = () => { locked = true; setTimeout(() => { locked = false; }, 460); };
+    const lock = () => { locked = true; setTimeout(() => { locked = false; }, 600); };
     const hide = () => { if (hidden || locked) return; chips.style.marginBottom = (-chips.offsetHeight) + "px"; chips.classList.add("is-hidden"); hidden = true; lock(); };
     const show = () => { if (!hidden || locked) return; chips.style.marginBottom = ""; chips.classList.remove("is-hidden"); hidden = false; lock(); };
     window.addEventListener("scroll", () => {
