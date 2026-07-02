@@ -679,7 +679,7 @@
     const chips = $(".chips");
     if (!chips) return;
     const appbarH = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue("--appbar-h"), 10) || 56;
-    let lastY = window.scrollY, ticking = false, hidden = false;
+    let lastY = window.scrollY, acc = 0, ticking = false, hidden = false;
     const hide = () => { if (hidden) return; chips.style.marginBottom = (-chips.offsetHeight) + "px"; chips.classList.add("is-hidden"); hidden = true; };
     const show = () => { if (!hidden) return; chips.style.marginBottom = ""; chips.classList.remove("is-hidden"); hidden = false; };
     window.addEventListener("scroll", () => {
@@ -687,14 +687,15 @@
       ticking = true;
       requestAnimationFrame(() => {
         ticking = false;
-        const y = window.scrollY, dy = y - lastY;
-        // don't reset lastY on tiny moves — let the delta accumulate so slow
-        // scrolling still triggers (bug fix: it only reacted to fast scrolls)
-        if (Math.abs(dy) < 8) return;
-        const stuck = chips.getBoundingClientRect().top <= appbarH() + 1;
-        if (dy > 0 && stuck) hide();      // scrolling down while pinned → slide away + reclaim space
-        else if (dy < 0) show();          // scrolling up → reveal
-        lastY = y;
+        const y = window.scrollY, dy = y - lastY; lastY = y;
+        if (dy === 0) return;
+        // hysteresis: accumulate net movement in one direction; reset on reversal.
+        // toggling only after ~48px of consistent scroll kills momentum-jitter flicker.
+        if ((dy > 0) !== (acc > 0)) acc = 0;
+        acc += dy;
+        const stuck = chips.getBoundingClientRect().top <= appbarH() + 2;
+        if (acc > 48 && stuck) hide();    // committed scroll down while pinned → hide
+        else if (acc < -48) show();       // committed scroll up → reveal
       });
     }, { passive: true });
   }
