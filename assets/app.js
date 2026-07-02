@@ -433,7 +433,7 @@
         <div style="flex:1;">
           <div class="pcard__name">${it.product_title}</div>
           <div class="pcard__sub">${it.variant_title || ""}</div>
-          <div class="pcard__price cart__price" data-price-key="${it.key}" style="margin-top:0.3rem;display:flex;align-items:baseline;gap:0.5rem;flex-wrap:wrap;"><b>${money(it.final_line_price)}</b></div>
+          <div class="pcard__price cart__price" data-price-key="${it.key}" style="margin-top:0.3rem;display:flex;align-items:baseline;gap:0.5rem;flex-wrap:wrap;"><b>${money(it.final_price)}</b></div>
           <div class="ps__qty" style="height:38px;margin-top:0.5rem;width:fit-content;">
             <button type="button" data-line-minus aria-label="Decrease">−</button><span>${it.quantity}</span><button type="button" data-line-plus aria-label="Increase">+</button>
           </div>
@@ -446,7 +446,7 @@
       variantCompare(it.handle, it.variant_id).then((cmp) => {
         if (!cmp || cmp <= it.final_price) return;
         const el = items.querySelector('[data-price-key="' + it.key + '"]');
-        if (el && !el.querySelector(".cart-mrp")) el.insertAdjacentHTML("beforeend", '<span class="cart-mrp">MRP <s>' + money(cmp * it.quantity) + "</s></span>");
+        if (el && !el.querySelector(".cart-mrp")) el.insertAdjacentHTML("beforeend", '<span class="cart-mrp">MRP <s>' + money(cmp) + "</s></span>");
       });
     });
   }
