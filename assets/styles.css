@@ -1798,6 +1798,40 @@ body.scrolled-past .appbar { top: 0; }
 .ps__reviews-badge:empty { display: none; }
 .ps-reviews { margin-top: 1.75rem; padding: 1.5rem var(--pad) 0; border-top: 1px solid var(--line); }
 
+/* Mobile: lay Judge.me reviews out as a horizontal swipe carousel (uniform cards, one-ish per view).
+   Overrides the widget's JS column/masonry layout; !important beats its inline styles. */
+@media (max-width: 899px) {
+  #judgeme_product_reviews .jdgm-rev-widg__reviews,
+  #judgeme_product_reviews div:has(> .jdgm-rev) {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    grid-template-columns: none !important;
+    align-items: flex-start !important;
+    gap: 12px;
+    height: auto !important;
+    overflow: auto hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-padding-left: 2px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  #judgeme_product_reviews .jdgm-rev-widg__reviews::-webkit-scrollbar,
+  #judgeme_product_reviews div:has(> .jdgm-rev)::-webkit-scrollbar { display: none; }
+  #judgeme_product_reviews .jdgm-rev {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    flex: 0 0 82% !important;
+    width: 82% !important;
+    max-width: 82% !important;
+    margin: 0 !important;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+  }
+}
+
 /* =========================================================
    Editable hero slides (block-based)
    ========================================================= */
