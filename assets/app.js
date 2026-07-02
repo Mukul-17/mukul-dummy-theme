@@ -404,6 +404,19 @@
   async function getCart() { return (await fetch(R.cart)).json(); }
   function setCount(n) { $$(".bag-count").forEach((b) => { b.textContent = n; b.hidden = n === 0; }); }
 
+  // cart.js has no compare_at_price, so fetch it per product (cached) for the MRP tag
+  const compareByVariant = {};
+  async function variantCompare(handle, variantId) {
+    if (!(handle in compareByVariant)) {
+      compareByVariant[handle] = true;
+      try {
+        const p = await (await fetch("/products/" + handle + ".js")).json();
+        p.variants.forEach((v) => { compareByVariant[v.id] = v.compare_at_price; });
+      } catch (_) {}
+    }
+    return compareByVariant[variantId];
+  }
+
   function renderCart(cart) {
     setCount(cart.item_count);
     const label = $("#cart-count-label"); if (label) label.textContent = cart.item_count ? `(${cart.item_count})` : "";
@@ -420,7 +433,7 @@
         <div style="flex:1;">
           <div class="pcard__name">${it.product_title}</div>
           <div class="pcard__sub">${it.variant_title || ""}</div>
-          <div class="pcard__price" style="margin-top:0.3rem;"><b>${money(it.final_price)}</b></div>
+          <div class="pcard__price cart__price" data-price-key="${it.key}" style="margin-top:0.3rem;display:flex;align-items:baseline;gap:0.5rem;flex-wrap:wrap;"><b>${money(it.final_line_price)}</b></div>
           <div class="ps__qty" style="height:38px;margin-top:0.5rem;width:fit-content;">
             <button type="button" data-line-minus aria-label="Decrease">−</button><span>${it.quantity}</span><button type="button" data-line-plus aria-label="Increase">+</button>
           </div>
@@ -428,6 +441,14 @@
         <button type="button" data-line-remove aria-label="Remove" style="color:var(--muted);align-self:flex-start;">✕</button>
       </div>`).join("");
     if (foot) { foot.hidden = false; $("#cart-subtotal").textContent = money(cart.total_price); }
+    // add an MRP (compare-at × qty) tag next to each line total, when the tee is on sale
+    cart.items.forEach((it) => {
+      variantCompare(it.handle, it.variant_id).then((cmp) => {
+        if (!cmp || cmp <= it.final_price) return;
+        const el = items.querySelector('[data-price-key="' + it.key + '"]');
+        if (el && !el.querySelector(".cart-mrp")) el.insertAdjacentHTML("beforeend", '<span class="cart-mrp">MRP <s>' + money(cmp * it.quantity) + "</s></span>");
+      });
+    });
   }
 
   async function changeLine(key, qty) {
