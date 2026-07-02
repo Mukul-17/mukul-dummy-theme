@@ -2187,7 +2187,7 @@ body.scrolled-past .appbar { top: 0; }
 @media (max-width: 719px) { :root { --appbar-h: 48px; } }
 
 /* category hanger hides on scroll-down, returns on scroll-up (more product area) */
-.chips { transition: transform 0.62s var(--ease-out), opacity 0.5s var(--ease-out), box-shadow 0.5s; will-change: transform, opacity; }
+.chips { transition: transform 0.85s var(--ease-out), opacity 0.65s var(--ease-out), box-shadow 0.6s; will-change: transform, opacity; }
 .chips.is-hidden { transform: translateY(-125%); opacity: 0; box-shadow: none; }
 
 /* =========================================================
