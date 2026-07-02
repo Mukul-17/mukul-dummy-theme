@@ -686,7 +686,7 @@
       requestAnimationFrame(() => {
         ticking = false;
         const y = window.scrollY, dy = y - lastY;
-        if (Math.abs(dy) < 6) { lastY = y; return; }
+        if (Math.abs(dy) < 12) { lastY = y; return; }
         const stuck = chips.getBoundingClientRect().top <= appbarH() + 1;
         if (dy > 0 && stuck) chips.classList.add("is-hidden");   // scrolling down while pinned → hide
         else if (dy < 0) chips.classList.remove("is-hidden");    // scrolling up → reveal
