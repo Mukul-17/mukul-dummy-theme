@@ -2187,8 +2187,8 @@ body.scrolled-past .appbar { top: 0; }
 @media (max-width: 719px) { :root { --appbar-h: 48px; } }
 
 /* category hanger hides on scroll-down, returns on scroll-up (more product area) */
-.chips { transition: transform 0.3s var(--ease), box-shadow 0.3s; will-change: transform; }
-.chips.is-hidden { transform: translateY(-135%); box-shadow: none; }
+.chips { transition: transform 0.5s var(--ease), opacity 0.4s var(--ease), box-shadow 0.4s; will-change: transform, opacity; }
+.chips.is-hidden { transform: translateY(-125%); opacity: 0; box-shadow: none; }
 
 /* =========================================================
    Section cards — content sections become distinct bordered,
